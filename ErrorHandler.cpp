@@ -1,7 +1,9 @@
-#include <fstream>
-#include <string>
 #include "ErrorHandler.h"
 #include "Exceptions.h"
+#include "SDL.h"
+#include <fstream>
+#include <iostream>
+#include <string>
 
 ErrorHandler::ErrorHandler(std::string const& logFileName) : m_logFileName(logFileName)
 {
@@ -17,11 +19,25 @@ ErrorHandler::~ErrorHandler()
 void ErrorHandler::showError(ImageException& error)
 {
     *this << error.what() << std::endl;
+    std::cerr << error.what() << std::endl;
+
+    SDL_ShowSimpleMessageBox(
+        SDL_MESSAGEBOX_ERROR,
+        "Error",
+        error.what(),
+        nullptr);
 }
 
 void ErrorHandler::showError(WindowException& error)
 {
     *this << error.what() << std::endl;
+    std::cerr << error.what() << std::endl;
+
+    SDL_ShowSimpleMessageBox(
+        SDL_MESSAGEBOX_ERROR,
+        "Error",
+        error.what(),
+        nullptr);
 }
 
 std::ofstream ErrorHandler::operator<<(std::string const& error)

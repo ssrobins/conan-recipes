@@ -14,4 +14,6 @@ target_include_directories(${target_name}
 )
 
 target_link_libraries(${target_name}
+    SDL2-static
+    SDL2main
 )
