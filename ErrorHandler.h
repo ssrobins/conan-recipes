@@ -10,8 +10,7 @@ public:
     ErrorHandler(std::string const&);
     ~ErrorHandler();
 
-    void showError(ImageException& error);
-    void showError(WindowException& error);
+    void showError(Exception& error);
 
     std::ofstream operator<<(std::string const&);
 

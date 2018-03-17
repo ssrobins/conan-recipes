@@ -16,19 +16,7 @@ ErrorHandler::~ErrorHandler()
 
 }
 
-void ErrorHandler::showError(ImageException& error)
-{
-    *this << error.what() << std::endl;
-    std::cerr << error.what() << std::endl;
-
-    SDL_ShowSimpleMessageBox(
-        SDL_MESSAGEBOX_ERROR,
-        "Error",
-        error.what(),
-        nullptr);
-}
-
-void ErrorHandler::showError(WindowException& error)
+void ErrorHandler::showError(Exception& error)
 {
     *this << error.what() << std::endl;
     std::cerr << error.what() << std::endl;
