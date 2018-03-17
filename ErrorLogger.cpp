@@ -3,18 +3,18 @@
 #include "ErrorLogger.h"
 #include "Exceptions.h"
 
-ErrorLogger::ErrorLogger(std::string const& logFileName) : m_logFileName(logFileName)
+ErrorHandler::ErrorHandler(std::string const& logFileName) : m_logFileName(logFileName)
 {
     // Remove the file so we don't see errors from a previous run of the program
     std::remove(m_logFileName.c_str());
 }
 
-ErrorLogger::~ErrorLogger()
+ErrorHandler::~ErrorHandler()
 {
 
 }
 
-std::ofstream ErrorLogger::operator<<(std::string const& error)
+std::ofstream ErrorHandler::operator<<(std::string const& error)
 {
     std::ofstream outputFileStream;
 

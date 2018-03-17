@@ -3,11 +3,11 @@
 #include <string>
 #include <fstream>
 
-class ErrorLogger
+class ErrorHandler
 {
 public:
-    ErrorLogger(std::string const&);
-    ~ErrorLogger();
+    ErrorHandler(std::string const&);
+    ~ErrorHandler();
 
     std::ofstream operator<<(std::string const&);
 
