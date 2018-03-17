@@ -1,6 +1,6 @@
 #include <fstream>
 #include <string>
-#include "ErrorLogger.h"
+#include "ErrorHandler.h"
 #include "Exceptions.h"
 
 ErrorHandler::ErrorHandler(std::string const& logFileName) : m_logFileName(logFileName)

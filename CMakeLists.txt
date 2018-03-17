@@ -1,8 +1,8 @@
 set(target_name ErrorHandler)
 
 add_library(${target_name} STATIC
-    ErrorLogger.cpp
-    ErrorLogger.h
+    ErrorHandler.cpp
+    ErrorHandler.h
     Exceptions.h
 )
 
