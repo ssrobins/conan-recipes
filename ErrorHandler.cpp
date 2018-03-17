@@ -14,6 +14,16 @@ ErrorHandler::~ErrorHandler()
 
 }
 
+void ErrorHandler::showError(ImageException& error)
+{
+    *this << error.what() << std::endl;
+}
+
+void ErrorHandler::showError(WindowException& error)
+{
+    *this << error.what() << std::endl;
+}
+
 std::ofstream ErrorHandler::operator<<(std::string const& error)
 {
     std::ofstream outputFileStream;
