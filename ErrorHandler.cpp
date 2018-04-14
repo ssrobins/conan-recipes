@@ -4,6 +4,9 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#ifdef __ANDROID__
+    #include <android/log.h>
+#endif
 
 ErrorHandler::ErrorHandler(std::string const& logFileName) : m_logFileName(logFileName)
 {
@@ -18,6 +21,10 @@ ErrorHandler::~ErrorHandler()
 
 void ErrorHandler::showError(Exception& error)
 {
+    #ifdef __ANDROID__
+         __android_log_print(ANDROID_LOG_VERBOSE, "Error", error.what());
+    #endif
+
     *this << error.what() << std::endl;
     std::cerr << error.what() << std::endl;
 
