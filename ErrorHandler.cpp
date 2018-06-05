@@ -22,7 +22,7 @@ ErrorHandler::~ErrorHandler()
 void ErrorHandler::showError(Exception& error)
 {
     #ifdef __ANDROID__
-         __android_log_print(ANDROID_LOG_VERBOSE, "Error", error.what());
+         __android_log_print(ANDROID_LOG_VERBOSE, "Error", "%s", error.what());
     #endif
 
     *this << error.what() << std::endl;
