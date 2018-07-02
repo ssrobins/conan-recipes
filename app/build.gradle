@@ -6,8 +6,8 @@ android {
         applicationId "com.${company}.${target_name}"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode ${version_code}
+        versionName "${version_major}.${version_minor}.${version_patch}"
 
         // Set the apk base name.
         setProperty("archivesBaseName", "${target_name}")
