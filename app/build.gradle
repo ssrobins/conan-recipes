@@ -4,7 +4,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.${company}.${target_name}"
-        minSdkVersion 15
+        minSdkVersion ${CMAKE_SYSTEM_VERSION}
         targetSdkVersion 27
         versionCode ${version_code}
         versionName "${version_major}.${version_minor}.${version_patch}"
