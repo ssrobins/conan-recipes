@@ -4,9 +4,9 @@
 #include "SDL_ttf.h"
 
 Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title, bool fullscreen)
-    : display(numTilesWidth, numTilesHeight, screenScale)
+    : screenScale(getScreenScale(fullscreen))
+    , display(numTilesWidth, numTilesHeight, screenScale)
     , fullscreen(fullscreen)
-    , screenScale(getScreenScale(fullscreen))
 {
     int flags = 0;
 
