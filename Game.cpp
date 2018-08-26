@@ -6,6 +6,7 @@
 Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title, bool fullscreen)
     : display(numTilesWidth, numTilesHeight, screenScale)
     , fullscreen(fullscreen)
+    , screenScale(getScreenScale(fullscreen))
 {
     int flags = 0;
 
@@ -67,6 +68,18 @@ Game::~Game()
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
+}
+
+const float Game::getScreenScale(bool fullscreen)
+{
+    if (fullscreen)
+    {
+        return 1.0f;
+    }
+    else
+    {
+        return 0.8f;
+    }
 }
 
 float Game::getPixelsToPointsScaleFactor(std::string& fontPath)

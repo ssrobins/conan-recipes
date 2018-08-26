@@ -10,6 +10,7 @@ class Game
 public:
     Game(const int numTilesWidth, const int numTilesHeight, const char* title, bool fullscreen);
     ~Game();
+    const float getScreenScale(bool fullscreen);
 
     float getPixelsToPointsScaleFactor(std::string& fontPath);
     void text(const char * text, int fontSizeHeightPercent, SDL_Color& fontColor, int x = 0, int y = 0, bool centered = false);
@@ -26,12 +27,7 @@ public:
     bool isFullscreen() { return fullscreen; };
 
 private:
-    const float screenScale = 
-    #if __ANDROID__ || TARGET_OS_IPHONE
-        1.0f;
-    #else
-        0.8f;
-    #endif
+    const float screenScale;
 
     Display display;
     bool fullscreen;
