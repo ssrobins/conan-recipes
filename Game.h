@@ -3,6 +3,7 @@
 #include "Display.h"
 #include "SDL.h"
 #include <chrono>
+#include <string>
 
 class Game
 {
