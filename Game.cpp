@@ -12,7 +12,7 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
 
     if (fullscreen)
     {
-        flags = SDL_WINDOW_FULLSCREEN;
+        flags = flags|SDL_WINDOW_FULLSCREEN;
     }
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -26,6 +26,14 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
         throw Exception(SDL_GetError());
     }
     display.setDisplaySize(displayMode.w, displayMode.h);
+
+    // This works around a blue tinting of the graphics
+    // experienced on an LG G7 ThinQ Android phone.
+    // A similar problem is discussed here:
+    // https://bugzilla.libsdl.org/show_bug.cgi?id=2291
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 
     window = SDL_CreateWindow(title,
         SDL_WINDOWPOS_CENTERED,
