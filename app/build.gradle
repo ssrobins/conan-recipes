@@ -1,11 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion ${CMAKE_SYSTEM_VERSION}
     defaultConfig {
         applicationId "com.${company}.${target_name}"
-        minSdkVersion ${CMAKE_SYSTEM_VERSION}
-        targetSdkVersion 27
+        minSdkVersion ${android_min_sdk_version}
+        targetSdkVersion ${CMAKE_SYSTEM_VERSION}
         versionCode ${version_code}
         versionName "${version_major}.${version_minor}.${version_patch}"
 
