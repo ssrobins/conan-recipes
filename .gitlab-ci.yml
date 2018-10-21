@@ -9,6 +9,8 @@ linux:
     - lscpu
     - cat /proc/meminfo | grep MemTotal
     - gcc --version
+    # Python
+    - apt update && apt -y install python3-pip
     # Conan
     - pip install conan
     # Build
