@@ -1,0 +1,9 @@
+stages:
+  - build
+
+windows:
+  stage: build
+  script:
+    - conan create . stever/testing
+  tags:
+    - windows
