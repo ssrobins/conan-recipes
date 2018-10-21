@@ -12,7 +12,7 @@ linux:
     # Python
     - apt update && apt -y install python3-pip
     # Conan
-    - pip install conan
+    - pip3 install conan
     # Build
     - conan create . stever/testing
 
