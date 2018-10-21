@@ -1,6 +1,17 @@
 stages:
   - build
 
+linux:
+  image: gcc:8.2.0
+  stage: build
+  script:
+    # Environment
+    - lscpu
+    - cat /proc/meminfo | grep MemTotal
+    - gcc --version
+    # Build
+    - conan create . stever/testing
+
 windows:
   stage: build
   script:
