@@ -23,11 +23,11 @@ linux:
     - wget --no-verbose https://cmake.org/files/v${cmake_version_major}.${cmake_version_minor}/${cmake_installer}
     - sh ./${cmake_installer} --prefix=/usr --skip-license
     # Build
-    - conan create . stever/testing -s arch=x86
+    - conan create . stever/testing
 
 windows:
   stage: build
   script:
-    - conan create . stever/testing
+    - conan create . stever/testing -s arch=x86
   tags:
     - windows
