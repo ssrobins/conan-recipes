@@ -9,6 +9,8 @@ linux:
     - lscpu
     - cat /proc/meminfo | grep MemTotal
     - gcc --version
+    # Conan
+    - pip install conan
     # Build
     - conan create . stever/testing
 
