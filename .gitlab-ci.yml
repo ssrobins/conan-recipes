@@ -4,7 +4,6 @@ stages:
 windows:
   stage: build
   script:
-    - pip install conan
     - conan create . stever/testing
   tags:
     - windows
