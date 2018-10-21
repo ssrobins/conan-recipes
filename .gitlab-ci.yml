@@ -1,3 +1,9 @@
+variables:
+  cmake_version_major: "3"
+  cmake_version_minor: "13"
+  cmake_version_patch: "0-rc1"
+  cmake_installer: "cmake-${cmake_version_major}.${cmake_version_minor}.${cmake_version_patch}-Linux-x86_64.sh"
+
 stages:
   - build
 
@@ -13,6 +19,9 @@ linux:
     - apt update && apt -y install python3-pip
     # Conan
     - pip3 install conan
+    # CMake
+    - wget --no-verbose https://cmake.org/files/v${cmake_version_major}.${cmake_version_minor}/${cmake_installer}
+    - sh ./${cmake_installer} --prefix=/usr --skip-license
     # Build
     - conan create . stever/testing
 
