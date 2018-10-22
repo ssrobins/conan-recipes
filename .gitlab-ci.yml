@@ -35,6 +35,6 @@ mac:
 windows:
   stage: build
   script:
-    - conan create . stever/testing -s arch=x86
+    - conan create . stever/testing -s arch=x86 -s compiler.runtime=MT
   tags:
     - windows
