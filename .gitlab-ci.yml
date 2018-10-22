@@ -28,7 +28,7 @@ linux:
 mac:
   stage: build
   script:
-    - conan create . stever/testing -s
+    - conan create . stever/testing
   tags:
     - mac
 
