@@ -1,4 +1,8 @@
 variables:
+  package_name: "zlib"
+  package_version: "1.2.11"
+  package_user: "stever"
+  package_channel: "testing"
   cmake_version_major: "3"
   cmake_version_minor: "13"
   cmake_version_patch: "0-rc1"
@@ -23,20 +27,20 @@ linux:
     - wget --no-verbose https://cmake.org/files/v${cmake_version_major}.${cmake_version_minor}/${cmake_installer}
     - sh ./${cmake_installer} --prefix=/usr --skip-license
     # Build
-    - conan create . stever/testing
+    - conan create . ${package_user}/${package_channel}
 
 mac:
   stage: build
   script:
-    - conan create . stever/testing
-    - conan upload zlib/1.2.11@stever/testing -r conan --all
+    - conan create . ${package_user}/${package_channel}
+    - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r conan --all
   tags:
     - mac
 
 windows:
   stage: build
   script:
-    - conan create . stever/testing -s arch=x86 -s compiler.runtime=MT
-    - conan upload zlib/1.2.11@stever/testing -r conan --all
+    - conan create . ${package_user}/${package_channel} -s arch=x86 -s compiler.runtime=MT
+    - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r conan --all
   tags:
     - windows
