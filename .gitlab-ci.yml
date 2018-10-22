@@ -1,6 +1,6 @@
 variables:
   package_name: "zlib"
-  package_version: "1.2.11"
+  package_version: "1.2.9"
   package_user: "stever"
   package_channel: "testing"
   cmake_version_major: "3"
