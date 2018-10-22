@@ -36,5 +36,6 @@ windows:
   stage: build
   script:
     - conan create . stever/testing -s arch=x86 -s compiler.runtime=MT
+    - conan upload zlib/1.2.11@stever/testing -r conan --all
   tags:
     - windows
