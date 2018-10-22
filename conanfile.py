@@ -5,7 +5,7 @@ import os
 
 class ZlibConan(ConanFile):
     name = "zlib"
-    version = "1.2.11"
+    version = os.getenv("package_version")
     license = "Zlib"
     url = "https://gitlab.com/ssrobins/conan-zlib"
     description = "A Massively Spiffy Yet Delicately Unobtrusive Compression Library " \
