@@ -25,6 +25,13 @@ linux:
     # Build
     - conan create . stever/testing
 
+mac:
+  stage: build
+  script:
+    - conan create . stever/testing -s
+  tags:
+    - mac
+
 windows:
   stage: build
   script:
