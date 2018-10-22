@@ -29,6 +29,7 @@ mac:
   stage: build
   script:
     - conan create . stever/testing
+    - conan upload zlib/1.2.11@stever/testing -r conan --all
   tags:
     - mac
 
