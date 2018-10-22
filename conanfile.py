@@ -30,6 +30,7 @@ class ZlibConan(ConanFile):
 
     def package(self):
         self.copy("*.h", dst="include", src=self.zip_folder_name)
+        self.copy("*.h", dst="include", src="build", keep_path=False)
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
 
