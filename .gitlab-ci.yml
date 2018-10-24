@@ -30,7 +30,7 @@ linux:
     # Build
     - conan create . ${package_user}/${package_channel}
     - conan remote add ${package_repo} https://api.bintray.com/conan/${package_user}/${package_repo}
-    - conan user -p ${conan_api_key} -r ${package_repo} ${package_user}
+    - conan user -p ${CONAN_API_KEY} -r ${package_repo} ${package_user}
     - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r ${package_repo} --all
 
 mac:
