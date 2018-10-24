@@ -45,6 +45,6 @@ windows:
   stage: build
   script:
     - conan create . %package_user%/%package_channel% -s arch=x86 -s compiler.runtime=MT
-    - conan upload %package_name%/%package_version%@%package_user%/%package_channel% -r ${package_repo} --all
+    - conan upload %package_name%/%package_version%@%package_user%/%package_channel% -r %package_repo% --all
   tags:
     - windows
