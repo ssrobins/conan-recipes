@@ -28,6 +28,7 @@ linux:
     - sh ./${cmake_installer} --prefix=/usr --skip-license
     # Build
     - conan create . ${package_user}/${package_channel}
+    - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r conan --all
 
 mac:
   stage: build
