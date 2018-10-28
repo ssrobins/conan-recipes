@@ -4,29 +4,18 @@ variables:
   package_user: "stever"
   package_channel: "testing"
   package_repo: "conan"
-  cmake_version_major: "3"
-  cmake_version_minor: "13"
-  cmake_version_patch: "0-rc1"
-  cmake_installer: "cmake-${cmake_version_major}.${cmake_version_minor}.${cmake_version_patch}-Linux-x86_64.sh"
 
 stages:
   - build
 
 linux:
-  image: gcc:8.2.0
+  image: registry.gitlab.com/ssrobins/docker-linux-build
   stage: build
   script:
     # Environment
     - lscpu
     - cat /proc/meminfo | grep MemTotal
     - gcc --version
-    # Python
-    - apt update && apt -y install python3-pip
-    # Conan
-    - pip3 install conan
-    # CMake
-    - wget --no-verbose https://cmake.org/files/v${cmake_version_major}.${cmake_version_minor}/${cmake_installer}
-    - sh ./${cmake_installer} --prefix=/usr --skip-license
     # Build
     - conan create . ${package_user}/${package_channel}
     - conan remote add ${package_repo} https://api.bintray.com/conan/${package_user}/${package_repo}
