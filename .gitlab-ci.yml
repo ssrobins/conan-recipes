@@ -1,0 +1,39 @@
+variables:
+  package_name: "sdl2"
+  package_version: "2.0.8"
+  package_user: "stever"
+  package_channel: "testing"
+  package_repo: "conan"
+
+stages:
+  - build
+
+linux:
+  image: registry.gitlab.com/ssrobins/docker-linux-build
+  stage: build
+  script:
+    # Environment
+    - lscpu
+    - cat /proc/meminfo | grep MemTotal
+    - gcc --version
+    # Build
+    - conan create . ${package_user}/${package_channel}
+    - conan remote add ${package_repo} https://api.bintray.com/conan/${package_user}/${package_repo}
+    - conan user -p ${CONAN_API_KEY} -r ${package_repo} ${package_user}
+    - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r ${package_repo} --all
+
+mac:
+  stage: build
+  script:
+    - conan create . ${package_user}/${package_channel}
+    - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r ${package_repo} --all
+  tags:
+    - mac
+
+windows:
+  stage: build
+  script:
+    - conan create . %package_user%/%package_channel% -s arch=x86 -s compiler.runtime=MT
+    - conan upload %package_name%/%package_version%@%package_user%/%package_channel% -r %package_repo% --all
+  tags:
+    - windows
