@@ -33,7 +33,7 @@ class SDL2Conan(ConanFile):
     #    self.copy("*.h", dst="include", src=self.zip_folder_name)
     #    self.copy("*.h", dst="include", src=self.build_folder, keep_path=False)
         self.copy("*.lib", dst="lib", keep_path=False)
-    #    self.copy("*.a", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
 
     #def package_info(self):
     #    if self.settings.os == "Windows" and not tools.os_info.is_linux:
