@@ -15,7 +15,6 @@ linux:
     # Environment
     - lscpu
     - cat /proc/meminfo | grep MemTotal
-    - gcc --version
     # Build
     - conan create . ${package_user}/${package_channel}
     - conan remote add ${package_repo} https://api.bintray.com/conan/${package_user}/${package_repo}
