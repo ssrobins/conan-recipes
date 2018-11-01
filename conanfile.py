@@ -15,6 +15,7 @@ class SDL2Conan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
+    exports_sources = "CMakeLists.diff"
     zip_folder_name = "SDL2-%s" % version
     zip_name = "%s.tar.gz" % zip_folder_name
 
@@ -22,21 +23,24 @@ class SDL2Conan(ConanFile):
         tools.download("https://www.libsdl.org/release/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
+        tools.patch(base_path=self.zip_folder_name, patch_file="CMakeLists.diff")
 
-    def build(self):
+    def configure_cmake(self):
         cmake = CMake(self)
         cmake.definitions["SDL_SHARED"] = "OFF"
         cmake.configure(source_folder=self.zip_folder_name)
+        return cmake
+
+    def build(self):
+        cmake = self.configure_cmake()
         cmake.build()
 
     def package(self):
-    #    self.copy("*.h", dst="include", src=self.zip_folder_name)
-    #    self.copy("*.h", dst="include", src=self.build_folder, keep_path=False)
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        cmake = self.configure_cmake()
+        cmake.install()
 
-    #def package_info(self):
-    #    if self.settings.os == "Windows" and not tools.os_info.is_linux:
-    #        self.cpp_info.libs = ['zlib']
-    #    else:
-    #        self.cpp_info.libs = ['z']
+    def package_info(self):
+        self.cpp_info.includedirs = [os.path.join('include', 'SDL2')]
+        self.cpp_info.libs = ["SDL2", "SDL2main"]
+        if self.settings.os == "Windows":
+            self.cpp_info.libs.extend(["imm32", "version", "winmm"])
