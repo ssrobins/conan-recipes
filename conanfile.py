@@ -52,6 +52,7 @@ include(${CMAKE_BINARY_DIR}/global_settings.cmake)''')
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["imm32", "version", "winmm"])
         elif self.settings.os == "Macos":
+            self.cpp_info.libs.append('iconv')
             frameworks = ['Cocoa', 'Carbon', 'IOKit', 'CoreVideo', 'CoreAudio', 'AudioToolbox', 'ForceFeedback']
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append("-framework %s" % framework)
