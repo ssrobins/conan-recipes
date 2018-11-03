@@ -30,7 +30,10 @@ class SDL2Conan(ConanFile):
 include(${CMAKE_BINARY_DIR}/global_settings.cmake)''')
 
     def configure_cmake(self):
-        cmake = CMake(self)
+        generator = None
+        if self.settings.os == "Macos":
+            generator = "Xcode"
+        cmake = CMake(self, generator=generator)
         cmake.definitions["SDL_SHARED"] = "OFF"
         cmake.configure(source_folder=self.zip_folder_name)
         return cmake
