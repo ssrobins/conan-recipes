@@ -26,8 +26,8 @@ class SDL2Conan(ConanFile):
         os.unlink(self.zip_name)
         tools.patch(base_path=self.zip_folder_name, patch_file="CMakeLists.diff")
         tools.replace_in_file("%s/CMakeLists.txt" % self.zip_folder_name, "conan_basic_setup()",
-                              '''conan_basic_setup()
-include(${CMAKE_BINARY_DIR}/global_settings.cmake)''')
+                              '''include(${CMAKE_BINARY_DIR}/global_settings.cmake)
+conan_basic_setup()''')
 
     def configure_cmake(self):
         generator = None
