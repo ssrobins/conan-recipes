@@ -20,10 +20,14 @@ class SDL2Conan(ConanFile):
     zip_name = "%s.tar.gz" % zip_folder_name
 
     def source(self):
+        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake?inline=false", "global_settings.cmake")
         tools.download("https://www.libsdl.org/release/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         tools.patch(base_path=self.zip_folder_name, patch_file="CMakeLists.diff")
+        tools.replace_in_file("%s/CMakeLists.txt" % self.zip_folder_name, "conan_basic_setup()",
+                              '''conan_basic_setup()
+include(${CMAKE_BINARY_DIR}/global_settings.cmake)''')
 
     def configure_cmake(self):
         cmake = CMake(self)
@@ -44,3 +48,7 @@ class SDL2Conan(ConanFile):
         self.cpp_info.libs = ["SDL2", "SDL2main"]
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["imm32", "version", "winmm"])
+        elif self.settings.os == "Macos":
+            frameworks = ['Cocoa', 'Carbon', 'IOKit', 'CoreVideo', 'CoreAudio', 'AudioToolbox', 'ForceFeedback']
+            for framework in frameworks:
+                self.cpp_info.exelinkflags.append("-framework %s" % framework)
