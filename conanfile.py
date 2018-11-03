@@ -51,6 +51,8 @@ conan_basic_setup()''')
         self.cpp_info.libs = ["SDL2", "SDL2main"]
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["imm32", "version", "winmm"])
+        if self.settings.os == "Linux":
+            self.cpp_info.libs.extend(['dl', 'm', 'pthread'])
         elif self.settings.os == "Macos":
             self.cpp_info.libs.append('iconv')
             frameworks = ['Cocoa', 'Carbon', 'IOKit', 'CoreVideo', 'CoreAudio', 'AudioToolbox', 'ForceFeedback']
