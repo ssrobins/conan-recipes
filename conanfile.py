@@ -31,10 +31,17 @@ conan_basic_setup()''')
 
     def configure_cmake(self):
         generator = None
-        if self.settings.os == "Macos":
+        if self.settings.os == "Macos" and self.settings.arch == "x86_64":
             generator = "Xcode"
         cmake = CMake(self, generator=generator)
         cmake.definitions["SDL_SHARED"] = "OFF"
+        if self.settings.arch == "armv7":
+            cmake.definitions["CMAKE_SYSTEM_NAME"] = "Android"
+            cmake.definitions["CMAKE_SYSTEM_VERSION"] = "28"
+            cmake.definitions["CMAKE_ANDROID_ARCH_ABI"] = "armeabi-v7a"
+            cmake.definitions["CMAKE_ANDROID_NDK"] = "/Users/steve/Documents/android-ndk-r18b"
+            cmake.definitions["CMAKE_ANDROID_NDK_TOOLCHAIN_VERSION"] = "clang"
+            cmake.definitions["CMAKE_ANDROID_STL_TYPE"] = "c++_static"
         cmake.configure(source_folder=self.zip_folder_name)
         return cmake
 
