@@ -39,7 +39,7 @@ conan_basic_setup()''')
             cmake.definitions["CMAKE_SYSTEM_NAME"] = "Android"
             cmake.definitions["CMAKE_SYSTEM_VERSION"] = "28"
             cmake.definitions["CMAKE_ANDROID_ARCH_ABI"] = "armeabi-v7a"
-            cmake.definitions["CMAKE_ANDROID_NDK"] = "/Users/steve/Documents/android-ndk-r18b"
+            cmake.definitions["CMAKE_ANDROID_NDK"] = os.environ['ANDROID_HOME'] + "/android-ndk-r18b"
             cmake.definitions["CMAKE_ANDROID_NDK_TOOLCHAIN_VERSION"] = "clang"
             cmake.definitions["CMAKE_ANDROID_STL_TYPE"] = "c++_static"
         cmake.configure(source_folder=self.zip_folder_name)
