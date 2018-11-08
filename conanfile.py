@@ -52,15 +52,17 @@ conan_basic_setup()''')
     def package(self):
         cmake = self.configure_cmake()
         cmake.install()
+        if self.settings.arch == "armv7":
+            self.copy("*.java", dst="android", src=os.path.join(self.zip_folder_name, 'android-project', 'app', 'src', 'main', 'java', 'org', 'libsdl', 'app'))
 
     def package_info(self):
         self.cpp_info.includedirs = [os.path.join('include', 'SDL2')]
         self.cpp_info.libs = ["SDL2", "SDL2main"]
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["imm32", "version", "winmm"])
-        if self.settings.os == "Linux":
+        if self.settings.os == "Linux" and self.settings.arch == "x86_64":
             self.cpp_info.libs.extend(['dl', 'm', 'pthread'])
-        elif self.settings.os == "Macos":
+        elif self.settings.os == "Macos" and self.settings.arch == "x86_64":
             self.cpp_info.libs.append('iconv')
             frameworks = ['Cocoa', 'Carbon', 'IOKit', 'CoreVideo', 'CoreAudio', 'AudioToolbox', 'ForceFeedback']
             for framework in frameworks:
