@@ -67,3 +67,5 @@ conan_basic_setup()''')
             frameworks = ['Cocoa', 'Carbon', 'IOKit', 'CoreVideo', 'CoreAudio', 'AudioToolbox', 'ForceFeedback']
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append("-framework %s" % framework)
+        elif self.settings.arch == "armv7":
+            self.cpp_info.libs.extend(['android'])
