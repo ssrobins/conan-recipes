@@ -35,7 +35,7 @@ conan_basic_setup()''')
             generator = "Xcode"
         cmake = CMake(self, generator=generator)
         cmake.definitions["SDL_SHARED"] = "OFF"
-        if self.settings.arch == "armv7":
+        if self.settings.os == "Android":
             cmake.definitions["CMAKE_SYSTEM_NAME"] = "Android"
             cmake.definitions["CMAKE_SYSTEM_VERSION"] = "28"
             cmake.definitions["CMAKE_ANDROID_ARCH_ABI"] = "armeabi-v7a"
@@ -52,7 +52,7 @@ conan_basic_setup()''')
     def package(self):
         cmake = self.configure_cmake()
         cmake.install()
-        if self.settings.arch == "armv7":
+        if self.settings.os == "Android":
             self.copy("*.java", dst="android", src=os.path.join(self.zip_folder_name, 'android-project', 'app', 'src', 'main', 'java', 'org', 'libsdl', 'app'))
 
     def package_info(self):
@@ -60,12 +60,12 @@ conan_basic_setup()''')
         self.cpp_info.libs = ["SDL2", "SDL2main"]
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["imm32", "version", "winmm"])
-        if self.settings.os == "Linux" and self.settings.arch == "x86_64":
+        if self.settings.os == "Linux":
             self.cpp_info.libs.extend(['dl', 'm', 'pthread'])
-        elif self.settings.os == "Macos" and self.settings.arch == "x86_64":
+        elif self.settings.os == "Macos":
             self.cpp_info.libs.append('iconv')
             frameworks = ['Cocoa', 'Carbon', 'IOKit', 'CoreVideo', 'CoreAudio', 'AudioToolbox', 'ForceFeedback']
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append("-framework %s" % framework)
-        elif self.settings.arch == "armv7":
+        elif self.settings.os == "Android":
             self.cpp_info.libs.extend(['android'])

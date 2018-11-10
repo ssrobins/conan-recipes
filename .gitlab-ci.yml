@@ -17,7 +17,7 @@ android:
     - cat /proc/meminfo | grep MemTotal
     # Build
     - export ANDROID_HOME=/root
-    - conan create . ${package_user}/${package_channel} -s arch=armv7 -s compiler=clang -s compiler.version=7.0 -s compiler.libcxx=libstdc++11
+    - conan create . ${package_user}/${package_channel} -s os=Android -s os.api_level=${android_sdk_version} -s arch=armv7 -s compiler=clang -s compiler.version=7.0 -s compiler.libcxx=libstdc++11
     - conan remote add ${package_repo} https://api.bintray.com/conan/${package_user}/${package_repo}
     - conan user -p ${CONAN_API_KEY} -r ${package_repo} ${package_user}
     - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r ${package_repo} --all
