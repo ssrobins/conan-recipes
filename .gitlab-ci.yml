@@ -22,6 +22,22 @@ android:
     - conan user -p ${CONAN_API_KEY} -r ${package_repo} ${package_user}
     - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r ${package_repo} --all
 
+ios:
+  stage: build
+  script:
+    - conan create . ${package_user}/${package_channel} -s os=iOS -s arch=armv7 -s os.version=8.0
+    - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r ${package_repo} --all
+  tags:
+    - mac
+
+ios-sim:
+  stage: build
+  script:
+    - conan create . ${package_user}/${package_channel} -s os=iOS -s os.version=8.0
+    - conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r ${package_repo} --all
+  tags:
+    - mac
+
 linux:
   image: registry.gitlab.com/ssrobins/docker-linux-build
   stage: build

@@ -20,7 +20,9 @@ class SDL2Conan(ConanFile):
     zip_name = "%s.tar.gz" % zip_folder_name
 
     def source(self):
-        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake?inline=false", "global_settings.cmake")
+        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
+        if self.settings.os == "iOS":
+            tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
         tools.download("https://www.libsdl.org/release/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
@@ -31,7 +33,7 @@ conan_basic_setup()''')
 
     def configure_cmake(self):
         generator = None
-        if self.settings.os == "Macos" and self.settings.arch == "x86_64":
+        if self.settings.os == "Macos" or self.settings.os == "iOS":
             generator = "Xcode"
         cmake = CMake(self, generator=generator)
         cmake.definitions["SDL_SHARED"] = "OFF"
@@ -42,6 +44,11 @@ conan_basic_setup()''')
             cmake.definitions["CMAKE_ANDROID_NDK"] = os.environ['ANDROID_HOME'] + "/android-ndk-r18b"
             cmake.definitions["CMAKE_ANDROID_NDK_TOOLCHAIN_VERSION"] = "clang"
             cmake.definitions["CMAKE_ANDROID_STL_TYPE"] = "c++_static"
+        if self.settings.os == "iOS":
+            cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.path.join(self.build_folder, "ios.toolchain.cmake")
+            cmake.definitions["ENABLE_BITCODE"] = "FALSE"
+            if self.settings.arch == "x86_64":
+                cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
         cmake.configure(source_folder=self.zip_folder_name)
         return cmake
 
