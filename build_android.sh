@@ -2,7 +2,7 @@ set -e
 
 cd $(dirname "$0")
 
-source config.txt
+. config.txt
 export $(cut -d= -f1 config.txt)
 
 conan create . ${package_user}/${package_channel} -s os=Android -s os.api_level=${android_sdk_version} -s arch=armv7 -s compiler=clang -s compiler.version=7.0 -s compiler.libcxx=libstdc++11
