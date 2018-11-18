@@ -1,19 +1,16 @@
 from conans import ConanFile, CMake, tools
-from conans.util import files
 import os
 
 
 class SDL2Conan(ConanFile):
-    name = "sdl2"
+    name = os.getenv("package_name")
     version = os.getenv("package_version")
     license = "Zlib"
-    url = "https://gitlab.com/ssrobins/conan-sdl2"
+    url = "https://gitlab.com/ssrobins/conan-" + name
     description = "A cross-platform development library designed to provide low level " \
                   "access to audio, keyboard, mouse, joystick, and graphics hardware " \
                   "via OpenGL and Direct3D."
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
     generators = "cmake"
     exports_sources = "CMakeLists.diff"
     zip_folder_name = "SDL2-%s" % version
