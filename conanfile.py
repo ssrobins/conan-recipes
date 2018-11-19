@@ -36,9 +36,9 @@ conan_basic_setup()''')
         cmake.definitions["SDL_SHARED"] = "OFF"
         if self.settings.os == "Android":
             cmake.definitions["CMAKE_SYSTEM_NAME"] = "Android"
-            cmake.definitions["CMAKE_SYSTEM_VERSION"] = "28"
-            cmake.definitions["CMAKE_ANDROID_ARCH_ABI"] = "armeabi-v7a"
-            cmake.definitions["CMAKE_ANDROID_NDK"] = os.environ['ANDROID_HOME'] + "/android-ndk-r18b"
+            cmake.definitions["CMAKE_SYSTEM_VERSION"] = os.getenv("android_sdk_version")
+            cmake.definitions["CMAKE_ANDROID_ARCH_ABI"] = os.getenv("android_arch_abi")
+            cmake.definitions["CMAKE_ANDROID_NDK"] = os.environ['ANDROID_HOME'] + "/android-ndk-" + os.getenv("android_ndk_version")
             cmake.definitions["CMAKE_ANDROID_NDK_TOOLCHAIN_VERSION"] = "clang"
             cmake.definitions["CMAKE_ANDROID_STL_TYPE"] = "c++_static"
         if self.settings.os == "iOS":
