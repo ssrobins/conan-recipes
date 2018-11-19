@@ -3,7 +3,7 @@ import os
 
 
 class SDL2Conan(ConanFile):
-    name = os.getenv("package_name")
+    name = "sdl2"
     version = os.getenv("package_version")
     license = "Zlib"
     url = "https://gitlab.com/ssrobins/conan-" + name
