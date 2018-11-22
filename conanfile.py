@@ -5,7 +5,6 @@ import os, shutil
 class SDL2Conan(ConanFile):
     name = "bzip2"
     version = os.getenv("package_version")
-    license = "Zlib"
     url = "https://gitlab.com/ssrobins/conan-" + name
     description = "A cross-platform development library designed to provide low level " \
                   "access to audio, keyboard, mouse, joystick, and graphics hardware " \
@@ -52,25 +51,3 @@ conan_basic_setup()''')
     def build(self):
         cmake = self.configure_cmake()
         cmake.build()
-
-    def package(self):
-        self.copy("bzlib.h", dst="include", src=self.zip_folder_name)
-
-    def package_info(self):
-        self.cpp_info.includedirs = [os.path.join('include', 'SDL2')]
-        self.cpp_info.libs = ["SDL2", "SDL2main"]
-        if self.settings.os == "Windows":
-            self.cpp_info.libs.extend(["imm32", "version", "winmm"])
-        if self.settings.os == "Linux":
-            self.cpp_info.libs.extend(['dl', 'm', 'pthread'])
-        elif self.settings.os == "Macos":
-            self.cpp_info.libs.append('iconv')
-            frameworks = ['Cocoa', 'Carbon', 'IOKit', 'CoreVideo', 'CoreAudio', 'AudioToolbox', 'ForceFeedback']
-            for framework in frameworks:
-                self.cpp_info.exelinkflags.append("-framework %s" % framework)
-        elif self.settings.os == "iOS":
-            frameworks = ['AVFoundation', 'CoreGraphics', 'CoreMotion', 'Foundation', 'GameController', 'Metal', 'OpenGLES', 'QuartzCore', 'UIKit', 'CoreVideo', 'IOKit', 'CoreAudio', 'AudioToolbox']
-            for framework in frameworks:
-                self.cpp_info.exelinkflags.append("-framework %s" % framework)
-        elif self.settings.os == "Android":
-            self.cpp_info.libs.extend(['android'])
