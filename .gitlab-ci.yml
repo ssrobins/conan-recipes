@@ -1,7 +1,3 @@
-variables:
-  package_user: "stever"
-  package_repo: "conan"
-
 stages:
   - build
 
@@ -16,7 +12,6 @@ android:
     - lscpu
     - cat /proc/meminfo | grep MemTotal
     - java -version
-    - conan user -p ${CONAN_API_KEY} -r ${package_repo} ${package_user}
     - sh ./build_android.sh
 
 ios:
@@ -40,7 +35,6 @@ linux:
     - lscpu
     - cat /proc/meminfo | grep MemTotal
     - gcc --version
-    - conan user -p ${CONAN_API_KEY} -r ${package_repo} ${package_user}
     - sh ./build_linux.sh
 
 mac:
