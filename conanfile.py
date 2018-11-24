@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 import os, shutil
 
 
-class Bzip2Conan(ConanFile):
+class Conan(ConanFile):
     name = "bzip2"
     version = os.getenv("package_version")
     url = "https://gitlab.com/ssrobins/conan-" + name
