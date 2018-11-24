@@ -14,8 +14,10 @@ class Conan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
+    exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = "zlib-%s" % version
     zip_name = "%s.tar.gz" % zip_folder_name
+    source_subfolder = "source_subfolder"
 
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
@@ -23,13 +25,18 @@ class Conan(ConanFile):
             tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
         tools.download("https://zlib.net/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
-        os.unlink(self.zip_name)
         files.rmdir("%s/contrib" % self.zip_folder_name)
-        tools.replace_in_file("%s/CMakeLists.txt" % self.zip_folder_name, "project(zlib C)",
-                              '''project(zlib C)
-include(${CMAKE_BINARY_DIR}/global_settings.cmake)
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-conan_basic_setup()''')
+        os.unlink(self.zip_name)
+        os.rename(self.zip_folder_name, self.source_subfolder)
+        
+        # Patch the CMakeLists.txt file with:
+        #   -New options BUILD_ZLIB_EXAMPLE and BUILD_ZLIB_MINIGZIP that allow shutting off
+        #    those example executable builds so I don't have to set MACOSX_BUNDLE,
+        #    XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY, and XCODE_ATTRIBUTE_DEVELOPMENT_TEAM to get
+        #    iOS builds to work
+        #   -MACOSX_RPATH set to ON to avoid CMake configure warning
+        # Submitted these changes to zlib@gzip.org
+        tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def configure_cmake(self):
         generator = None
@@ -48,7 +55,7 @@ conan_basic_setup()''')
             cmake.definitions["ENABLE_BITCODE"] = "FALSE"
             if self.settings.arch == "x86_64":
                 cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
-        cmake.configure(source_folder=self.zip_folder_name)
+        cmake.configure()
         return cmake
 
     def build(self):
@@ -56,7 +63,7 @@ conan_basic_setup()''')
         cmake.build()
 
     def package(self):
-        self.copy("*.h", dst="include", src=self.zip_folder_name)
+        self.copy("*.h", dst="include", src=self.source_subfolder)
         self.copy("*.h", dst="include", src=self.build_folder, keep_path=False)
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
