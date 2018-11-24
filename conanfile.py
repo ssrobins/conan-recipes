@@ -3,7 +3,7 @@ from conans.util import files
 import os
 
 
-class ZlibConan(ConanFile):
+class Conan(ConanFile):
     name = "zlib"
     version = os.getenv("package_version")
     license = "Zlib"
@@ -15,17 +15,36 @@ class ZlibConan(ConanFile):
     default_options = "shared=False"
     generators = "cmake"
     zip_folder_name = "zlib-%s" % version
+    zip_name = "%s.tar.gz" % zip_folder_name
 
     def source(self):
-        z_name = "zlib-%s.tar.gz" % self.version
-        tools.download("https://zlib.net/zlib-%s.tar.gz" % self.version, z_name)
-        tools.unzip(z_name)
-        os.unlink(z_name)
+        tools.download("https://zlib.net/%s" % self.zip_name, self.zip_name)
+        tools.unzip(self.zip_name)
+        os.unlink(self.zip_name)
         files.rmdir("%s/contrib" % self.zip_folder_name)
 
-    def build(self):
-        cmake = CMake(self)
+    def configure_cmake(self):
+        generator = None
+        if self.settings.os == "Macos" or self.settings.os == "iOS":
+            generator = "Xcode"
+        cmake = CMake(self, generator=generator)
+        if self.settings.os == "Android":
+            cmake.definitions["CMAKE_SYSTEM_NAME"] = "Android"
+            cmake.definitions["CMAKE_SYSTEM_VERSION"] = os.getenv("android_sdk_version")
+            cmake.definitions["CMAKE_ANDROID_ARCH_ABI"] = os.getenv("android_arch_abi")
+            cmake.definitions["CMAKE_ANDROID_NDK"] = os.environ['ANDROID_HOME'] + "/android-ndk-" + os.getenv("android_ndk_version")
+            cmake.definitions["CMAKE_ANDROID_NDK_TOOLCHAIN_VERSION"] = "clang"
+            cmake.definitions["CMAKE_ANDROID_STL_TYPE"] = "c++_static"
+        if self.settings.os == "iOS":
+            cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.path.join(self.build_folder, "ios.toolchain.cmake")
+            cmake.definitions["ENABLE_BITCODE"] = "FALSE"
+            if self.settings.arch == "x86_64":
+                cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
         cmake.configure(source_folder=self.zip_folder_name)
+        return cmake
+
+    def build(self):
+        cmake = self.configure_cmake()
         cmake.build()
 
     def package(self):

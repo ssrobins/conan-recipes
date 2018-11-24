@@ -1,0 +1,5 @@
+package_name=zlib
+package_version=1.2.11
+package_user=stever
+package_channel=testing
+package_repo=conan
