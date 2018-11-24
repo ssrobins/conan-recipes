@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 import os
 
 
-class SDL2Conan(ConanFile):
+class Conan(ConanFile):
     name = "sdl2"
     version = os.getenv("package_version")
     license = "Zlib"
