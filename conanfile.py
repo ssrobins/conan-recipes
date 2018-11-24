@@ -18,10 +18,18 @@ class Conan(ConanFile):
     zip_name = "%s.tar.gz" % zip_folder_name
 
     def source(self):
+        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
+        if self.settings.os == "iOS":
+            tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
         tools.download("https://zlib.net/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         files.rmdir("%s/contrib" % self.zip_folder_name)
+        tools.replace_in_file("%s/CMakeLists.txt" % self.zip_folder_name, "project(zlib C)",
+                              '''project(zlib C)
+include(${CMAKE_BINARY_DIR}/global_settings.cmake)
+include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+conan_basic_setup()''')
 
     def configure_cmake(self):
         generator = None
