@@ -1,0 +1,52 @@
+stages:
+  - build
+
+before_script:
+  - cmake --version
+  - conan --version
+
+android:
+  image: registry.gitlab.com/ssrobins/docker-android-build
+  stage: build
+  script:
+    - lscpu
+    - cat /proc/meminfo | grep MemTotal
+    - java -version
+    - sh ./build_android.sh
+
+ios:
+  stage: build
+  script:
+    - sh ./build_ios.sh
+  tags:
+    - mac
+
+ios-sim:
+  stage: build
+  script:
+    - sh ./build_ios_sim.sh
+  tags:
+    - mac
+
+linux:
+  image: registry.gitlab.com/ssrobins/docker-linux-build
+  stage: build
+  script:
+    - lscpu
+    - cat /proc/meminfo | grep MemTotal
+    - gcc --version
+    - sh ./build_linux.sh
+
+mac:
+  stage: build
+  script:
+    - sh ./build_mac.sh
+  tags:
+    - mac
+
+windows:
+  stage: build
+  script:
+    - build_windows.bat
+  tags:
+    - windows
