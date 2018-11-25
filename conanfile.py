@@ -17,7 +17,8 @@ class Conan(ConanFile):
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = "zlib-%s" % version
     zip_name = "%s.tar.gz" % zip_folder_name
-    source_subfolder = "source_subfolder"
+    build_subfolder = "build"
+    source_subfolder = "source"
 
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
@@ -55,7 +56,7 @@ class Conan(ConanFile):
             cmake.definitions["ENABLE_BITCODE"] = "FALSE"
             if self.settings.arch == "x86_64":
                 cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
-        cmake.configure()
+        cmake.configure(build_dir=self.build_subfolder)
         return cmake
 
     def build(self):
