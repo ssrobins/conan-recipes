@@ -1,0 +1,103 @@
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -35,6 +35,10 @@
+ #
+ #   cmake -E chdir build cmake -G Xcode -D IOS_PLATFORM=SIMULATOR ..
+ #
++# or
++#
++#   cmake -E chdir build cmake -G Xcode -D IOS_PLATFORM=SIMULATOR64 ..
++#
+ # Finally, build the project with:
+ #
+ #   cmake --build build
+@@ -96,9 +100,10 @@
+ if (APPLE)
+   if (DEFINED IOS_PLATFORM)
+     if (NOT "${IOS_PLATFORM}" STREQUAL "OS"
+-        AND NOT "${IOS_PLATFORM}" STREQUAL "SIMULATOR")
++        AND NOT "${IOS_PLATFORM}" STREQUAL "SIMULATOR"
++        AND NOT "${IOS_PLATFORM}" STREQUAL "SIMULATOR64")
+       message(FATAL_ERROR
+-        "IOS_PLATFORM must be set to either OS or SIMULATOR")
++        "IOS_PLATFORM must be set to either OS, SIMULATOR, or SIMULATOR64")
+     endif ()
+     if (NOT "${CMAKE_GENERATOR}" STREQUAL "Xcode")
+       message(AUTHOR_WARNING
+@@ -153,7 +158,7 @@
+ 
+ 
+ # Disallow in-source builds
+-if ("${PROJECT_BINARY_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}")
++if ("${CMAKE_BINARY_DIR}" STREQUAL "${CMAKE_SOURCE_DIR}")
+   message(FATAL_ERROR
+     "In-source builds are not permitted!  Make a separate folder for"
+     " building, e.g.,\n"
+@@ -229,9 +234,12 @@
+   endif ()
+   string(REPLACE "/undef " "#undef "
+     FTCONFIG_H "${FTCONFIG_H}")
+-  file(WRITE "${PROJECT_BINARY_DIR}/include/freetype/config/ftconfig.h"
+-    "${FTCONFIG_H}")
++else()
++  file(READ "${PROJECT_SOURCE_DIR}/include/freetype/config/ftconfig.h"
++    FTCONFIG_H)
+ endif ()
++file(WRITE "${PROJECT_BINARY_DIR}/include/freetype/config/ftconfig.h"
++  "${FTCONFIG_H}")
+ 
+ 
+ # Create the options file
+@@ -353,17 +361,17 @@
+     SOVERSION ${LIBRARY_SOVERSION})
+ endif ()
+ 
+-target_include_directories(
+-  freetype BEFORE  # Pick up ftconfig.h and ftoption.h generated above.
+-    PRIVATE "${PROJECT_BINARY_DIR}/include")
+-
++# Pick up ftconfig.h and ftoption.h generated above, first.
+ target_include_directories(
+   freetype
+-    PRIVATE "${PROJECT_SOURCE_DIR}/include")
++    PUBLIC
++      $<INSTALL_INTERFACE:include/freetype2>
++      $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
++      $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
++    PRIVATE 
++      ${CMAKE_CURRENT_BINARY_DIR}/include
++      ${CMAKE_CURRENT_SOURCE_DIR}/include)
+ 
+-target_include_directories(
+-  freetype
+-    PUBLIC $<INSTALL_INTERFACE:include/freetype2>)
+ 
+ if (BUILD_FRAMEWORK)
+   set_property(SOURCE ${PUBLIC_CONFIG_HEADERS}
+@@ -380,17 +388,23 @@
+ 
+ set(PKG_CONFIG_REQUIRED_PRIVATE "")
+ 
+-if (ZLIB_FOUND)
++if (TARGET zlibstatic)
++  target_link_libraries(freetype PRIVATE zlibstatic)
++elseif (ZLIB_FOUND)
+   target_link_libraries(freetype PRIVATE ${ZLIB_LIBRARIES})
+   target_include_directories(freetype PRIVATE ${ZLIB_INCLUDE_DIRS})
+   list(APPEND PKG_CONFIG_REQUIRED_PRIVATE zlib)
+ endif ()
+-if (BZIP2_FOUND)
++if (TARGET bzip2)
++  target_link_libraries(freetype PRIVATE bzip2)
++elseif (BZIP2_FOUND)
+   target_link_libraries(freetype PRIVATE ${BZIP2_LIBRARIES})
+   target_include_directories(freetype PRIVATE ${BZIP2_INCLUDE_DIR}) # not BZIP2_INCLUDE_DIRS
+   list(APPEND PKG_CONFIG_REQUIRED_PRIVATE bzip2)
+ endif ()
+-if (PNG_FOUND)
++if (TARGET png_static)
++  target_link_libraries(freetype PRIVATE png_static)
++elseif (PNG_FOUND)
+   target_link_libraries(freetype PRIVATE ${PNG_LIBRARIES})
+   target_compile_definitions(freetype PRIVATE ${PNG_DEFINITIONS})
+   target_include_directories(freetype PRIVATE ${PNG_INCLUDE_DIRS})
