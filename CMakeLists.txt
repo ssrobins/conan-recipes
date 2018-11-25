@@ -15,7 +15,7 @@ target_include_directories(${target_name}
 target_link_libraries(${target_name}
     Display
     ErrorHandler
-    SDL2-static
+    CONAN_PKG::sdl2
     SDL2_image
     SDL2_ttf
 )
