@@ -23,9 +23,6 @@ class Conan(ConanFile):
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         shutil.move(self.exports_sources, self.zip_folder_name)
-        tools.replace_in_file("%s/CMakeLists.txt" % self.zip_folder_name, "conan_basic_setup()",
-                              '''include(${CMAKE_BINARY_DIR}/global_settings.cmake)
-conan_basic_setup()''')
 
     def configure_cmake(self):
         generator = None
@@ -51,3 +48,7 @@ conan_basic_setup()''')
     def build(self):
         cmake = self.configure_cmake()
         cmake.build()
+
+    def package(self):
+        self.copy("bzlib.h", dst="include", src=self.zip_folder_name)
+        self.copy("*.lib", dst="lib", keep_path=False)

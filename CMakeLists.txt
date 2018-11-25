@@ -1,5 +1,6 @@
 set(target_name bzip2)
 
+include(${CMAKE_BINARY_DIR}/global_settings.cmake)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()
 
