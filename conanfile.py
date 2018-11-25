@@ -68,6 +68,8 @@ class Conan(ConanFile):
         self.copy("*.h", dst="include", src=self.build_folder, keep_path=False)
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
+        if self.settings.compiler == 'Visual Studio':
+            self.copy(pattern="*.pdb", dst="lib", src=".")
 
     def package_info(self):
         if self.settings.os == "Windows" and not tools.os_info.is_linux:
