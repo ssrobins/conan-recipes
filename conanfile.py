@@ -6,9 +6,7 @@ class Conan(ConanFile):
     name = "libpng"
     version = os.getenv("package_version")
     url = "https://gitlab.com/ssrobins/conan-" + name
-    description = "A cross-platform development library designed to provide low level " \
-                  "access to audio, keyboard, mouse, joystick, and graphics hardware " \
-                  "via OpenGL and Direct3D."
+    description = ""
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = ["CMakeLists.txt"]
