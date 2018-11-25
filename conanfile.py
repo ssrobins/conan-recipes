@@ -51,3 +51,11 @@ class Conan(ConanFile):
     def build(self):
         cmake = self.configure_cmake()
         cmake.build()
+
+    def package(self):
+        cmake = self.configure_cmake()
+        cmake.install()
+
+    def package_info(self):
+        if self.settings.os == "Windows":
+            self.cpp_info.libs = ['libpng16_static']
