@@ -12,9 +12,11 @@ class Conan(ConanFile):
                   "via OpenGL and Direct3D."
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
-    exports_sources = "CMakeLists.diff"
+    exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = "SDL2-%s" % version
     zip_name = "%s.tar.gz" % zip_folder_name
+    build_subfolder = "build"
+    source_subfolder = "source"
 
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
@@ -23,17 +25,20 @@ class Conan(ConanFile):
         tools.download("https://www.libsdl.org/release/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
-        tools.patch(base_path=self.zip_folder_name, patch_file="CMakeLists.diff")
-        tools.replace_in_file("%s/CMakeLists.txt" % self.zip_folder_name, "conan_basic_setup()",
-                              '''include(${CMAKE_BINARY_DIR}/global_settings.cmake)
-conan_basic_setup()''')
+        os.rename(self.zip_folder_name, self.source_subfolder)
+        
+        # Copy over an edited version of the SDL2 CMakeLists.txt file with the following changes:
+        # https://bugzilla.libsdl.org/show_bug.cgi?id=4143
+        # https://bugzilla.libsdl.org/show_bug.cgi?id=4178
+        # https://bugzilla.libsdl.org/show_bug.cgi?id=4194
+        # https://bugzilla.libsdl.org/show_bug.cgi?id=4195
+        tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def configure_cmake(self):
         generator = None
         if self.settings.os == "Macos" or self.settings.os == "iOS":
             generator = "Xcode"
         cmake = CMake(self, generator=generator)
-        cmake.definitions["SDL_SHARED"] = "OFF"
         if self.settings.os == "Android":
             cmake.definitions["CMAKE_SYSTEM_NAME"] = "Android"
             cmake.definitions["CMAKE_SYSTEM_VERSION"] = os.getenv("android_sdk_version")
@@ -46,7 +51,7 @@ conan_basic_setup()''')
             cmake.definitions["ENABLE_BITCODE"] = "FALSE"
             if self.settings.arch == "x86_64":
                 cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
-        cmake.configure(source_folder=self.zip_folder_name)
+        cmake.configure(build_dir=self.build_subfolder)
         return cmake
 
     def build(self):
@@ -57,7 +62,7 @@ conan_basic_setup()''')
         cmake = self.configure_cmake()
         cmake.install()
         if self.settings.os == "Android":
-            self.copy("*.java", dst="android", src=os.path.join(self.zip_folder_name, 'android-project', 'app', 'src', 'main', 'java', 'org', 'libsdl', 'app'))
+            self.copy("*.java", dst="android", src=os.path.join(self.source_subfolder, 'android-project', 'app', 'src', 'main', 'java', 'org', 'libsdl', 'app'))
 
     def package_info(self):
         self.cpp_info.includedirs = [os.path.join('include', 'SDL2')]
