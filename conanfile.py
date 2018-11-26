@@ -61,3 +61,5 @@ class Conan(ConanFile):
     def package_info(self):
         if self.settings.os == "Windows":
             self.cpp_info.libs = ['libpng16_static']
+        else:
+            self.cpp_info.libs = ['png']
