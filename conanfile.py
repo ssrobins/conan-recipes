@@ -50,5 +50,11 @@ class Conan(ConanFile):
         cmake.build()
 
     def package(self):
+        self.copy("*.h", dst="include/gtest", src=os.path.join(self.source_subfolder, 'googletest', 'include', 'gtest'))
+        self.copy("*.h", dst="include/gtest/internal", src=os.path.join(self.source_subfolder, 'googletest', 'include', 'gtest', 'internal'))
+        self.copy("*.lib", dst="lib", keep_path=False)
         if self.settings.compiler == 'Visual Studio':
             self.copy(pattern="*.pdb", dst="lib", src=".")
+
+    def package_info(self):
+        self.cpp_info.libs = ['gtest', 'gtest_main']
