@@ -69,3 +69,4 @@ class Conan(ConanFile):
         
     def package_info(self):
         self.cpp_info.includedirs = [os.path.join('include', 'freetype2')]
+        self.cpp_info.libs = ['freetype']
