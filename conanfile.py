@@ -54,5 +54,10 @@ class Conan(ConanFile):
         cmake.build()
 
     def package(self):
+        self.copy("SDL_ttf.h", dst="include", src=self.zip_folder_name)
+        self.copy("lib/SDL2_ttf.lib", dst="lib", keep_path=False)
         if self.settings.compiler == 'Visual Studio':
             self.copy(pattern="*.pdb", dst="lib", src=".")
+
+    def package_info(self):
+        self.cpp_info.libs = ['SDL2_ttf']
