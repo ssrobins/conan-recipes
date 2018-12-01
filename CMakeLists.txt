@@ -16,6 +16,6 @@ target_link_libraries(${target_name}
     Display
     ErrorHandler
     CONAN_PKG::sdl2
-    SDL2_image
-    SDL2_ttf
+    CONAN_PKG::sdl2_image
+    CONAN_PKG::sdl2_ttf
 )
