@@ -56,6 +56,7 @@ class Conan(ConanFile):
     def package(self):
         self.copy("SDL_ttf.h", dst="include", src=self.zip_folder_name)
         self.copy("lib/SDL2_ttf.lib", dst="lib", keep_path=False)
+        self.copy("lib/libSDL2_ttf.a", dst="lib", keep_path=False)
         if self.settings.compiler == 'Visual Studio':
             self.copy(pattern="*.pdb", dst="lib", src=".")
 
