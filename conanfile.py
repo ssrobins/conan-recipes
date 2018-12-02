@@ -28,7 +28,6 @@ class Conan(ConanFile):
         if self.settings.os == "Macos" or self.settings.os == "iOS":
             generator = "Xcode"
         cmake = CMake(self, generator=generator)
-        cmake.definitions["SDL_SHARED"] = "OFF"
         if self.settings.os == "Android":
             cmake.definitions["CMAKE_SYSTEM_NAME"] = "Android"
             cmake.definitions["CMAKE_SYSTEM_VERSION"] = os.getenv("android_sdk_version")
