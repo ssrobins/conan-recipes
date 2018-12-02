@@ -54,7 +54,7 @@ class Conan(ConanFile):
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
         if self.settings.compiler == 'Visual Studio':
-            self.copy(pattern="*.pdb", dst="lib", src=".")
+            self.copy(pattern="*.pdb", dst="lib", src=".", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ['gtest', 'gtest_main']
