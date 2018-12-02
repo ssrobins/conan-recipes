@@ -17,8 +17,7 @@ class Conan(ConanFile):
 
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
-        if self.settings.os == "iOS":
-            tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
+        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
         tools.download("https://github.com/abseil/googletest/archive/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
