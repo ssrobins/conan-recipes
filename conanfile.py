@@ -51,4 +51,4 @@ class Conan(ConanFile):
 
     def package(self):
         if self.settings.compiler == 'Visual Studio':
-            self.copy(pattern="*.pdb", dst="lib", src=".")
+            self.copy(pattern="*.pdb", dst="lib", src=".", keep_path=False)
