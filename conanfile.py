@@ -69,7 +69,7 @@ class Conan(ConanFile):
         # Be sure to do zlibstatic on non-Windows platforms too!
         self.copy("*.a", dst="lib", keep_path=False)
         if self.settings.compiler == 'Visual Studio':
-            self.copy(pattern="*.pdb", dst="lib", src=".")
+            self.copy(pattern="*.pdb", dst="lib", src=".", keep_path=False)
 
     def package_info(self):
         if self.settings.os == "Windows" and not tools.os_info.is_linux:
