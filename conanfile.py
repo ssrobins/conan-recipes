@@ -66,7 +66,6 @@ class Conan(ConanFile):
         self.copy("*.h", dst="include", src=self.source_subfolder)
         self.copy("*.h", dst="include", src=self.build_folder, keep_path=False)
         self.copy("build/lib/zlibstatic.lib", dst="lib", keep_path=False)
-        # Be sure to do zlibstatic on non-Windows platforms too!
         self.copy("*.a", dst="lib", keep_path=False)
         if self.settings.compiler == 'Visual Studio':
             self.copy(pattern="*.pdb", dst="lib", src=".", keep_path=False)
@@ -75,5 +74,4 @@ class Conan(ConanFile):
         if self.settings.os == "Windows" and not tools.os_info.is_linux:
             self.cpp_info.libs = ['zlibstatic']
         else:
-            # Be sure to do zlibstatic on non-Windows platforms too!
             self.cpp_info.libs = ['z']
