@@ -52,6 +52,7 @@ class Conan(ConanFile):
     def package(self):
         self.copy("bzlib.h", dst="include", src=self.zip_folder_name)
         self.copy("*.lib", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
         if self.settings.compiler == 'Visual Studio':
             self.copy(pattern="*.pdb", dst="lib", src=".")
 
