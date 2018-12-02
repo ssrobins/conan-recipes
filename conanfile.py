@@ -55,7 +55,7 @@ class Conan(ConanFile):
         cmake = self.configure_cmake()
         cmake.install()
         if self.settings.compiler == 'Visual Studio':
-            self.copy(pattern="*.pdb", dst="lib", src=".")
+            self.copy(pattern="*.pdb", dst="lib", src=".", keep_path=False)
 
     def package_info(self):
         if self.settings.os == "Windows":
