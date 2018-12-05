@@ -3,7 +3,6 @@ include(conanbuildinfo.cmake)
 conan_basic_setup()
 
 option(PNG_SHARED "Build shared lib" OFF)
-option(PNG_BUILD_ZLIB "Custom zlib Location, else find_package is used" ON)
 
 # Workaround for this issue:
 # https://sourceforge.net/p/libpng/bugs/281/
