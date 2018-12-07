@@ -31,7 +31,6 @@ class Conan(ConanFile):
         if self.settings.os == "Macos" or self.settings.os == "iOS":
             generator = "Xcode"
         cmake = CMake(self, generator=generator)
-        cmake.definitions["SDL_SHARED"] = "OFF"
         if self.settings.os == "Android":
             cmake.definitions["CMAKE_SYSTEM_NAME"] = "Android"
             cmake.definitions["CMAKE_SYSTEM_VERSION"] = os.getenv("android_sdk_version")
@@ -57,7 +56,7 @@ class Conan(ConanFile):
         cmake = self.configure_cmake()
         cmake.install()
         if self.settings.compiler == 'Visual Studio':
-            self.copy(pattern="*.pdb", dst="lib", src=".")
+            self.copy(pattern="*.pdb", dst="lib", src=".", keep_path=False)
 
     def package_info(self):
         if self.settings.os == "Windows":
