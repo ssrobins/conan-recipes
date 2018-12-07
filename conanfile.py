@@ -50,6 +50,8 @@ class Conan(ConanFile):
             cmake.definitions["ENABLE_BITCODE"] = "FALSE"
             if self.settings.arch == "x86_64":
                 cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
+            else:
+                cmake.definitions["IOS_ARCH"] = "armv7"
         cmake.configure(build_dir=self.build_subfolder)
         return cmake
 
