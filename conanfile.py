@@ -37,10 +37,11 @@ class Conan(ConanFile):
             cmake.definitions["CMAKE_ANDROID_STL_TYPE"] = "c++_static"
         if self.settings.os == "iOS":
             cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.path.join(self.build_folder, "ios.toolchain.cmake")
-            cmake.definitions["IOS_ARCH"] = "armv7"
             cmake.definitions["ENABLE_BITCODE"] = "FALSE"
             if self.settings.arch == "x86_64":
                 cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
+            else:
+                cmake.definitions["IOS_ARCH"] = "armv7"
         cmake.configure(source_folder=self.zip_folder_name)
         return cmake
 
