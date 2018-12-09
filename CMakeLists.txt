@@ -29,6 +29,20 @@ target_compile_options(${target_name} PRIVATE
     -DSDL_IMAGE_USE_COMMON_BACKEND
 )
 
+if(IOS)
+    if(${ENABLE_BITCODE})
+        set(xcode_bitcode YES)
+    else()
+        set(xcode_bitcode NO)
+    endif()
+
+    set_target_properties(${target_name}
+        PROPERTIES
+        XCODE_ATTRIBUTE_ENABLE_BITCODE "${xcode_bitcode}"
+    )
+endif()
+
 target_include_directories(${target_name} PUBLIC
     .
 )
+
