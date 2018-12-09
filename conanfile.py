@@ -17,7 +17,7 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires.add("bzip2/1.0.6@stever/testing")
-        self.requires.add("libpng/1.6.35@stever/testing")
+        self.requires.add("libpng/1.6.36@stever/testing")
         self.requires.add("zlib/1.2.11@stever/testing")
 
     def source(self):
