@@ -51,5 +51,11 @@ class Conan(ConanFile):
         cmake.build()
 
     def package(self):
+        self.copy("SDL_mixer.h", dst="include", src=self.zip_folder_name)
+        self.copy("lib/SDL2_mixer.lib", dst="lib", keep_path=False)
+        self.copy("lib/libSDL2_mixer.a", dst="lib", keep_path=False)
         if self.settings.compiler == 'Visual Studio':
             self.copy(pattern="*.pdb", dst="lib", src=".", keep_path=False)
+
+    def package_info(self):
+        self.cpp_info.libs = ['SDL2_mixer']
