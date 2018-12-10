@@ -22,7 +22,19 @@
  # TODO: Can't deactivate on FreeBSD? w/o LIBC, SDL_stdinc.h can't define
  # anything.
  if(LIBC)
-@@ -1482,7 +1490,7 @@
+@@ -757,7 +765,10 @@
+ endif()
+ if(SDL_SENSOR)
+   file(GLOB SENSOR_SOURCES ${SDL2_SOURCE_DIR}/src/sensor/*.c)
+-  set(SOURCE_FILES ${SOURCE_FILES} ${SENSOR_SOURCES})
++  if(IOS)
++    file(GLOB EXTRA_SENSOR_SOURCES ${SDL2_SOURCE_DIR}/src/sensor/coremotion/*.m)
++  endif()
++  set(SOURCE_FILES ${SOURCE_FILES} ${SENSOR_SOURCES} ${EXTRA_SENSOR_SOURCES})
+ endif()
+ if(SDL_POWER)
+   file(GLOB POWER_SOURCES ${SDL2_SOURCE_DIR}/src/power/*.c)
+@@ -1482,7 +1493,7 @@
      find_library(IOKIT IOKit)
      list(APPEND EXTRA_LIBS ${IOKIT})
    endif()
@@ -31,7 +43,7 @@
      find_library(FORCEFEEDBACK ForceFeedback)
      list(APPEND EXTRA_LIBS ${FORCEFEEDBACK})
    endif()
-@@ -1621,8 +1629,18 @@
+@@ -1621,8 +1632,18 @@
  #   endif()
  # endif()
  
@@ -52,7 +64,7 @@
  
  # Prepare the flags and remove duplicates
  if(EXTRA_LDFLAGS)
-@@ -1738,6 +1756,20 @@
+@@ -1738,6 +1759,20 @@
    set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
  endif()
  
@@ -73,7 +85,7 @@
  if(SDL_SHARED)
    add_library(SDL2 SHARED ${SOURCE_FILES} ${VERSION_SOURCES})
    if(APPLE)
-@@ -1767,6 +1799,9 @@
+@@ -1767,6 +1802,9 @@
    if (NOT ANDROID)
      set_target_properties(SDL2 PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
    endif()
@@ -83,7 +95,7 @@
  endif()
  
  if(SDL_STATIC)
-@@ -1792,6 +1827,9 @@
+@@ -1792,6 +1830,9 @@
    target_include_directories(SDL2-static PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include/SDL2>)
    if (NOT ANDROID)
      set_target_properties(SDL2-static PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
