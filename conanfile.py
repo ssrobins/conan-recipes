@@ -3,7 +3,7 @@ import os
 
 
 class Conan(ConanFile):
-    name = "googletest"
+    name = "gtest"
     version = os.getenv("package_version")
     url = "https://gitlab.com/ssrobins/conan-" + name
     description = ""

@@ -1,4 +1,4 @@
-package_name=googletest
+package_name=gtest
 package_version=1.9.0
 package_user=stever
 package_channel=testing
