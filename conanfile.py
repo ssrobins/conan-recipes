@@ -5,10 +5,10 @@ import os, shutil
 class Conan(ConanFile):
     name = "bzip2"
     version = os.getenv("package_version")
+    description = "A compression library based on Burrows–Wheeler algorithm"
+    homepage = "http://www.bzip.org/"
+    license = "BSD-like license"
     url = "https://gitlab.com/ssrobins/conan-" + name
-    description = "A cross-platform development library designed to provide low level " \
-                  "access to audio, keyboard, mouse, joystick, and graphics hardware " \
-                  "via OpenGL and Direct3D."
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = "CMakeLists.txt"
