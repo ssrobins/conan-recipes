@@ -5,8 +5,10 @@ import os, shutil
 class Conan(ConanFile):
     name = "sdl2_mixer"
     version = os.getenv("package_version")
+    description = "A sample multi-channel audio mixer library"
+    homepage = "https://www.libsdl.org/projects/SDL_mixer/"
+    license = "Zlib"
     url = "https://gitlab.com/ssrobins/conan-" + name
-    description = ""
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = "CMakeLists.txt"
