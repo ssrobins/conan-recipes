@@ -5,10 +5,10 @@ import os, shutil
 class Conan(ConanFile):
     name = "sdl2_ttf"
     version = os.getenv("package_version")
-    url = "https://gitlab.com/ssrobins/conan-" + name
-    description = "A cross-platform development library designed to provide low level " \
-                  "access to audio, keyboard, mouse, joystick, and graphics hardware " \
-                  "via OpenGL and Direct3D."
+    description = "A sample library which allows you to use TrueType fonts in your SDL applications"
+    homepage = "https://www.libsdl.org/projects/SDL_ttf/"
+    license = "Zlib"
+    url = "https://gitlab.com/ssrobins/conan-" + name 
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = "CMakeLists.txt"
