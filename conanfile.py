@@ -5,8 +5,10 @@ import os
 class Conan(ConanFile):
     name = "gtest"
     version = os.getenv("package_version")
+    description = "Google's C++ test framework"
+    homepage = "https://github.com/google/googletest"
+    license = "BSD-3-Clause"
     url = "https://gitlab.com/ssrobins/conan-" + name
-    description = ""
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = ["CMakeLists.txt"]
