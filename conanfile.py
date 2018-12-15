@@ -5,11 +5,12 @@ import os
 class Conan(ConanFile):
     name = "sdl2"
     version = os.getenv("package_version")
-    license = "Zlib"
-    url = "https://gitlab.com/ssrobins/conan-" + name
     description = "A cross-platform development library designed to provide low level " \
                   "access to audio, keyboard, mouse, joystick, and graphics hardware " \
                   "via OpenGL and Direct3D."
+    homepage = "https://www.libsdl.org"
+    license = "Zlib https://www.libsdl.org/license.php"
+    url = "https://gitlab.com/ssrobins/conan-" + name
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
