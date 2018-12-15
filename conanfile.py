@@ -5,10 +5,10 @@ import os, shutil
 class Conan(ConanFile):
     name = "sdl2_image"
     version = os.getenv("package_version")
+    description = "A library that loads image files as SDL surfaces and textures"
+    homepage = "https://www.libsdl.org/projects/SDL_image/"
+    license = "Zlib"
     url = "https://gitlab.com/ssrobins/conan-" + name
-    description = "A cross-platform development library designed to provide low level " \
-                  "access to audio, keyboard, mouse, joystick, and graphics hardware " \
-                  "via OpenGL and Direct3D."
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = "CMakeLists.txt"
