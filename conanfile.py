@@ -10,15 +10,15 @@ class Conan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = ["CMakeLists.txt"]
-    zip_folder_name = "googletest-master"
-    zip_name = "master.zip"
+    zip_folder_name = "googletest-release-%s" % version
+    zip_name = "release-%s.tar.gz" % version
     build_subfolder = "build"
     source_subfolder = "source"
 
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
-        tools.download("https://github.com/abseil/googletest/archive/%s" % self.zip_name, self.zip_name)
+        tools.download("https://github.com/google/googletest/archive/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         os.rename(self.zip_folder_name, self.source_subfolder)
