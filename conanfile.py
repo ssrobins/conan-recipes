@@ -5,8 +5,10 @@ import os
 class Conan(ConanFile):
     name = "freetype"
     version = os.getenv("package_version")
+    description = "Freely available software library to render fonts"
+    homepage = "https://www.freetype.org/"
+    license = "FTL https://www.freetype.org/license.html"
     url = "https://gitlab.com/ssrobins/conan-" + name
-    description = ""
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
