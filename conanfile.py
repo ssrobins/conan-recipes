@@ -51,7 +51,7 @@ class Conan(ConanFile):
 
     def package(self):
         self.copy("*.h", dst="include/gtest", src=os.path.join(self.source_subfolder, 'googletest', 'include', 'gtest'))
-        self.copy("*.h", dst="include/gtest/internal", src=os.path.join(self.source_subfolder, 'googletest', 'include', 'gtest', 'internal'))
+        self.copy("*.h", dst="include/gmock", src=os.path.join(self.source_subfolder, 'googlemock', 'include', 'gmock'))
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
         if self.settings.compiler == 'Visual Studio':
