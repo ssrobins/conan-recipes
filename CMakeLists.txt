@@ -6,3 +6,5 @@ option(BUILD_ZLIB_EXAMPLE "Build zlib example" OFF)
 option(BUILD_ZLIB_MINIGZIP "Build zlib gzip example" OFF)
 
 add_subdirectory(source)
+
+message("!!!!!!!!!!!! ${CMAKE_OSX_DEPLOYMENT_TARGET}")

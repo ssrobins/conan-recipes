@@ -6,10 +6,11 @@ import os
 class Conan(ConanFile):
     name = "zlib"
     version = os.getenv("package_version")
-    license = "Zlib"
-    url = "https://gitlab.com/ssrobins/conan-zlib"
     description = "A Massively Spiffy Yet Delicately Unobtrusive Compression Library " \
                   "(Also Free, Not to Mention Unencumbered by Patents)"
+    homepage = "https://zlib.net/"
+    license = "Zlib"
+    url = "https://gitlab.com/ssrobins/conan-" + name
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=False"
