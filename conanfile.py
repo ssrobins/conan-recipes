@@ -5,8 +5,10 @@ import os
 class Conan(ConanFile):
     name = "libpng"
     version = os.getenv("package_version")
+    description = "Official PNG image format reference library"
+    homepage = "http://www.libpng.org"
+    license = "Libpng http://www.libpng.org/pub/png/src/libpng-LICENSE.txt"
     url = "https://gitlab.com/ssrobins/conan-" + name
-    description = ""
     settings = "os", "compiler", "build_type", "arch"
     generators = "cmake"
     exports_sources = ["CMakeLists.txt"]
