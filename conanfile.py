@@ -16,7 +16,7 @@ class Conan(ConanFile):
     zip_name = "%s.tar.gz" % zip_folder_name
     
     def requirements(self):
-        self.requires.add("sdl2/2.0.9@stever/testing")
+        self.requires.add("sdl2/2.0.8@stever/testing")
 
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
