@@ -52,10 +52,14 @@
  
  # Prepare the flags and remove duplicates
  if(EXTRA_LDFLAGS)
-@@ -1701,6 +1719,20 @@
-   set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
- endif()
- 
+@@ -1697,8 +1715,20 @@
+ add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
+ target_include_directories(SDL2main PUBLIC $<INSTALL_INTERFACE:include>)
+ set(_INSTALL_LIBS "SDL2main")
+-if (NOT ANDROID)
+-  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
++set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
++
 +if(IOS)
 +  set(IOS_FRAMEWORKS
 +    "-framework AVFoundation"
@@ -68,39 +72,36 @@
 +    "-framework QuartzCore"
 +    "-framework UIKit"
 +  )
-+endif()
-+
+ endif()
+ 
  if(SDL_SHARED)
-   add_library(SDL2 SHARED ${SOURCE_FILES} ${VERSION_SOURCES})
-   if(APPLE)
-@@ -1724,10 +1756,15 @@
+@@ -1724,9 +1754,12 @@
    endif()
    set(_INSTALL_LIBS "SDL2" ${_INSTALL_LIBS})
    target_link_libraries(SDL2 ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
 -  target_include_directories(SDL2 PUBLIC $<INSTALL_INTERFACE:include>)
+-  if (NOT ANDROID)
+-    set_target_properties(SDL2 PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
 +  target_include_directories(SDL2 PUBLIC
 +    $<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>
 +    $<INSTALL_INTERFACE:include>)
-   if (NOT ANDROID)
-     set_target_properties(SDL2 PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
-   endif()
++  set_target_properties(SDL2 PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
 +  if(IOS)
 +    target_link_libraries(SDL2 ${IOS_FRAMEWORKS})
-+  endif()
+   endif()
  endif()
  
- if(SDL_STATIC)
-@@ -1750,9 +1787,14 @@
+@@ -1750,9 +1783,12 @@
    # libraries - do we need to consider this?
    set(_INSTALL_LIBS "SDL2-static" ${_INSTALL_LIBS})
    target_link_libraries(SDL2-static ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
 -  target_include_directories(SDL2-static PUBLIC $<INSTALL_INTERFACE:include>)
+-  if (NOT ANDROID)
+-    set_target_properties(SDL2-static PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
 +  target_include_directories(SDL2-static PUBLIC
 +    $<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>
 +    $<INSTALL_INTERFACE:include>)
-   if (NOT ANDROID)
-     set_target_properties(SDL2-static PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
-+  endif()
++  set_target_properties(SDL2-static PROPERTIES DEBUG_POSTFIX ${SDL_CMAKE_DEBUG_POSTFIX})
 +  if(IOS)
 +    target_link_libraries(SDL2-static ${IOS_FRAMEWORKS})
    endif()
