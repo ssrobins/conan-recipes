@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake, tools
-import os
+import os, shutil
 
 
 class Conan(ConanFile):
@@ -11,7 +11,7 @@ class Conan(ConanFile):
     homepage = "https://www.libsdl.org"
     license = "Zlib https://www.libsdl.org/license.php"
     url = "https://gitlab.com/ssrobins/conan-" + name
-    settings = "os", "compiler", "build_type", "arch"
+    settings = "os", "compiler", "arch"
     generators = "cmake"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = "SDL2-%s" % version
@@ -35,7 +35,7 @@ class Conan(ConanFile):
         # https://bugzilla.libsdl.org/show_bug.cgi?id=4419
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
-    def configure_cmake(self):
+    def cmake_init(self):
         generator = None
         if self.settings.os == "Macos" or self.settings.os == "iOS":
             generator = "Xcode"
@@ -54,16 +54,40 @@ class Conan(ConanFile):
                 cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
             else:
                 cmake.definitions["IOS_ARCH"] = "armv7"
-        cmake.configure(build_dir=self.build_subfolder)
         return cmake
 
+    def configure_cmake(self, cmake, config=None):
+        if config:
+            cmake.definitions["CMAKE_BUILD_TYPE"] = config
+        cmake.configure(build_dir=self.build_subfolder)
+
     def build(self):
-        cmake = self.configure_cmake()
-        cmake.build()
+        cmake = self.cmake_init()
+        if cmake.is_multi_configuration:
+            self.configure_cmake(cmake)
+            cmake.build(args=['--config', 'Debug'])
+            cmake.build(args=['--config', 'Release'])
+        else:
+            for config in ("Debug", "Release"):
+                self.output.info("Building %s" % config)
+                self.configure_cmake(cmake, config)
+                cmake.build()
+                shutil.rmtree(os.path.join(self.build_subfolder, "CMakeFiles"))
+                os.remove(os.path.join(self.build_subfolder, "CMakeCache.txt"))
 
     def package(self):
-        cmake = self.configure_cmake()
-        cmake.install()
+        cmake = self.cmake_init()
+        if cmake.is_multi_configuration:
+            self.configure_cmake(cmake)
+            cmake.install(args=['--config', 'Debug'])
+            cmake.install(args=['--config', 'Release'])
+        else:
+            for config in ("Debug", "Release"):
+                self.output.info("Building %s" % config)
+                self.configure_cmake(cmake, config)
+                cmake.install()
+                shutil.rmtree(os.path.join(self.build_subfolder, "CMakeFiles"))
+                os.remove(os.path.join(self.build_subfolder, "CMakeCache.txt"))
         if self.settings.os == "Android":
             self.copy("*.java", dst="android", src=os.path.join(self.source_subfolder, 'android-project', 'app', 'src', 'main', 'java', 'org', 'libsdl', 'app'))
         elif self.settings.compiler == 'Visual Studio':
@@ -71,7 +95,8 @@ class Conan(ConanFile):
 
     def package_info(self):
         self.cpp_info.includedirs = [os.path.join('include', 'SDL2')]
-        self.cpp_info.libs = ["SDL2", "SDL2main"]
+        self.cpp_info.debug.libs = ["SDL2d", "SDL2maind"]
+        self.cpp_info.release.libs = ["SDL2", "SDL2main"]
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["imm32", "version", "winmm"])
         if self.settings.os == "Linux":
