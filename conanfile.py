@@ -17,7 +17,7 @@ class Conan(ConanFile):
     
     def requirements(self):
         self.requires.add("freetype/2.9.1@stever/testing")
-        self.requires.add("sdl2/2.0.9@stever/testing")
+        self.requires.add("sdl2/2.0.8@stever/testing")
 
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
