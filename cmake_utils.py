@@ -1,4 +1,4 @@
-import os
+import os, shutil
 
 def cmake_init(settings, cmake, build_folder, build_subfolder):
     if settings.os == "Macos" or settings.os == "iOS":
