@@ -38,11 +38,11 @@ class Conan(ConanFile):
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def build(self):
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder, self.build_subfolder)
+        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
         cmake_build_debug_release(cmake, self.build_subfolder)
 
     def package(self):
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder, self.build_subfolder)
+        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
         cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.os == "Android":
             self.copy("*.java", dst="android", src=os.path.join(self.source_subfolder, 'android-project', 'app', 'src', 'main', 'java', 'org', 'libsdl', 'app'))

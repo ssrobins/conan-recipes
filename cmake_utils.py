@@ -1,6 +1,6 @@
 import os, shutil
 
-def cmake_init(settings, cmake, build_folder, build_subfolder):
+def cmake_init(settings, cmake, build_folder):
     if settings.os == "Macos" or settings.os == "iOS":
         cmake.generator = "Xcode"
     if settings.os == "Android":
