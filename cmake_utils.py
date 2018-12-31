@@ -1,3 +1,5 @@
+import os
+
 def cmake_init(settings, cmake, build_folder, build_subfolder):
     if settings.os == "Macos" or settings.os == "iOS":
         cmake.generator = "Xcode"
@@ -29,7 +31,6 @@ def cmake_build_debug_release(cmake, build_subfolder):
         cmake.build(args=['--config', 'Release'])
     else:
         for config in ("Debug", "Release"):
-            self.output.info("Building %s" % config)
             configure_cmake(cmake, build_subfolder, config)
             cmake.build()
             shutil.rmtree(os.path.join(build_subfolder, "CMakeFiles"))
@@ -42,7 +43,6 @@ def cmake_install_debug_release(cmake, build_subfolder):
         cmake.install(args=['--config', 'Release'])
     else:
         for config in ("Debug", "Release"):
-            self.output.info("Building %s" % config)
             configure_cmake(cmake, build_subfolder, config)
             cmake.install()
             shutil.rmtree(os.path.join(build_subfolder, "CMakeFiles"))
