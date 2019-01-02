@@ -1,0 +1,11 @@
+set(target_name SDL2_ttf)
+
+add_library(${target_name} STATIC
+    SDL_ttf.c
+)
+
+set_target_properties(${target_name} PROPERTIES DEBUG_POSTFIX d)
+
+target_include_directories(${target_name} PUBLIC
+    .
+)
