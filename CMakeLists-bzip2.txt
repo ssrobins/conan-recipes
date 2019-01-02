@@ -1,0 +1,15 @@
+set(target_name bzip2)
+
+add_library(${target_name} STATIC
+    blocksort.c
+    bzlib.c
+    bzlib.h
+    bzlib_private.h
+    compress.c
+    crctable.c
+    decompress.c
+    huffman.c
+    randtable.c
+)
+
+set_target_properties(${target_name} PROPERTIES DEBUG_POSTFIX d)
