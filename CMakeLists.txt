@@ -17,3 +17,5 @@ if(IOS AND IOS_ARCH MATCHES arm)
 endif()
 
 add_subdirectory(source)
+
+set_target_properties(png_static PROPERTIES DEBUG_POSTFIX d)
