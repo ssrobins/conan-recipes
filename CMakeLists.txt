@@ -3,6 +3,7 @@ include(conanbuildinfo.cmake)
 conan_basic_setup()
 
 option(BOX2D_BUILD_EXAMPLES "Build Box2D examples" OFF)
+option(BOX2D_INSTALL "Install Box2D libs, includes, and CMake scripts" ON)
 
 add_subdirectory(source/Box2D)
 
