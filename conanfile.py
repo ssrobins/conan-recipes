@@ -2,7 +2,6 @@ from conans import ConanFile, CMake, tools
 import os
 from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_debug_release
 
-
 class Conan(ConanFile):
     name = "sdl2"
     version = os.getenv("package_version")
@@ -45,26 +44,27 @@ class Conan(ConanFile):
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
         cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.os == "Android":
-            self.copy("*.java", dst="android", src=os.path.join(self.source_subfolder, 'android-project', 'app', 'src', 'main', 'java', 'org', 'libsdl', 'app'))
-        elif self.settings.compiler == 'Visual Studio':
-            self.copy(pattern="*.pdb", dst="lib", src=".", keep_path=False)
+            self.copy("*.java", dst="android", src=os.path.join(self.source_subfolder, "android-project", "app", "src", "main", "java", "org", "libsdl", "app"))
+        elif self.settings.compiler == "Visual Studio":
+            self.copy(pattern="*.pdb", dst="lib", src="build/source/SDL2-static.dir/Release", keep_path=False)
+            self.copy(pattern="*.pdb", dst="lib", src="build/source/SDL2main.dir/Release", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.includedirs = [os.path.join('include', 'SDL2')]
+        self.cpp_info.includedirs = [os.path.join("include", "SDL2")]
         self.cpp_info.debug.libs = ["SDL2d", "SDL2maind"]
         self.cpp_info.release.libs = ["SDL2", "SDL2main"]
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["imm32", "version", "winmm"])
         if self.settings.os == "Linux":
-            self.cpp_info.libs.extend(['dl', 'm', 'pthread'])
+            self.cpp_info.libs.extend(["dl", "m", "pthread"])
         elif self.settings.os == "Macos":
-            self.cpp_info.libs.append('iconv')
-            frameworks = ['Cocoa', 'Carbon', 'IOKit', 'CoreVideo', 'CoreAudio', 'AudioToolbox', 'ForceFeedback']
+            self.cpp_info.libs.append("iconv")
+            frameworks = ["Cocoa", "Carbon", "IOKit", "CoreVideo", "CoreAudio", "AudioToolbox", "ForceFeedback"]
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append("-framework %s" % framework)
         elif self.settings.os == "iOS":
-            frameworks = ['AVFoundation', 'CoreGraphics', 'CoreMotion', 'Foundation', 'GameController', 'Metal', 'OpenGLES', 'QuartzCore', 'UIKit', 'CoreVideo', 'IOKit', 'CoreAudio', 'AudioToolbox']
+            frameworks = ["AVFoundation", "CoreGraphics", "CoreMotion", "Foundation", "GameController", "Metal", "OpenGLES", "QuartzCore", "UIKit", "CoreVideo", "IOKit", "CoreAudio", "AudioToolbox"]
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append("-framework %s" % framework)
         elif self.settings.os == "Android":
-            self.cpp_info.libs.extend(['android'])
+            self.cpp_info.libs.extend(["android"])
