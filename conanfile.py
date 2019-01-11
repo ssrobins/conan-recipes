@@ -12,14 +12,11 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.txt"]
+    exports_sources = ["AudioDevice.diff", "CMakeLists.txt"]
     zip_folder_name = "SFML-%s" % version
     zip_name = "%s-sources.zip" % zip_folder_name
     build_subfolder = "build"
     source_subfolder = "source"
-
-    def requirements(self):
-        self.requires.add("freetype/2.9.1@stever/testing")
     
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
@@ -28,6 +25,7 @@ class Conan(ConanFile):
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         os.rename(self.zip_folder_name, self.source_subfolder)
+        tools.patch(base_path=os.path.join(self.source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
 
     def build(self):
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
