@@ -17,7 +17,7 @@ class Conan(ConanFile):
     zip_name = "%s-sources.zip" % zip_folder_name
     build_subfolder = "build"
     source_subfolder = "source"
-    
+
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
@@ -25,6 +25,8 @@ class Conan(ConanFile):
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         os.rename(self.zip_folder_name, self.source_subfolder)
+
+        # Replace auto_ptr with unique_ptr to fix build errors when using the C++17 standard
         tools.patch(base_path=os.path.join(self.source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
 
     def build(self):
