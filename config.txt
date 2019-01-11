@@ -1,0 +1,5 @@
+package_name=sfml
+package_version=2.5.1
+package_user=stever
+package_channel=testing
+package_repo=conan
