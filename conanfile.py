@@ -37,5 +37,9 @@ class Conan(ConanFile):
             self.copy(pattern="*.pdb", dst="lib", src="build/source/Box2D/Box2D/Box2D.dir/Release", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.debug.libs = ["glew32d"]
-        self.cpp_info.release.libs = ["glew32"]
+        if self.settings.os == "Windows":
+            self.cpp_info.debug.libs = ["glew32d"]
+            self.cpp_info.release.libs = ["glew32"]
+        else:
+            self.cpp_info.debug.libs = ["GLEWd"]
+            self.cpp_info.release.libs = ["GLEW"]
