@@ -1,0 +1,5 @@
+package_name=glew
+package_version=2.1.0
+package_user=stever
+package_channel=testing
+package_repo=conan
