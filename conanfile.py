@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake, tools
-import os, shutil
+import os
 from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_debug_release
 
 class Conan(ConanFile):
