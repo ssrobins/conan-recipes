@@ -38,8 +38,10 @@ class Conan(ConanFile):
 
     def package_info(self):
         if self.settings.os == "Windows":
-            self.cpp_info.debug.libs = ["glew32d"]
-            self.cpp_info.release.libs = ["glew32"]
+            self.cpp_info.debug.libs = ["libglew32d"]
+            self.cpp_info.release.libs = ["libglew32"]
+            self.cpp_info.libs.append("OpenGL32.lib")
+            self.cpp_info.defines.append("GLEW_STATIC")
         else:
             self.cpp_info.debug.libs = ["GLEWd"]
             self.cpp_info.release.libs = ["GLEW"]
