@@ -40,8 +40,14 @@ class Conan(ConanFile):
             self.copy(pattern="*.pdb", dst="lib", src="build/source/lib/Release", keep_path=False)
 
     def package_info(self):
+        self.cpp_info.debug.libs = ["sfml-system-s-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-graphics-s-d", "sfml-audio-s-d"]
+        self.cpp_info.release.libs = ["sfml-system-s", "sfml-window-s", "sfml-network-s", "sfml-graphics-s", "sfml-audio-s"]
         if self.settings.os == "Windows":
+            self.cpp_info.debug.libs.append("sfml-main-d")
+            self.cpp_info.release.libs.append("sfml-main")
             self.cpp_info.libs = ["opengl32", "winmm"]
-        self.cpp_info.debug.libs = ["sfml-system-s-d", "sfml-main-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-graphics-s-d", "sfml-audio-s-d"]
-        self.cpp_info.release.libs = ["sfml-system-s", "sfml-main", "sfml-window-s", "sfml-network-s", "sfml-graphics-s", "sfml-audio-s"]
+        elif self.settings.os == "Macos":
+            frameworks = ["Carbon", "Cocoa", "CoreFoundation", "CoreGraphics", "IOKit", "OpenGL"]
+            for framework in frameworks:
+                self.cpp_info.exelinkflags.append("-framework %s" % framework)
         self.cpp_info.defines = ["SFML_STATIC"]
