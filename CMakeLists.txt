@@ -11,7 +11,3 @@ option(SFML_BUILD_EXAMPLES OFF)
 option(SFML_USE_STATIC_STD_LIBS ON)
 
 add_subdirectory(source)
-
-target_compile_options(sfml-graphics PUBLIC
-    -DSFML_STATIC
-)

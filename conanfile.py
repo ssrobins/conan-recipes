@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake, tools
-import os, shutil
+import os
 from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_debug_release
 
 class Conan(ConanFile):
@@ -32,3 +32,16 @@ class Conan(ConanFile):
     def build(self):
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
         cmake_build_debug_release(cmake, self.build_subfolder)
+
+    def package(self):
+        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
+        cmake_install_debug_release(cmake, self.build_subfolder)
+        if self.settings.compiler == "Visual Studio":
+            self.copy(pattern="*.pdb", dst="lib", src="build/source/lib/Release", keep_path=False)
+
+    def package_info(self):
+        if self.settings.os == "Windows":
+            self.cpp_info.libs = ["opengl32", "winmm"]
+        self.cpp_info.debug.libs = ["sfml-system-s-d", "sfml-main-d", "sfml-window-s-d", "sfml-network-s-d", "sfml-graphics-s-d", "sfml-audio-s-d"]
+        self.cpp_info.release.libs = ["sfml-system-s", "sfml-main", "sfml-window-s", "sfml-network-s", "sfml-graphics-s", "sfml-audio-s"]
+        self.cpp_info.defines = ["SFML_STATIC"]
