@@ -1,1 +1,1 @@
-include: 'https://gitlab.com/ssrobins/ci/raw/master/conan.yml'
+include: 'https://gitlab.com/ssrobins/ci/raw/master/conan_desktop.yml'
