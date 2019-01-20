@@ -56,7 +56,9 @@ class Conan(ConanFile):
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["imm32", "version", "winmm"])
         if self.settings.os == "Linux":
-            self.cpp_info.libs.extend(["dl", "m", "pthread"])
+            system_libs = ["dl", "m", "pthread"]
+            self.cpp_info.debug.libs.extend(system_libs)
+            self.cpp_info.release.libs.extend(system_libs)
         elif self.settings.os == "Macos":
             self.cpp_info.libs.append("iconv")
             frameworks = ["Cocoa", "Carbon", "IOKit", "CoreVideo", "CoreAudio", "AudioToolbox", "ForceFeedback"]
