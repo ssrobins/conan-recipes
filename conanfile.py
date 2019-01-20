@@ -54,4 +54,5 @@ class Conan(ConanFile):
             frameworks = ["Carbon", "Cocoa", "CoreFoundation", "CoreGraphics", "IOKit", "OpenGL"]
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append("-framework %s" % framework)
+            self.cpp_info.exelinkflags.append("-ObjC")
         self.cpp_info.defines = ["SFML_STATIC"]
