@@ -8,6 +8,6 @@ export package_channel=$(git rev-parse --abbrev-ref HEAD)
 
 conan create . ${package_user}/${package_channel}
 
-if [ -n "$conan_upload" ]; then
+if [ "$conan_upload" == "true" ]; then
     conan upload ${package_name}/${package_version}@${package_user}/${package_channel} -r ${package_repo} --all
 fi
