@@ -1,4 +1,4 @@
 variables:
-  desktop_only: true
+  desktop_only: 'true'
 
 include: 'https://gitlab.com/ssrobins/ci/raw/master/conan.yml'
