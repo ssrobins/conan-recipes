@@ -8,7 +8,7 @@ for /f "usebackq tokens=*" %%b in (`git rev-parse --abbrev-ref HEAD`) do (set pa
 
 conan create . %package_user%/%package_channel% -s arch=x86 -s compiler.runtime=MT || goto :error
 
-if "%conan_upload%" == "true" (
+if "%CI%" == "true" (
     conan upload %package_name%/%package_version%@%package_user%/%package_channel% -r %package_repo% --all || goto :error
 )
 
