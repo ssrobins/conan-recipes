@@ -42,6 +42,11 @@ class Conan(ConanFile):
             self.cpp_info.release.libs = ["libglew32"]
             self.cpp_info.libs.append("OpenGL32")
             self.cpp_info.defines.append("GLEW_STATIC")
+        elif self.settings.os == "Macos":
+            self.cpp_info.debug.libs = ["GLEWd"]
+            self.cpp_info.release.libs = ["GLEW"]
+            self.cpp_info.exelinkflags.append("-framework OpenGL")
         else:
             self.cpp_info.debug.libs = ["GLEWd"]
             self.cpp_info.release.libs = ["GLEW"]
+            self.cpp_info.libs.append("GL")
