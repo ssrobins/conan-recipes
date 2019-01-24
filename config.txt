@@ -1,5 +1,4 @@
 package_name=sdl2_image
 package_version=2.0.4
 package_user=stever
-package_channel=testing
 package_repo=conan
