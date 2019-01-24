@@ -1,5 +1,4 @@
 package_name=box2d
 package_version=2.3.1
 package_user=stever
-package_channel=testing
 package_repo=conan
