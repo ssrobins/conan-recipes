@@ -4,7 +4,12 @@ cd $(dirname "$0")
 
 . ./config.txt
 export $(cut -d= -f1 config.txt)
-export package_channel=$(git rev-parse --abbrev-ref HEAD)
+
+if [ -n "$CI_COMMIT_REF_NAME" ]; then
+    package_channel=$CI_COMMIT_REF_NAME
+else
+    package_channel=testing
+fi
 
 conan create . ${package_user}/${package_channel} -s compiler.libcxx=libstdc++11
 
