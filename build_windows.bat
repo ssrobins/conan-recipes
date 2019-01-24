@@ -4,7 +4,12 @@ setlocal
 cd /d %~dp0
 
 for /f "delims=" %%x in (config.txt) do (set "%%x")
-for /f "usebackq tokens=*" %%b in (`git rev-parse --abbrev-ref HEAD`) do (set package_channel=%%b)
+
+if defined CI_COMMIT_REF_NAME (
+    set package_channel=%CI_COMMIT_REF_NAME%
+) else (
+    set package_channel=testing
+)
 
 conan create . %package_user%/%package_channel% -s arch=x86 -s compiler.runtime=MT || goto :error
 
