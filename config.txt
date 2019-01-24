@@ -1,5 +1,4 @@
 package_name=gtest
 package_version=1.8.1
 package_user=stever
-package_channel=testing
 package_repo=conan
