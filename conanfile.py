@@ -19,8 +19,8 @@ class Conan(ConanFile):
     source_subfolder = "source"
     
     def requirements(self):
-        self.requires.add("libpng/1.6.36@stever/testing")
-        self.requires.add("sdl2/2.0.8@stever/testing")
+        self.requires.add("libpng/1.6.36@stever/stable")
+        self.requires.add("sdl2/2.0.8@stever/stable")
 
     def source(self):
         tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
