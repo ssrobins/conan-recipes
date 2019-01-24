@@ -1,5 +1,4 @@
 package_name=bzip2
 package_version=1.0.6
 package_user=stever
-package_channel=testing
 package_repo=conan
