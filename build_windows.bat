@@ -8,7 +8,7 @@ for /f "delims=" %%x in (config.txt) do (set "%%x")
 if defined CI_COMMIT_REF_NAME (
     set package_channel=%CI_COMMIT_REF_NAME%
 ) else (
-    set package_channel=testing
+    for /f "usebackq tokens=*" %%b in (`git rev-parse --abbrev-ref HEAD`) do (set package_channel=%%b)
 )
 
 conan create . %package_user%/%package_channel% -s arch=x86 -s compiler.runtime=MT || goto :error
