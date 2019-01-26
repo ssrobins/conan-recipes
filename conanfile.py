@@ -40,12 +40,14 @@ class Conan(ConanFile):
             self.copy(pattern="*.pdb", dst="lib", src="build/source/lib/Release", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.debug.libs = ["sfml-audio-s-d", "sfml-graphics-s-d", "sfml-network-s-d", "sfml-window-s-d", "sfml-system-s-d"]
-        self.cpp_info.release.libs = ["sfml-audio-s", "sfml-graphics-s", "sfml-network-s", "sfml-window-s", "sfml-system-s"]
+        self.cpp_info.debug.libs = ["sfml-graphics-s-d", "sfml-window-s-d", "sfml-system-s-d"]
+        self.cpp_info.release.libs = ["sfml-graphics-s", "sfml-window-s", "sfml-system-s"]
         if self.settings.os == "Windows":
+            system_libs = ["opengl32", "winmm"]
             self.cpp_info.debug.libs.append("sfml-main-d")
             self.cpp_info.release.libs.append("sfml-main")
-            self.cpp_info.libs = ["opengl32", "winmm"]
+            self.cpp_info.debug.libs.extend(system_libs)
+            self.cpp_info.release.libs.extend(system_libs)
         elif self.settings.os == "Linux":
             system_libs = ["GL", "pthread", "udev", "X11", "Xrandr"]
             self.cpp_info.debug.libs.extend(system_libs)
