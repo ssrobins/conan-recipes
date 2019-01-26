@@ -8,7 +8,7 @@ export $(cut -d= -f1 config.txt)
 if [ -n "$CI_COMMIT_REF_NAME" ]; then
     package_channel=$CI_COMMIT_REF_NAME
 else
-    package_channel=testing
+    package_channel=$(git rev-parse --abbrev-ref HEAD)
 fi
 
 conan create . ${package_user}/${package_channel}
