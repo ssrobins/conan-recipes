@@ -24,7 +24,7 @@ function(install_executable target_name)
 
         add_custom_command(
             TARGET ${target_name}
-            POST_BUILD
+            PRE_BUILD
             COMMAND cmake -E copy_directory
                 ${CMAKE_CURRENT_SOURCE_DIR}/assets
                 $<TARGET_FILE_DIR:${target_name}>/${assets_dest_dir}
