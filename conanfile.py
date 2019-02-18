@@ -48,7 +48,7 @@ class Conan(ConanFile):
         self.copy("*.h", dst="include", src=self.source_subfolder)
         self.copy("*.h", dst="include", src=self.build_folder, keep_path=False)
         self.copy("build/lib/zlibstatic*.lib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        self.copy("build/lib/*.a", dst="lib", keep_path=False)
         if self.settings.compiler == "Visual Studio":
             self.copy(pattern="*.pdb", dst="lib", src="build/source/zlibstatic.dir/Release", keep_path=False)
 
