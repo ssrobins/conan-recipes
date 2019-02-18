@@ -34,7 +34,7 @@ class Conan(ConanFile):
         self.copy("*.h", dst="include/gtest", src=os.path.join(self.source_subfolder, "googletest", "include", "gtest"))
         self.copy("*.h", dst="include/gmock", src=os.path.join(self.source_subfolder, "googlemock", "include", "gmock"))
         self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        self.copy("build/lib/*.a", dst="lib", keep_path=False)
         if self.settings.compiler == "Visual Studio":
             self.copy(pattern="*.pdb", dst="lib", src="build/source/googlemock/gmock.dir/Release", keep_path=False)
             self.copy(pattern="*.pdb", dst="lib", src="build/source/googlemock/gmock_main.dir/Release", keep_path=False)
