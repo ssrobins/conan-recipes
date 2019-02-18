@@ -16,7 +16,7 @@ def cmake_init(settings, cmake, build_folder):
         if settings.arch == "x86_64":
             cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
         else:
-            cmake.definitions["IOS_ARCH"] = "armv7"
+            cmake.definitions["IOS_ARCH"] = "armv7 arm64"
     return cmake
 
 def configure_cmake(cmake, build_subfolder, config=None):
