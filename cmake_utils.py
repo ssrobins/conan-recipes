@@ -4,12 +4,10 @@ def cmake_init(settings, cmake, build_folder):
     if settings.os == "Macos" or settings.os == "iOS":
         cmake.generator = "Xcode"
     if settings.os == "Android":
-        cmake.definitions["CMAKE_SYSTEM_NAME"] = "Android"
-        cmake.definitions["CMAKE_SYSTEM_VERSION"] = os.getenv("android_sdk_version")
-        cmake.definitions["CMAKE_ANDROID_ARCH_ABI"] = os.getenv("android_arch_abi")
-        cmake.definitions["CMAKE_ANDROID_NDK"] = os.environ["ANDROID_HOME"] + "/android-ndk-" + os.getenv("android_ndk_version")
-        cmake.definitions["CMAKE_ANDROID_NDK_TOOLCHAIN_VERSION"] = "clang"
-        cmake.definitions["CMAKE_ANDROID_STL_TYPE"] = "c++_static"
+        cmake.definitions["ANDROID_ABI"] = os.getenv("android_arch_abi")
+        cmake.definitions["ANDROID_TOOLCHAIN"] = "clang"
+        cmake.definitions["ANDROID_STL"] = "c++_static"
+        cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.environ['ANDROID_HOME'] + "/android-ndk-" + os.getenv("android_ndk_version") + "/build/cmake/android.toolchain.cmake"
     if settings.os == "iOS":
         cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.path.join(build_folder, "ios.toolchain.cmake")
         cmake.definitions["ENABLE_BITCODE"] = "FALSE"
