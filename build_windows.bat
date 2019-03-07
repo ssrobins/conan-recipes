@@ -13,3 +13,6 @@ if not defined CI_COMMIT_REF_NAME (
 )
 
 conan create . %CONAN_USERNAME%/%CI_COMMIT_REF_NAME% -s arch=x86 -s compiler.runtime=MT
+
+:error
+exit /b %errorlevel%
