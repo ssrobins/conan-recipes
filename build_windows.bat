@@ -3,19 +3,16 @@ setlocal
 
 cd /d %~dp0
 
-for /f "delims=" %%x in (config.txt) do (set "%%x")
-
-if defined CI_COMMIT_REF_NAME (
-    set package_channel=%CI_COMMIT_REF_NAME%
-) else (
-    for /f "usebackq tokens=*" %%b in (`git rev-parse --abbrev-ref HEAD`) do (set package_channel=%%b)
+if not defined CONAN_USERNAME (
+    echo Set CONAN_USERNAME environment variable and re-run
+    goto :error
 )
 
-conan create . %package_user%/%package_channel% -s arch=x86 -s compiler.runtime=MT || goto :error
-
-if "%CI%" == "true" (
-    conan upload %package_name%/%package_version%@%package_user%/%package_channel% -r %package_repo% --all || goto :error
+if not defined CI_COMMIT_REF_NAME (
+    for /f "usebackq tokens=*" %%b in (`git rev-parse --abbrev-ref HEAD`) do (set CI_COMMIT_REF_NAME=%%b)
 )
+
+conan create . %CONAN_USERNAME%/%CI_COMMIT_REF_NAME% -s arch=x86 -s compiler.runtime=MT || goto :error
 
 :error
 exit /b %errorlevel%
