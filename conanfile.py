@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release
 
 class Conan(ConanFile):
     name = "sdl2_mixer"
-    version = os.getenv("package_version")
+    version = "2.0.4"
     description = "A sample multi-channel audio mixer library"
     homepage = "https://www.libsdl.org/projects/SDL_mixer/"
     license = "Zlib"
