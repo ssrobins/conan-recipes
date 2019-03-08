@@ -5,7 +5,7 @@ def cmake_init(settings, cmake, build_folder):
         cmake.definitions["ANDROID_ABI"] = os.getenv("android_arch_abi")
         cmake.definitions["ANDROID_TOOLCHAIN"] = "clang"
         cmake.definitions["ANDROID_STL"] = "c++_static"
-        cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.environ["ANDROID_HOME"] + "/android-ndk-" + \
+        cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_HOME") + "/android-ndk-" + \
             os.getenv("android_ndk_version") + "/build/cmake/android.toolchain.cmake"
     elif settings.os == "iOS":
         cmake.generator = "Xcode"
