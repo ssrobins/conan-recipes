@@ -1,4 +1,0 @@
-package_name=libpng
-package_version=1.6.36
-package_user=stever
-package_repo=conan
