@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release
 
 class Conan(ConanFile):
     name = "bzip2"
-    version = os.getenv("package_version")
+    version = "1.0.6"
     description = "A compression library based on Burrows–Wheeler algorithm"
     homepage = "http://www.bzip.org/"
     license = "BSD-like license"
