@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_deb
 
 class Conan(ConanFile):
     name = "sdl2"
-    version = os.getenv("package_version")
+    version = "2.0.8"
     description = "A cross-platform development library designed to provide low level " \
                   "access to audio, keyboard, mouse, joystick, and graphics hardware " \
                   "via OpenGL and Direct3D."
