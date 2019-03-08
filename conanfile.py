@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_deb
 
 class Conan(ConanFile):
     name = "glew"
-    version = os.getenv("package_version")
+    version = "2.1.0"
     description = "OpenGL extension wrangler library"
     homepage = "https://github.com/nigels-com/glew"
     license = "https://github.com/nigels-com/glew/blob/master/LICENSE.txt"
