@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_deb
 
 class Conan(ConanFile):
     name = "sfml"
-    version = os.getenv("package_version")
+    version = "2.5.1"
     description = "Simple and fast multimedia library"
     homepage = "https://www.sfml-dev.org/"
     license = "Zlib"
