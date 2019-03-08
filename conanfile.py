@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_deb
 
 class Conan(ConanFile):
     name = "box2d"
-    version = os.getenv("package_version")
+    version = "2.3.1"
     description = "A 2D physics engine for games"
     homepage = "https://box2d.org/"
     license = "Zlib"
