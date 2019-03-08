@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release
 
 class Conan(ConanFile):
     name = "gtest"
-    version = os.getenv("package_version")
+    version = "1.8.1"
     description = "Google's C++ test framework"
     homepage = "https://github.com/google/googletest"
     license = "BSD-3-Clause"
