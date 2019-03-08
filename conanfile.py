@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release
 
 class Conan(ConanFile):
     name = "sdl2_ttf"
-    version = os.getenv("package_version")
+    version = "2.0.15"
     description = "A sample library which allows you to use TrueType fonts in your SDL applications"
     homepage = "https://www.libsdl.org/projects/SDL_ttf/"
     license = "Zlib"
