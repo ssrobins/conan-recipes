@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_deb
 
 class Conan(ConanFile):
     name = "freetype"
-    version = os.getenv("package_version")
+    version = "2.9.1"
     description = "Freely available software library to render fonts"
     homepage = "https://www.freetype.org/"
     license = "FTL https://www.freetype.org/license.html"
