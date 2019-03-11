@@ -2,7 +2,10 @@ import os, shutil
 
 def cmake_init(settings, cmake, build_folder):
     if settings.os == "Android":
-        cmake.definitions["ANDROID_ABI"] = os.getenv("android_arch_abi")
+        if settings.arch == "armv7":
+            cmake.definitions["ANDROID_ABI"] = "armeabi-v7a"
+        elif settings.arch == "armv8":
+            cmake.definitions["ANDROID_ABI"] = "arm64-v8a"
         cmake.definitions["ANDROID_TOOLCHAIN"] = "clang"
         cmake.definitions["ANDROID_STL"] = "c++_static"
         cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_HOME") + "/android-ndk-" + \
