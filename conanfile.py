@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_deb
 
 class Conan(ConanFile):
     name = "freetype"
-    version = "2.9.1"
+    version = "2.10.0"
     description = "Freely available software library to render fonts"
     homepage = "https://www.freetype.org/"
     license = "FTL https://www.freetype.org/license.html"
@@ -30,13 +30,6 @@ class Conan(ConanFile):
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         os.rename(self.zip_folder_name, self.source_subfolder)
-        
-        # Patch the CMakeLists.txt file with the following changes:
-        # https://savannah.nongnu.org/bugs/index.php?54450
-        # https://savannah.nongnu.org/bugs/index.php?54048
-        # https://savannah.nongnu.org/bugs/index.php?53816
-        # https://savannah.nongnu.org/bugs/index.php?53815
-        tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def build(self):
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
