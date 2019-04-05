@@ -6,7 +6,7 @@ if(ANDROID)
 endif()
 
 if(APPLE AND NOT IOS)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version" FORCE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.7" CACHE STRING "Minimum OS X deployment version" FORCE)
 endif()
 
 if(IOS)
