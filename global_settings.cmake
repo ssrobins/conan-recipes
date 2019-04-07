@@ -5,6 +5,8 @@ if(ANDROID)
     set(android_min_sdk_version 15)
 endif()
 
+set(company dnqpy)
+
 if(APPLE AND NOT IOS)
     set(CMAKE_OSX_DEPLOYMENT_TARGET "10.7" CACHE STRING "Minimum OS X deployment version" FORCE)
 endif()
@@ -74,8 +76,6 @@ define_property(
     BRIEF_DOCS "Set the folder name."
     FULL_DOCS  "Use to organize targets in an IDE."
 )
-
-set(company dnqpy)
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(bitness 64)
