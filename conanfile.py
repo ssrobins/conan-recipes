@@ -12,7 +12,7 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.txt", "CMakeLists-%s.txt" % name]
+    exports_sources = ["CMakeLists.txt", "CMakeLists-%s.txt" % name, "global_settings.cmake", "ios.toolchain.cmake"]
     zip_folder_name = "SDL2_image-%s" % version
     zip_name = "%s.tar.gz" % zip_folder_name
     build_subfolder = "build"
@@ -23,8 +23,6 @@ class Conan(ConanFile):
         self.requires.add("sdl2/2.0.8@stever/stable")
 
     def source(self):
-        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
-        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
         tools.download("https://www.libsdl.org/projects/SDL_image/release/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
