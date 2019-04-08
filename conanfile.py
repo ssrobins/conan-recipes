@@ -12,15 +12,13 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     exports = "cmake_utils.py"
-    exports_sources = ["AudioDevice.diff", "CMakeLists.txt"]
+    exports_sources = ["AudioDevice.diff", "CMakeLists.txt", "global_settings.cmake"]
     zip_folder_name = "SFML-%s" % version
     zip_name = "%s-sources.zip" % zip_folder_name
     build_subfolder = "build"
     source_subfolder = "source"
 
     def source(self):
-        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
-        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
         tools.download("https://www.sfml-dev.org/files/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
