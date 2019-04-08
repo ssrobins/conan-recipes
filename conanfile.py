@@ -12,15 +12,13 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.txt"]
+    exports_sources = ["CMakeLists.txt", "global_settings.cmake"]
     zip_folder_name = "%s-%s" % (name, version)
     zip_name = "%s.tgz" % zip_folder_name
     build_subfolder = "build"
     source_subfolder = "source"
 
     def source(self):
-        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/global_settings.cmake", "global_settings.cmake")
-        tools.download("https://gitlab.com/ssrobins/cmake-utils/raw/master/ios.toolchain.cmake", "ios.toolchain.cmake")
         tools.download("https://github.com/nigels-com/glew/releases/download/%s/%s" % (self.zip_folder_name, self.zip_name), self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
