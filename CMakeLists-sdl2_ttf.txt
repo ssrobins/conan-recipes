@@ -6,6 +6,13 @@ add_library(${target_name} STATIC
 
 set_target_properties(${target_name} PROPERTIES DEBUG_POSTFIX d)
 
+if(MSVC)
+    target_compile_options(${target_name}
+      PRIVATE
+        /Fd$<TARGET_FILE_DIR:${target_name}>/${target_name}$<$<CONFIG:Debug>:d>.pdb
+    )
+endif()
+
 target_include_directories(${target_name} PUBLIC
     .
 )
