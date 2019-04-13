@@ -27,6 +27,13 @@ target_compile_options(${target_name} PRIVATE
     -DSDL_IMAGE_USE_COMMON_BACKEND
 )
 
+if(MSVC)
+    target_compile_options(${target_name}
+      PRIVATE
+        /Fd$<TARGET_FILE_DIR:${target_name}>/${target_name}$<$<CONFIG:Debug>:d>.pdb
+    )
+endif()
+
 if(IOS)
     if(${ENABLE_BITCODE})
         set(xcode_bitcode YES)
