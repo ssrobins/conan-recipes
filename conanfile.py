@@ -56,3 +56,4 @@ class Conan(ConanFile):
                 self.cpp_info.exelinkflags.append("-framework %s" % framework)
             self.cpp_info.exelinkflags.append("-ObjC")
         self.cpp_info.defines = ["SFML_STATIC"]
+        self.cpp_info.libs = self.cpp_info.release.libs
