@@ -41,4 +41,6 @@ class Conan(ConanFile):
         self.cpp_info.release.libs = ["gmock", "gmock_main", "gtest", "gtest_main"]
         self.cpp_info.libs = self.cpp_info.release.libs
         if self.settings.os == "Linux":
-            self.cpp_info.libs.append("pthread")
+            system_libs = ["pthread"]
+            self.cpp_info.debug.libs.extend(system_libs)
+            self.cpp_info.release.libs.extend(system_libs)
