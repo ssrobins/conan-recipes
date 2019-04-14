@@ -10,3 +10,10 @@ option(BOX2D_INSTALL "Install Box2D libs, includes, and CMake scripts" ON)
 add_subdirectory(source/Box2D)
 
 set_target_properties(Box2D PROPERTIES DEBUG_POSTFIX d)
+
+if(MSVC)
+    target_compile_options(Box2D
+      PRIVATE
+        /Fd$<TARGET_FILE_DIR:Box2D>/Box2D$<$<CONFIG:Debug>:d>.pdb
+    )
+endif()
