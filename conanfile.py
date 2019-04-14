@@ -37,7 +37,7 @@ class Conan(ConanFile):
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
         cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.compiler == "Visual Studio":
-            self.copy(pattern="*.pdb", dst="lib", src="build/source/freetype.dir/Release", keep_path=False)
+            self.copy("*.pdb", dst="lib", keep_path=False)
         
     def package_info(self):
         self.cpp_info.includedirs = [os.path.join("include", "freetype2")]

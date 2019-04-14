@@ -13,3 +13,10 @@ set(ZLIB_LIBRARY ${CONAN_LIB_DIRS_ZLIB}/${CONAN_LIBS_ZLIB})
 set(ZLIB_ROOT ${CONAN_ZLIB_ROOT})
 
 add_subdirectory(source)
+
+if(MSVC)
+    target_compile_options(freetype
+      PRIVATE
+        /Fd$<TARGET_FILE_DIR:freetype>/freetype$<$<CONFIG:Debug>:d>.pdb
+    )
+endif()
