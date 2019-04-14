@@ -26,4 +26,9 @@ if(MSVC)
       PRIVATE
         /Fd$<TARGET_FILE_DIR:gtest_main>/gtest_main$<$<CONFIG:Debug>:d>.pdb
     )
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    target_compile_options(gtest
+      PRIVATE
+        -fPIC
+    )
 endif()
