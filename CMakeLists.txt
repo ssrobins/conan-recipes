@@ -11,3 +11,14 @@ if(ANDROID)
 endif()
 
 add_subdirectory(source)
+
+if(MSVC)
+    target_compile_options(SDL2-static
+      PRIVATE
+        /Fd$<TARGET_FILE_DIR:SDL2-static>/SDL2-static$<$<CONFIG:Debug>:d>.pdb
+    )
+    target_compile_options(SDL2main
+      PRIVATE
+        /Fd$<TARGET_FILE_DIR:SDL2main>/SDL2main$<$<CONFIG:Debug>:d>.pdb
+    )
+endif()
