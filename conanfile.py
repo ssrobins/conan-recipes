@@ -39,3 +39,4 @@ class Conan(ConanFile):
     def package_info(self):
         self.cpp_info.debug.libs = ["bzip2d"]
         self.cpp_info.release.libs = ["bzip2"]
+        self.cpp_info.libs = self.cpp_info.release.libs
