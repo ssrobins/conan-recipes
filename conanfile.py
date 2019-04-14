@@ -44,3 +44,4 @@ class Conan(ConanFile):
         else:
             self.cpp_info.debug.libs = ["png16d"]
             self.cpp_info.release.libs = ["png16"]
+        self.cpp_info.libs = self.cpp_info.release.libs
