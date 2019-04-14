@@ -34,7 +34,7 @@ class Conan(ConanFile):
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("build/lib/*.a", dst="lib", keep_path=False)
         if self.settings.compiler == "Visual Studio":
-            self.copy(pattern="*.pdb", dst="lib", src="build/source/bzip2.dir/Release", keep_path=False)
+            self.copy("*.pdb", dst="lib", keep_path=False)
 
     def package_info(self):
         self.cpp_info.debug.libs = ["bzip2d"]
