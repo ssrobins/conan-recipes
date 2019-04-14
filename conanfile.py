@@ -50,6 +50,7 @@ class Conan(ConanFile):
         self.cpp_info.includedirs = [os.path.join("include", "SDL2")]
         self.cpp_info.debug.libs = ["SDL2d", "SDL2maind"]
         self.cpp_info.release.libs = ["SDL2", "SDL2main"]
+        self.cpp_info.libs = self.cpp_info.release.libs
         if self.settings.os == "Windows":
             self.cpp_info.libs.extend(["imm32", "version", "winmm"])
         if self.settings.os == "Linux":
