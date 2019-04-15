@@ -26,6 +26,9 @@ if(MSVC)
         /SAFESEH:NO # Don't produce an image with a table of safe exceptions handlers
     )
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_compile_options(
+        -fPIC
+    )
     add_link_options(
         -static-libgcc
         -static-libstdc++
