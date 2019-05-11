@@ -12,12 +12,13 @@ def cmake_init(settings, cmake, build_folder):
             os.getenv("android_ndk_version") + "/build/cmake/android.toolchain.cmake"
     elif settings.os == "iOS":
         cmake.generator = "Xcode"
-        cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.path.join(build_folder, "ios.toolchain.cmake")
-        cmake.definitions["ENABLE_BITCODE"] = "FALSE"
+        cmake.definitions["CMAKE_SYSTEM_NAME"] = "iOS"
+        cmake.definitions["CMAKE_OSX_DEPLOYMENT_TARGET"] = "8.0"
         if settings.arch == "x86_64":
-            cmake.definitions["IOS_PLATFORM"] = "SIMULATOR64"
+            cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "x86_64"
         else:
-            cmake.definitions["IOS_ARCH"] = "armv7 arm64"
+            cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7 arm64"
+        cmake.definitions["CMAKE_TRY_COMPILE_TARGET_TYPE"] = "STATIC_LIBRARY"
     elif settings.os == "Macos":
         cmake.generator = "Xcode"
     return cmake
