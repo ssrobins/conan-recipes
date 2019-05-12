@@ -29,7 +29,6 @@ function(add_executable_custom target_name)
             XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage"
             XCODE_ATTRIBUTE_ENABLE_BITCODE "${xcode_bitcode}"
             XCODE_ATTRIBUTE_INSTALL_PATH "$(LOCAL_APPS_DIR)"
-            XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "${CMAKE_OSX_DEPLOYMENT_TARGET}"
             XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2" # 1=iPhone/iPod, 2=iPad
             RESOURCE "${icons}"
         )
