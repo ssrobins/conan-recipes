@@ -13,7 +13,7 @@ set(ZLIB_ROOT ${CONAN_ZLIB_ROOT})
 
 # Workaround for this issue:
 # https://sourceforge.net/p/libpng/bugs/281/
-if(IOS AND IOS_ARCH MATCHES arm)
+if(IOS AND CMAKE_OSX_ARCHITECTURES MATCHES arm)
     set(CMAKE_SYSTEM_PROCESSOR arm)
     set(PNG_ARM_NEON off CACHE STRING "")
 endif()
