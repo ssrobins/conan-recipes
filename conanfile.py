@@ -12,7 +12,7 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.txt", "global_settings.cmake", "ios.toolchain.cmake"]
+    exports_sources = ["CMakeLists.diff", "CMakeLists.txt", "global_settings.cmake", "ios.toolchain.cmake"]
     zip_folder_name = "libpng-%s" % version
     zip_name = "%s.tar.gz" % zip_folder_name
     build_subfolder = "build"
@@ -26,6 +26,7 @@ class Conan(ConanFile):
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         os.rename(self.zip_folder_name, self.source_subfolder)
+        tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def build(self):
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
