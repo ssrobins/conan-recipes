@@ -26,6 +26,9 @@ class Conan(ConanFile):
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         os.rename(self.zip_folder_name, self.source_subfolder)
+
+        # Apply a patch to the libpng CMakeLists.txt file with the following changes:
+        # https://sourceforge.net/p/libpng/code/merge-requests/4/
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def build(self):
