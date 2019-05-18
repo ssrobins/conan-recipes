@@ -43,4 +43,3 @@ class Conan(ConanFile):
     def package_info(self):
         self.cpp_info.debug.libs = ["SDL2_ttfd"]
         self.cpp_info.release.libs = ["SDL2_ttf"]
-        self.cpp_info.libs = self.cpp_info.release.libs
