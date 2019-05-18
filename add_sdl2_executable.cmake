@@ -60,7 +60,7 @@ function(add_sdl2_executable target_name)
             COMMAND cmake -E copy
                 $<TARGET_FILE:${target_name}>
                 ${CMAKE_CURRENT_BINARY_DIR}/Android/app/src/main/jniLibs/${CMAKE_ANDROID_ARCH_ABI}/$<TARGET_FILE_NAME:${target_name}>
-            COMMAND sh ./gradlew assembleRelease
+            COMMAND ./gradlew assembleRelease
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Android
         )
     endif()
