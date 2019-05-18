@@ -57,4 +57,3 @@ class Conan(ConanFile):
         else:
             self.cpp_info.debug.libs = ["zd"]
             self.cpp_info.release.libs = ["z"]
-        self.cpp_info.libs = self.cpp_info.release.libs
