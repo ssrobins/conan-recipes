@@ -49,5 +49,4 @@ class Conan(ConanFile):
         else:
             self.cpp_info.debug.libs = ["GLEWd"]
             self.cpp_info.release.libs = ["GLEW"]
-            self.cpp_info.libs = self.cpp_info.release.libs
             self.cpp_info.libs.append("GL")
