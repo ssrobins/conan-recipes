@@ -25,6 +25,8 @@ set(version_major 0)
 set(version_minor 1)
 set(version_patch 0)
 
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
+
 if(MSVC)
     add_compile_options(
         $<$<CONFIG:Release>:/GL> # Whole program optimization
