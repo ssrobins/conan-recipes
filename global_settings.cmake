@@ -55,6 +55,9 @@ else()
     add_compile_options(
         -Werror # Warning as error
     )
+    add_link_options(
+        -Werror # Warning as error
+    )
 endif()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
