@@ -37,4 +37,3 @@ class Conan(ConanFile):
     def package_info(self):
         self.cpp_info.debug.libs = ["Box2Dd"]
         self.cpp_info.release.libs = ["Box2D"]
-        self.cpp_info.libs = self.cpp_info.release.libs
