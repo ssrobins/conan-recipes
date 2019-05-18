@@ -51,18 +51,24 @@ if(MSVC)
         /SAFESEH:NO # Don't produce an image with a table of safe exceptions handlers
         /WX # Warning as error
     )
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    add_link_options(
-        -static-libgcc
-        -static-libstdc++
-    )
-elseif(ANDROID)
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -g0")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -g0")
 else()
     add_compile_options(
         -Werror # Warning as error
     )
+endif()
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_link_options(
+        -static-libgcc
+        -static-libstdc++
+    )
+endif()
+
+if(ANDROID)
+    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -g0")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -g0")
 endif()
 
 # Allow organizing source files into subdirectories
