@@ -43,4 +43,3 @@ class Conan(ConanFile):
         self.cpp_info.includedirs = [os.path.join("include", "freetype2")]
         self.cpp_info.debug.libs = ["freetyped"]
         self.cpp_info.release.libs = ["freetype"]
-        self.cpp_info.libs = self.cpp_info.release.libs
