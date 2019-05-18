@@ -5,6 +5,8 @@ if(APPLE AND NOT IOS)
     set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version" FORCE)
 endif()
 
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
+
 if(MSVC)
     add_compile_options(
         $<$<CONFIG:Release>:/Gy> # Enable function-level linking
@@ -25,19 +27,18 @@ if(MSVC)
         $<$<CONFIG:Release>:/OPT:REF> # Eliminates functions and/or data that are never referenced
         /SAFESEH:NO # Don't produce an image with a table of safe exceptions handlers
     )
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    add_compile_options(
-        -fPIC
-    )
+endif()
+
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     add_link_options(
         -static-libgcc
         -static-libstdc++
     )
-elseif(ANDROID)
+endif()
+
+if(ANDROID)
     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -g0")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -g0")
-elseif(IOS)
-    add_link_options(
-        "${XCODE_IOS_PLATFORM_VERSION_FLAGS}"
-    )
 endif()
