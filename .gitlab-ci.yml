@@ -18,7 +18,7 @@ before_script:
     - cat /proc/meminfo | grep MemTotal
     - java -version
     - conan user -p $CONAN_API_KEY -r conan stever
-    - sh ./build_$android_arch.sh
+    - ./build_$android_arch.sh
     - conan upload "*" --all -r conan -c
   except:
     variables:
@@ -38,7 +38,7 @@ ios:
   stage: build
   script:
     - conan user -p $CONAN_API_KEY -r conan stever
-    - sh ./build_ios.sh
+    - ./build_ios.sh
     - conan upload "*" --all -r conan -c
   tags:
     - mac
@@ -54,14 +54,14 @@ linux:
     - cat /proc/meminfo | grep MemTotal
     - gcc --version
     - conan user -p $CONAN_API_KEY -r conan stever
-    - sh ./build_linux.sh
+    - ./build_linux.sh
     - conan upload "*" --all -r conan -c
 
 mac:
   stage: build
   script:
     - conan user -p $CONAN_API_KEY -r conan stever
-    - sh ./build_mac.sh
+    - ./build_mac.sh
     - conan upload "*" --all -r conan -c
   tags:
     - mac
