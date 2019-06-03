@@ -11,7 +11,7 @@ before_script:
   - conan remote add conan https://api.bintray.com/conan/stever/conan
 
 .android:
-  image: registry.gitlab.com/ssrobins/docker-android-build:jdk8u212-ndk19c
+  image: registry.gitlab.com/ssrobins/docker-android-build:jdk8u212b04-ndk19c
   stage: build
   script:
     - lscpu
