@@ -2,7 +2,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(ANDROID)
-    set(android_min_sdk_version 15)
+    set(android_sdk_version 28)
 endif()
 
 set(company dnqpy)
