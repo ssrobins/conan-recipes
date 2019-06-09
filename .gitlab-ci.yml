@@ -9,6 +9,7 @@ before_script:
   - cmake --version
   - conan --version
   - conan remote add conan https://api.bintray.com/conan/stever/conan
+  - conan user -p $CONAN_API_KEY -r conan stever
 
 .android:
   image: registry.gitlab.com/ssrobins/docker-android-build:jdk8u212b04-ndk20
@@ -17,7 +18,6 @@ before_script:
     - lscpu
     - cat /proc/meminfo | grep MemTotal
     - java -version
-    - conan user -p $CONAN_API_KEY -r conan stever
     - ./build_$android_arch.sh
     - conan upload "*" --all -r conan -c
   except:
@@ -37,7 +37,6 @@ android-v8a:
 ios:
   stage: build
   script:
-    - conan user -p $CONAN_API_KEY -r conan stever
     - ./build_ios.sh
     - conan upload "*" --all -r conan -c
   tags:
@@ -53,14 +52,12 @@ linux:
     - lscpu
     - cat /proc/meminfo | grep MemTotal
     - gcc --version
-    - conan user -p $CONAN_API_KEY -r conan stever
     - ./build_linux.sh
     - conan upload "*" --all -r conan -c
 
 mac:
   stage: build
   script:
-    - conan user -p $CONAN_API_KEY -r conan stever
     - ./build_mac.sh
     - conan upload "*" --all -r conan -c
   tags:
@@ -69,7 +66,6 @@ mac:
 windows:
   stage: build
   script:
-    - conan user -p $CONAN_API_KEY -r conan stever
     - .\build_windows.bat
     - conan upload "*" --all -r conan -c
   tags:
