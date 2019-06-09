@@ -70,7 +70,7 @@ windows:
   stage: build
   script:
     - conan user -p %CONAN_API_KEY% -r conan stever
-    - call build_windows.bat
+    - .\build_windows.bat
     - conan upload "*" --all -r conan -c
   tags:
     - windows
