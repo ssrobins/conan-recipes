@@ -69,7 +69,7 @@ mac:
 windows:
   stage: build
   script:
-    - conan user -p %CONAN_API_KEY% -r conan stever
+    - conan user -p $CONAN_API_KEY -r conan stever
     - .\build_windows.bat
     - conan upload "*" --all -r conan -c
   tags:
