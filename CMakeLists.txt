@@ -4,6 +4,8 @@ include(global_settings.cmake)
 include(conanbuildinfo.cmake)
 conan_basic_setup()
 
+set(CMAKE_FIND_ROOT_PATH ${CONAN_ZLIB_ROOT} ${CMAKE_FIND_ROOT_PATH})
+
 option(PNG_SHARED "Build shared lib" OFF)
 
 # Workaround for this issue:
