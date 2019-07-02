@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_deb
 
 class Conan(ConanFile):
     name = "freetype"
-    version = "2.10.0"
+    version = "2.10.1"
     description = "Freely available software library to render fonts"
     homepage = "https://www.freetype.org/"
     license = "FTL https://www.freetype.org/license.html"
@@ -24,7 +24,7 @@ class Conan(ConanFile):
         self.requires.add("zlib/1.2.11@stever/stable")
 
     def source(self):
-        tools.download("http://download.savannah.gnu.org/releases/freetype/%s" % self.zip_name, self.zip_name)
+        tools.download("http://dnqpy.com/libs/%s" % self.zip_name, self.zip_name)
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         os.rename(self.zip_folder_name, self.source_subfolder)
