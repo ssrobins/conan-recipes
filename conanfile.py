@@ -4,7 +4,7 @@ from cmake_utils import cmake_init, cmake_build_debug_release
 
 class Conan(ConanFile):
     name = "sdl2_image"
-    version = "2.0.4"
+    version = "2.0.5"
     description = "A library that loads image files as SDL surfaces and textures"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
     license = "Zlib"
