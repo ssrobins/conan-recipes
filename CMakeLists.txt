@@ -4,7 +4,8 @@ include(global_settings.cmake)
 include(conanbuildinfo.cmake)
 conan_basic_setup()
 
-set(CMAKE_FIND_ROOT_PATH ${CONAN_ZLIB_ROOT} ${CMAKE_FIND_ROOT_PATH})
+# Force find_package() to look in the Conan package directories first
+set(CMAKE_FIND_ROOT_PATH ${CONAN_CMAKE_MODULE_PATH} ${CMAKE_FIND_ROOT_PATH})
 
 option(PNG_SHARED "Build shared lib" OFF)
 
