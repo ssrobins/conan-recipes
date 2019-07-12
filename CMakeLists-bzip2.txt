@@ -12,4 +12,6 @@ add_library(${target_name} STATIC
     randtable.c
 )
 
+set_target_properties(${target_name} PROPERTIES OUTPUT_NAME bz2)
+
 set_target_properties(${target_name} PROPERTIES DEBUG_POSTFIX d)
