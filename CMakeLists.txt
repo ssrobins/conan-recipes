@@ -25,4 +25,13 @@ if(MSVC)
       PRIVATE
         /Fd$<TARGET_FILE_DIR:png_static>/png_static$<$<CONFIG:Debug>:d>.pdb
     )
+
+    # Remove '_static' from the libpng name so that find_package(PNG) will work.
+    # This pending merge request would fix it:
+    # https://gitlab.kitware.com/cmake/cmake/merge_requests/3552
+    get_target_property(png_filename png_static OUTPUT_NAME)
+    string(REPLACE "_static" "" png_filename ${png_filename})
+    set_target_properties(png_static PROPERTIES
+        OUTPUT_NAME ${png_filename}
+    )
 endif()
