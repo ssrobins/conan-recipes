@@ -17,6 +17,7 @@ class Conan(ConanFile):
     zip_name = "%s.tar.gz" % zip_folder_name
     build_subfolder = "build"
     source_subfolder = "source"
+    maj_min_ver = str().join(version.split(".")[0:2])
 
     def requirements(self):
         self.requires.add("zlib/1.2.11@stever/stable")
@@ -43,8 +44,8 @@ class Conan(ConanFile):
 
     def package_info(self):
         if self.settings.os == "Windows":
-            self.cpp_info.debug.libs = ["libpng16d"]
-            self.cpp_info.release.libs = ["libpng16"]
+            self.cpp_info.debug.libs = ["libpng%sd" % self.maj_min_ver]
+            self.cpp_info.release.libs = ["libpng%s" % self.maj_min_ver]
         else:
-            self.cpp_info.debug.libs = ["png16d"]
-            self.cpp_info.release.libs = ["png16"]
+            self.cpp_info.debug.libs = ["png%sd" % self.maj_min_ver]
+            self.cpp_info.release.libs = ["png%s" % self.maj_min_ver]
