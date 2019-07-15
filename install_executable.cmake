@@ -1,7 +1,11 @@
 function(install_executable target_name)
     set(component_name ${target_name}_${version_major}.${version_minor}.${version_patch}_${platform})
 
-    install(TARGETS ${target_name} DESTINATION ${target_name} COMPONENT ${component_name})
+    if(ANDROID)
+        install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Android DESTINATION . COMPONENT ${component_name})
+    else()
+        install(TARGETS ${target_name} DESTINATION ${target_name} COMPONENT ${component_name})
+    endif()
 
     # Stage assets so they are available at runtime in the build directory and install directory
     if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/assets)
