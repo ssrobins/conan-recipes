@@ -5,10 +5,9 @@
 
 Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title, bool fullscreen)
     : screenScale(getScreenScale(fullscreen))
-    , display(numTilesWidth, numTilesHeight, screenScale)
-    , fullscreen(fullscreen)
+    , display(numTilesWidth, numTilesHeight)
 {
-    int flags = 0;
+    int flags = SDL_WINDOW_ALLOW_HIGHDPI;
 
     if (fullscreen)
     {
@@ -25,7 +24,7 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
     {
         throw Exception(SDL_GetError());
     }
-    display.setDisplaySize(displayMode.w, displayMode.h);
+    display.setDisplaySize(displayMode.w, displayMode.h, screenScale, false);
 
     // This works around a blue tinting of the graphics
     // experienced on an LG G7 ThinQ Android phone.
@@ -60,6 +59,11 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
     {
         throw Exception(SDL_GetError());
     }
+
+    int pixelWidth;
+    int pixelHeight;
+    SDL_GetRendererOutputSize(renderer, &pixelWidth, &pixelHeight);
+    display.setDisplaySize(pixelWidth, pixelHeight, 1.0f, true);
     renderRect.x = (display.getScreenWidth()-display.getGameWidth())/2;
     renderRect.y = (display.getScreenHeight()-display.getGameHeight())/2;
     renderRect.w = display.getGameWidth();
@@ -167,7 +171,8 @@ void Game::renderPresent()
     SDL_RenderPresent(renderer);
 }
 
-void Game::renderFillRect(const SDL_Rect& rect)
+void Game::renderFillRect(const SDL_Rect& rect, const SDL_Color& color)
 {
+    setRenderDrawColor(color);
     SDL_RenderFillRect(renderer, &rect);
 }

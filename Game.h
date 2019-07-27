@@ -18,19 +18,21 @@ public:
     void setRenderDrawColor(const SDL_Color& color);
     void renderClear();
     void renderPresent();
-    void renderFillRect(const SDL_Rect& rect);
+    void renderFillRect(const SDL_Rect& rect, const SDL_Color& color);
     int getScreenWidth() { return display.getScreenWidth(); }
     int getScreenHeight() { return display.getScreenHeight(); }
+    int getGameWidth() { return display.getGameWidth(); }
+    int getGameHeight() { return display.getGameHeight(); }
     int getTileSize() { return display.getTileSize(); }
+    int getOutlineOffsetWidth() { return display.getOutlineOffsetWidth(); };
+    int getOutlineOffsetHeight() { return display.getOutlineOffsetHeight(); };
     int widthPercentToPixels(int percent) { return display.widthPercentToPixels(percent); }
     int heightPercentToPixels(int percent) { return display.heightPercentToPixels(percent); }
-    bool isFullscreen() { return fullscreen; };
 
 private:
     const float screenScale;
 
     Display display;
-    bool fullscreen;
 
     SDL_Window *window;
     SDL_Renderer* renderer;
