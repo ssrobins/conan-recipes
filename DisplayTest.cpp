@@ -239,6 +239,84 @@ TEST(display, fullscreenIphone4sWithOutline)
     EXPECT_EQ(0, display.getOutlineOffsetHeight());
 }
 
+TEST(display, fullscreenIphone8)
+{
+    Display display(12, 20);
+    display.setDisplaySize(1242, 2208, 1.0f, false);
+    EXPECT_EQ(1242, display.getScreenWidth());
+    EXPECT_EQ(2208, display.getScreenHeight());
+    EXPECT_EQ(1236, display.getGameWidth());
+    EXPECT_EQ(2060, display.getGameHeight());
+    EXPECT_EQ(103, display.getTileSize());
+    EXPECT_EQ(0, display.getOutlineOffsetWidth());
+    EXPECT_EQ(0, display.getOutlineOffsetHeight());
+}
+
+TEST(display, fullscreenIphone8WithOutline)
+{
+    Display display(12, 20);
+    display.setDisplaySize(1242, 2208, 1.0f, true);
+    EXPECT_EQ(1242, display.getScreenWidth());
+    EXPECT_EQ(2208, display.getScreenHeight());
+    EXPECT_EQ(1236, display.getGameWidth());
+    EXPECT_EQ(2076, display.getGameHeight());
+    EXPECT_EQ(103, display.getTileSize());
+    EXPECT_EQ(0, display.getOutlineOffsetWidth());
+    EXPECT_EQ(8, display.getOutlineOffsetHeight());
+}
+
+TEST(display, fullscreenIphoneX)
+{
+    Display display(12, 20);
+    display.setDisplaySize(1125, 2436, 1.0f, false);
+    EXPECT_EQ(1125, display.getScreenWidth());
+    EXPECT_EQ(2436, display.getScreenHeight());
+    EXPECT_EQ(1116, display.getGameWidth());
+    EXPECT_EQ(1860, display.getGameHeight());
+    EXPECT_EQ(93, display.getTileSize());
+    EXPECT_EQ(0, display.getOutlineOffsetWidth());
+    EXPECT_EQ(0, display.getOutlineOffsetHeight());
+}
+
+TEST(display, fullscreenIphoneXWithOutline)
+{
+    Display display(12, 20);
+    display.setDisplaySize(1125, 2436, 1.0f, true);
+    EXPECT_EQ(1125, display.getScreenWidth());
+    EXPECT_EQ(2436, display.getScreenHeight());
+    EXPECT_EQ(1116, display.getGameWidth());
+    EXPECT_EQ(1874, display.getGameHeight());
+    EXPECT_EQ(93, display.getTileSize());
+    EXPECT_EQ(0, display.getOutlineOffsetWidth());
+    EXPECT_EQ(7, display.getOutlineOffsetHeight());
+}
+
+TEST(display, fullscreenIphoneXs)
+{
+    Display display(12, 20);
+    display.setDisplaySize(1242, 2688, 1.0f, false);
+    EXPECT_EQ(1242, display.getScreenWidth());
+    EXPECT_EQ(2688, display.getScreenHeight());
+    EXPECT_EQ(1236, display.getGameWidth());
+    EXPECT_EQ(2060, display.getGameHeight());
+    EXPECT_EQ(103, display.getTileSize());
+    EXPECT_EQ(0, display.getOutlineOffsetWidth());
+    EXPECT_EQ(0, display.getOutlineOffsetHeight());
+}
+
+TEST(display, fullscreenIphoneXsWithOutline)
+{
+    Display display(12, 20);
+    display.setDisplaySize(1242, 2688, 1.0f, true);
+    EXPECT_EQ(1242, display.getScreenWidth());
+    EXPECT_EQ(2688, display.getScreenHeight());
+    EXPECT_EQ(1236, display.getGameWidth());
+    EXPECT_EQ(2076, display.getGameHeight());
+    EXPECT_EQ(103, display.getTileSize());
+    EXPECT_EQ(0, display.getOutlineOffsetWidth());
+    EXPECT_EQ(8, display.getOutlineOffsetHeight());
+}
+
 TEST(display, windowMacBookProRetina13inchEarly2015)
 {
     Display display(12, 20);
