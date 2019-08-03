@@ -7,12 +7,5 @@ function(add_test_executable target_name)
 
     if(NOT ANDROID AND NOT IOS)
         add_test(NAME ${target_name} COMMAND ${target_name})
-
-        # Run unit tests after the build
-        add_custom_command(
-            TARGET ${target_name}
-            POST_BUILD
-            COMMAND ctest -C $<CONFIGURATION> --output-on-failure
-        )
     endif()
 endfunction(add_test_executable)
