@@ -11,6 +11,7 @@ class Conan(ConanFile):
     url = "https://gitlab.com/ssrobins/conan-" + name
     settings = "os", "compiler", "arch"
     generators = "cmake"
+    revision_mode = "scm"
     exports = "cmake_utils.py"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt", "global_settings.cmake", "ios.toolchain.cmake"]
     zip_folder_name = "%s-%s" % (name, version)
@@ -19,9 +20,9 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def requirements(self):
-        self.requires.add("bzip2/1.0.6@stever/stable")
-        self.requires.add("libpng/1.6.37@stever/stable")
-        self.requires.add("zlib/1.2.11@stever/stable")
+        self.requires.add("bzip2/1.0.6#4403f684d682c4ff3ed38d8a793a53d1b9234b37")
+        self.requires.add("libpng/1.6.37#130fe78bdbd18b70eb4424047a5824c1dced8813")
+        self.requires.add("zlib/1.2.11#1598dd7b6f5d4b62bd9c16f81fa3bf83326e79f6")
 
     def source(self):
         tools.download("http://dnqpy.com/libs/%s" % self.zip_name, self.zip_name)
