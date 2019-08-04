@@ -13,7 +13,7 @@ class Conan(ConanFile):
     generators = "cmake"
     revision_mode = "scm"
     exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.txt", "global_settings.cmake"]
+    exports_sources = ["CMakeLists.diff", "CMakeLists.txt", "global_settings.cmake"]
     zip_folder_name = "%s-%s" % (name, version)
     zip_name = "%s.tgz" % zip_folder_name
     build_subfolder = "build"
@@ -24,6 +24,10 @@ class Conan(ConanFile):
         tools.unzip(self.zip_name)
         os.unlink(self.zip_name)
         os.rename(self.zip_folder_name, self.source_subfolder)
+
+        # Apply a patch to fix error LNK2001: unresolved external symbol _memset
+        # when building the shared library on MSVC:
+        tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def build(self):
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
