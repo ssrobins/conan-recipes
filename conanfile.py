@@ -11,6 +11,7 @@ class Conan(ConanFile):
     url = "https://gitlab.com/ssrobins/conan-" + name
     settings = "os", "compiler", "arch"
     generators = "cmake"
+    revision_mode = "scm"
     exports = "cmake_utils.py"
     exports_sources = ["CMakeLists.txt", "global_settings.cmake", "ios.toolchain.cmake"]
     zip_folder_name = "googletest-release-%s" % version
