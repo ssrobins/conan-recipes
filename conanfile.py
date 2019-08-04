@@ -11,6 +11,7 @@ class Conan(ConanFile):
     url = "https://gitlab.com/ssrobins/conan-" + name 
     settings = "os", "compiler", "arch"
     generators = "cmake"
+    revision_mode = "scm"
     exports = "cmake_utils.py"
     exports_sources = ["CMakeLists.txt", "CMakeLists-%s.txt" % name, "global_settings.cmake", "ios.toolchain.cmake"]
     zip_folder_name = "SDL2_ttf-%s" % version
@@ -19,8 +20,8 @@ class Conan(ConanFile):
     source_subfolder = "source"
     
     def requirements(self):
-        self.requires.add("freetype/2.10.1@stever/stable")
-        self.requires.add("sdl2/2.0.8@stever/stable")
+        self.requires.add("freetype/2.10.1#e69cb5d3a5eb452a398b3b5e10e3ba9da591b1d7")
+        self.requires.add("sdl2/2.0.8#ece35a6c4011a59b0240d62bccb7a469ac47d6b9")
 
     def source(self):
         tools.download("https://www.libsdl.org/projects/SDL_ttf/release/%s" % self.zip_name, self.zip_name)
