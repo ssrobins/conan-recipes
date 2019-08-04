@@ -13,6 +13,7 @@ class Conan(ConanFile):
     url = "https://gitlab.com/ssrobins/conan-" + name
     settings = "os", "compiler", "arch"
     generators = "cmake"
+    revision_mode = "scm"
     exports = "cmake_utils.py"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt", "global_settings.cmake", "ios.toolchain.cmake"]
     zip_folder_name = "SDL2-%s" % version
