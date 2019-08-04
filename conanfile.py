@@ -15,6 +15,7 @@ class Conan(ConanFile):
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
+    revision_mode = "scm"
     exports = "cmake_utils.py"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt", "global_settings.cmake", "ios.toolchain.cmake"]
     zip_folder_name = "%s-%s" % (name, version)
