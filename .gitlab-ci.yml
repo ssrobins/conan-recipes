@@ -1,5 +1,4 @@
 variables:
-  CONAN_USERNAME: "stever"
   CONAN_USER_HOME: "$CI_PROJECT_DIR"
 
 stages:
