@@ -1,14 +1,12 @@
-set(target_name DisplayTest)
+add_test_executable(DisplayTest)
 
-add_test_executable(${target_name})
-
-target_sources(${target_name} PRIVATE
+target_sources(DisplayTest PRIVATE
     DisplayTest.cpp
 )
 
-target_include_directories(${target_name} PRIVATE
+target_include_directories(DisplayTest PRIVATE
 )
 
-target_link_libraries(${target_name}
+target_link_libraries(DisplayTest
     Display
 )
