@@ -1,6 +1,4 @@
-set(target_name SDL2_mixer)
-
-add_library(${target_name} STATIC
+add_library(SDL2_mixer STATIC
     effect_position.c
     effect_stereoreverse.c
     effects_internal.c
@@ -40,19 +38,19 @@ add_library(${target_name} STATIC
     SDL_mixer.h
 )
 
-set_target_properties(${target_name} PROPERTIES DEBUG_POSTFIX d)
+set_target_properties(SDL2_mixer PROPERTIES DEBUG_POSTFIX d)
 
 if(MSVC)
-    target_compile_options(${target_name}
+    target_compile_options(SDL2_mixer
       PRIVATE
-        /Fd$<TARGET_FILE_DIR:${target_name}>/${target_name}$<$<CONFIG:Debug>:d>.pdb
+        /Fd$<TARGET_FILE_DIR:SDL2_mixer>/SDL2_mixer$<$<CONFIG:Debug>:d>.pdb
     )
 endif()
 
-target_compile_definitions(${target_name} PRIVATE
+target_compile_definitions(SDL2_mixer PRIVATE
     -DMUSIC_WAV
 )
 
-target_include_directories(${target_name} PUBLIC
+target_include_directories(SDL2_mixer PUBLIC
     .
 )
