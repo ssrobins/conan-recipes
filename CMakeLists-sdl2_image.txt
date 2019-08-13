@@ -1,6 +1,4 @@
-set(target_name SDL2_image)
-
-add_library(${target_name} STATIC
+add_library(SDL2_image STATIC
     IMG.c
     IMG_bmp.c
     IMG_gif.c
@@ -19,22 +17,22 @@ add_library(${target_name} STATIC
     IMG_xxx.c
 )
 
-set_target_properties(${target_name} PROPERTIES DEBUG_POSTFIX d)
+set_target_properties(SDL2_image PROPERTIES DEBUG_POSTFIX d)
 
-target_compile_options(${target_name} PRIVATE
+target_compile_options(SDL2_image PRIVATE
     -DLOAD_BMP
     -DLOAD_PNG
     -DSDL_IMAGE_USE_COMMON_BACKEND
 )
 
 if(MSVC)
-    target_compile_options(${target_name}
+    target_compile_options(SDL2_image
       PRIVATE
-        /Fd$<TARGET_FILE_DIR:${target_name}>/${target_name}$<$<CONFIG:Debug>:d>.pdb
+        /Fd$<TARGET_FILE_DIR:SDL2_image>/SDL2_image$<$<CONFIG:Debug>:d>.pdb
     )
 endif()
 
-target_include_directories(${target_name} PUBLIC
+target_include_directories(SDL2_image PUBLIC
     .
 )
 
