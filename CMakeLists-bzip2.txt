@@ -1,6 +1,4 @@
-set(target_name bzip2)
-
-add_library(${target_name} STATIC
+add_library(bzip2 STATIC
     blocksort.c
     bzlib.c
     bzlib.h
@@ -12,6 +10,6 @@ add_library(${target_name} STATIC
     randtable.c
 )
 
-set_target_properties(${target_name} PROPERTIES OUTPUT_NAME bz2)
+set_target_properties(bzip2 PROPERTIES OUTPUT_NAME bz2)
 
-set_target_properties(${target_name} PROPERTIES DEBUG_POSTFIX d)
+set_target_properties(bzip2 PROPERTIES DEBUG_POSTFIX d)
