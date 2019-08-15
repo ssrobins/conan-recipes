@@ -21,7 +21,7 @@ class Conan(ConanFile):
     maj_min_ver = str().join(version.split(".")[0:2])
 
     def requirements(self):
-        self.requires.add("zlib/1.2.11#1598dd7b6f5d4b62bd9c16f81fa3bf83326e79f6")
+        self.requires.add("zlib/1.2.11#85844dd3e9dcd0dadc4873592a971b1a34228ce9")
 
     def source(self):
         tools.download("http://dnqpy.com/libs/%s" % self.zip_name, self.zip_name)
