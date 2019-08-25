@@ -35,8 +35,9 @@ class Conan(ConanFile):
         #    those example executable builds so I don't have to set MACOSX_BUNDLE,
         #    XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY, and XCODE_ATTRIBUTE_DEVELOPMENT_TEAM to get
         #    iOS builds to work
-        #   -MACOSX_RPATH set to ON to avoid CMake configure warning
-        # Submitted these changes to zlib@gzip.org
+        #   -MACOSX_RPATH set to ON to avoid CMake configure warning (no longer an issue in CMake 3.15?)
+        # Submitted these changes to zlib@gzip.org and filed this PR:
+        # https://github.com/madler/zlib/pull/441
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def build(self):
