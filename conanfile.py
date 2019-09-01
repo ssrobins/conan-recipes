@@ -20,7 +20,7 @@ class Conan(ConanFile):
     source_subfolder = "source"
     
     def requirements(self):
-        self.requires.add("libpng/1.6.37#467ff567396b2ff709d0b4de6744f4a800c534e8")
+        self.requires.add("libpng/1.6.37#4feb62eebfe1932daba02a3a07b6f33b7c3c6bda")
         self.requires.add("sdl2/2.0.8#69c21e066605654a91aa48560889ada1b5e3913a")
 
     def source(self):
