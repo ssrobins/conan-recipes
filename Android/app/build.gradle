@@ -1,0 +1,43 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion ${android_sdk_version}
+    defaultConfig {
+        applicationId "com.${company}.${target_name}"
+        minSdkVersion $ENV{android_min_sdk_version}
+        targetSdkVersion ${android_sdk_version}
+        versionCode ${version_code}
+        versionName "${version_major}.${version_minor}.${version_patch}"
+
+        // Set the apk base name.
+        setProperty("archivesBaseName", "${target_name}")
+
+        ndk {
+            //abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+
+            // Limiting to a smaller set of ABIs to save time while testing:
+            abiFilters "${ANDROID_ABI}"
+        }
+    }
+
+    signingConfigs {
+        release {
+            storeFile file(ANDROID_KEY_STORE_PATH)
+            storePassword ANDROID_KEY_STORE_PASSWORD
+            keyAlias ANDROID_KEY_ALIAS
+            keyPassword ANDROID_KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+}
