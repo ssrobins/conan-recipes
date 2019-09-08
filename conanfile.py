@@ -1,5 +1,5 @@
 from conans import ConanFile, CMake, tools
-import os, shutil
+import os
 from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_debug_release
 
 class Conan(ConanFile):
@@ -13,7 +13,7 @@ class Conan(ConanFile):
     generators = "cmake"
     revision_mode = "scm"
     exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.txt", "global_settings.cmake", "ios.toolchain.cmake"]
+    exports_sources = ["CMakeLists.txt", "global_settings.cmake"]
     zip_folder_name = "Box2D-%s" % version
     zip_name = "v%s.tar.gz" % version
     build_subfolder = "build"
