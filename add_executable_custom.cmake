@@ -1,3 +1,5 @@
+set(current_file_path ${CMAKE_CURRENT_LIST_DIR})
+
 function(add_executable_custom target_name)
     if(ANDROID)
         add_library(${target_name} SHARED)
@@ -9,7 +11,7 @@ function(add_executable_custom target_name)
         set_target_properties(${target_name} PROPERTIES
             MACOSX_BUNDLE_BUNDLE_VERSION "${version_major}.${version_minor}.${version_patch}"
             MACOSX_BUNDLE_SHORT_VERSION_STRING "${version_major}.${version_minor}.${version_patch}"
-            MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/cmake/info.plist.in"
+            MACOSX_BUNDLE_INFO_PLIST "${current_file_path}/info.plist.in"
             XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "${xcode_code_sign_identity}"
             XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "${xcode_dev_team}"
         )
