@@ -13,7 +13,7 @@ class Conan(ConanFile):
     generators = "cmake"
     revision_mode = "scm"
     exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.txt", "CMakeLists-%s.txt" % name, "global_settings.cmake", "ios.toolchain.cmake"]
+    exports_sources = ["CMakeLists.txt", "CMakeLists-%s.txt" % name, "global_settings.cmake"]
     zip_folder_name = "SDL2_mixer-%s" % version
     zip_name = "%s.tar.gz" % zip_folder_name
     build_subfolder = "build"
