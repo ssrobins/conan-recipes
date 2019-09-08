@@ -17,7 +17,7 @@ class Conan(ConanFile):
     generators = "cmake"
     revision_mode = "scm"
     exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.diff", "CMakeLists.txt", "global_settings.cmake", "ios.toolchain.cmake"]
+    exports_sources = ["CMakeLists.diff", "CMakeLists.txt", "global_settings.cmake"]
     zip_folder_name = "%s-%s" % (name, version)
     zip_name = "%s.tar.gz" % zip_folder_name
     build_subfolder = "build"
