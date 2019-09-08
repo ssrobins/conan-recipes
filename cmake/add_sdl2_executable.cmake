@@ -1,3 +1,5 @@
+set(package_root_path ${CMAKE_CURRENT_LIST_DIR}/..)
+
 function(add_sdl2_executable target_name)
     add_executable_custom(${target_name})
 
@@ -5,7 +7,7 @@ function(add_sdl2_executable target_name)
         # Stage copy of gradle project for Android build and SDL's Java files
         execute_process(
             COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CMAKE_SOURCE_DIR}/Android
+                ${package_root_path}/Android
                 ${CMAKE_CURRENT_BINARY_DIR}/Android
             COMMAND ${CMAKE_COMMAND} -E copy_directory
                 ${CONAN_SDL2_ROOT}/android
@@ -37,19 +39,19 @@ function(add_sdl2_executable target_name)
 
         # Process files so they include target-specific properties
         configure_file (
-            ${CMAKE_SOURCE_DIR}/Android/app/src/main/AndroidManifest.xml
+            ${package_root_path}/Android/app/src/main/AndroidManifest.xml
             ${CMAKE_CURRENT_BINARY_DIR}/Android/app/src/main/AndroidManifest.xml
         )
         configure_file (
-            ${CMAKE_SOURCE_DIR}/Android/app/build.gradle
+            ${package_root_path}/Android/app/build.gradle
             ${CMAKE_CURRENT_BINARY_DIR}/Android/app/build.gradle
         )
         configure_file (
-            ${CMAKE_SOURCE_DIR}/Android/templates/MainActivity.java
+            ${package_root_path}/Android/templates/MainActivity.java
             ${CMAKE_CURRENT_BINARY_DIR}/Android/app/src/main/java/com/${company}/${target_name}/MainActivity.java
         )
         configure_file (
-            ${CMAKE_SOURCE_DIR}/Android/app/src/main/res/values/strings.xml
+            ${package_root_path}/Android/app/src/main/res/values/strings.xml
             ${CMAKE_CURRENT_BINARY_DIR}/Android/app/src/main/res/values/strings.xml
         )
 

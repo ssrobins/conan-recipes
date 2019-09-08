@@ -92,7 +92,7 @@ endif()
 
 if(ANDROID)
     set(CPACK_GENERATOR External)
-    set(CPACK_EXTERNAL_PACKAGE_SCRIPT ${CMAKE_SOURCE_DIR}/cmake/package_android_apk.cmake)
+    set(CPACK_EXTERNAL_PACKAGE_SCRIPT ${CMAKE_CURRENT_LIST_DIR}/package_android_apk.cmake)
     set(CPACK_EXTERNAL_ENABLE_STAGING true)
     set(CPACK_BUILD_CONFIG ${CMAKE_BUILD_TYPE})
     set(platform Android)

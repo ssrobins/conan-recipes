@@ -15,6 +15,7 @@ class Conan(ConanFile):
     exports_sources = [
         "CMakeLists.txt",
         "global_settings.cmake",
+        "Android/*",
         "cmake/*",
         "Display/*",
         "DisplayTest/*",
@@ -39,6 +40,9 @@ class Conan(ConanFile):
         self.copy("*.lib", dst="lib", keep_path=False)
         if self.settings.compiler == "Visual Studio":
             self.copy("*.pdb", dst="lib", keep_path=False)
+        if self.settings.os == "Android":
+            self.copy("Android/*")
+        self.copy("cmake/*")
 
     def package_info(self):
         self.cpp_info.debug.libs = ["Displayd", "ErrorHandlerd", "Gamed"]
