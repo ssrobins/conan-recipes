@@ -7,7 +7,7 @@ android {
         minSdkVersion $ENV{android_min_sdk_version}
         targetSdkVersion ${android_sdk_version}
         versionCode ${version_code}
-        versionName "${version_major}.${version_minor}.${version_patch}"
+        versionName "${PROJECT_VERSION}"
 
         // Set the apk base name.
         setProperty("archivesBaseName", "${target_name}")
