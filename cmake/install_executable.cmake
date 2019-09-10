@@ -1,5 +1,5 @@
 function(install_executable target_name)
-    set(component_name ${target_name}_${version_major}.${version_minor}.${version_patch}_${platform})
+    set(component_name ${target_name}_${PROJECT_VERSION}_${platform})
 
     if(ANDROID)
         install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Android DESTINATION . COMPONENT ${component_name})

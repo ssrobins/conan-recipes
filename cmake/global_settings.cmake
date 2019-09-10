@@ -21,10 +21,6 @@ if(APPLE)
     set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.${company}.\${PRODUCT_NAME:identifier}")
 endif()
 
-set(version_major 0)
-set(version_minor 1)
-set(version_patch 0)
-
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
 if(MSVC)
@@ -110,10 +106,5 @@ endif()
 # Settings for install and packaging
 set(CMAKE_INSTALL_PREFIX ${PROJECT_BINARY_DIR}/_install)
 set(CPACK_PACKAGE_DIRECTORY ${PROJECT_BINARY_DIR}/_package)
-set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
 set(CPACK_COMPONENTS_GROUPING IGNORE)
-set(CPACK_PACKAGE_VERSION_MAJOR ${version_major})
-set(CPACK_PACKAGE_VERSION_MINOR ${version_minor})
-set(CPACK_PACKAGE_VERSION_PATCH ${version_patch})
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
-set(CPACK_PACKAGE_FILE_NAME ${CMAKE_PROJECT_NAME})
