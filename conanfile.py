@@ -45,5 +45,5 @@ class Conan(ConanFile):
         self.copy("cmake/*")
 
     def package_info(self):
-        self.cpp_info.debug.libs = ["Displayd", "ErrorHandlerd", "Gamed"]
-        self.cpp_info.release.libs = ["Display", "ErrorHandler", "Game"]
+        self.cpp_info.debug.libs = ["Gamed", "Displayd", "ErrorHandlerd"]
+        self.cpp_info.release.libs = ["Game", "Display", "ErrorHandler"]
