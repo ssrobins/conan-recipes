@@ -32,6 +32,12 @@ endif()
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    # CMAKE_POSITION_INDEPENDENT_CODE isn't setting -fPIC on gcc, find out why.
+    # Until it's fixed, set it manually.
+    add_compile_options(
+        -fPIC
+    )
+
     add_link_options(
         -static-libgcc
         -static-libstdc++
