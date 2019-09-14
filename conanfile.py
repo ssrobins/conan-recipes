@@ -20,8 +20,8 @@ class Conan(ConanFile):
     source_subfolder = "source"
     
     def requirements(self):
-        self.requires.add("libpng/1.6.37#4feb62eebfe1932daba02a3a07b6f33b7c3c6bda")
-        self.requires.add("sdl2/2.0.8#69c21e066605654a91aa48560889ada1b5e3913a")
+        self.requires.add("libpng/1.6.37#d14868f856b52b2e517fb9281877c39fe4f545c7")
+        self.requires.add("sdl2/2.0.8#4841c177e6f3920faa36e56495bfcd23f55d1d1e")
 
     def source(self):
         tools.download("https://www.libsdl.org/projects/SDL_image/release/%s" % self.zip_name, self.zip_name)
