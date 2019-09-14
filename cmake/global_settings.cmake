@@ -49,6 +49,10 @@ if(MSVC)
     )
 else()
     add_compile_options(
+        # CMAKE_POSITION_INDEPENDENT_CODE isn't setting -fPIC on gcc, find out why.
+        # Until it's fixed, set it manually.
+        -fPIC
+
         -Werror # Warning as error
     )
     add_link_options(

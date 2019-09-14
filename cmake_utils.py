@@ -32,15 +32,15 @@ def configure_cmake(cmake, build_subfolder, config=None):
 def cmake_build_debug_release(cmake, build_subfolder, run):
     if cmake.is_multi_configuration:
         configure_cmake(cmake, build_subfolder)
-        cmake.build(args=["--config", "Debug"])
-        cmake.build(args=["--config", "Release"])
+        cmake.build(args=["--config", "Debug", "--verbose"])
+        cmake.build(args=["--config", "Release", "--verbose"])
         with tools.chdir(build_subfolder):
             run("ctest -C Debug --output-on-failure")
             run("ctest -C Release --output-on-failure")
     else:
         for config in ("Debug", "Release"):
             configure_cmake(cmake, build_subfolder, config)
-            cmake.build()
+            cmake.build(["--verbose"])
             with tools.chdir(build_subfolder):
                 run("ctest -C " + config + " --output-on-failure")
             shutil.rmtree(os.path.join(build_subfolder, "CMakeFiles"))
