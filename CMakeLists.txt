@@ -7,7 +7,7 @@ include(cmake/add_executable_custom.cmake)
 include(cmake/add_test_executable.cmake)
 
 include(conanbuildinfo.cmake)
-conan_basic_setup(TARGETS NO_OUTPUT_DIRS)
+conan_basic_setup(TARGETS)
 
 enable_testing()
 
