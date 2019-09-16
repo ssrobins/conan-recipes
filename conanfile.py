@@ -38,7 +38,7 @@ class Conan(ConanFile):
 
     def package(self):
         self.copy("*.h", dst="include", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        self.copy("*.lib", dst="lib", src=self.build_subfolder, keep_path=False)
         self.copy("build/lib/*.a", dst="lib", keep_path=False)
         if self.settings.compiler == "Visual Studio":
             self.copy("*.pdb", dst="lib", keep_path=False)
