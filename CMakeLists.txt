@@ -6,6 +6,7 @@ conan_basic_setup()
 
 option(BUILD_ZLIB_EXAMPLE "Build zlib example" OFF)
 option(BUILD_ZLIB_MINIGZIP "Build zlib gzip example" OFF)
+option(BUILD_ZLIB_SHARED "Build zlib shared library" OFF)
 
 add_subdirectory(source)
 
