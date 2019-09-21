@@ -31,12 +31,12 @@ def configure_cmake(cmake, build_subfolder, config=None):
 def cmake_build_debug_release(cmake, build_subfolder):
     if cmake.is_multi_configuration:
         configure_cmake(cmake, build_subfolder)
-        cmake.build(args=["--config", "Debug"])
-        cmake.build(args=["--config", "Release"])
+        cmake.build(args=["--config", "Debug", "--verbose"])
+        cmake.build(args=["--config", "Release", "--verbose"])
     else:
         for config in ("Debug", "Release"):
             configure_cmake(cmake, build_subfolder, config)
-            cmake.build()
+            cmake.build(["--verbose"])
             shutil.rmtree(os.path.join(build_subfolder, "CMakeFiles"))
             os.remove(os.path.join(build_subfolder, "CMakeCache.txt"))
 
