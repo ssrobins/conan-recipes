@@ -20,8 +20,8 @@ class Conan(ConanFile):
     source_subfolder = "source"
     
     def requirements(self):
-        self.requires.add("freetype/2.10.1#ea797184a06128cf82f145683b9e331e8ba6d34d")
-        self.requires.add("sdl2/2.0.8#4841c177e6f3920faa36e56495bfcd23f55d1d1e")
+        self.requires.add("freetype/2.10.1#a65bf66afcdac113e464c03ed249768862cb24a2")
+        self.requires.add("sdl2/2.0.8#e119e81196414d99c32c6ef72a8c2624b9408171")
 
     def source(self):
         tools.download("https://www.libsdl.org/projects/SDL_ttf/release/%s" % self.zip_name, self.zip_name)
