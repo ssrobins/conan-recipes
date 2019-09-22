@@ -20,7 +20,7 @@ class Conan(ConanFile):
     source_subfolder = "source"
     
     def requirements(self):
-        self.requires.add("sdl2/2.0.8#4841c177e6f3920faa36e56495bfcd23f55d1d1e")
+        self.requires.add("sdl2/2.0.8#e119e81196414d99c32c6ef72a8c2624b9408171")
 
     def source(self):
         tools.download("https://www.libsdl.org/projects/SDL_mixer/release/%s" % self.zip_name, self.zip_name)
