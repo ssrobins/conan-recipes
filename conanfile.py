@@ -20,7 +20,7 @@ class Conan(ConanFile):
     source_subfolder = "source"
     
     def requirements(self):
-        self.requires.add("freetype/2.10.1#a65bf66afcdac113e464c03ed249768862cb24a2")
+        self.requires.add("freetype/2.10.1#fe32fd4c5e73b49267b522a7f0bc5002c065a6f6")
         self.requires.add("sdl2/2.0.8#e119e81196414d99c32c6ef72a8c2624b9408171")
 
     def source(self):
