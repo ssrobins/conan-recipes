@@ -25,7 +25,7 @@ class Conan(ConanFile):
     build_subfolder = "build"
 
     def build_requirements(self):
-        self.build_requires.add("gtest/1.8.1#87754ca5593a1001e629122ee514d931aa9e8bf7")
+        self.build_requires.add("gtest/1.10.0#016389183489f5c0a5db55001303991db14e7ce1")
 
     def requirements(self):
         self.requires.add("sdl2/2.0.8#e119e81196414d99c32c6ef72a8c2624b9408171")
