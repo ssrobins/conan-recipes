@@ -1,4 +1,4 @@
-set(package_root_path ${CMAKE_CURRENT_LIST_DIR}/..)
+set(package_root_path ${CONAN_ANDROID_SDL2_ROOT})
 
 function(add_sdl2_executable target_name)
     add_executable_custom(${target_name})
