@@ -1,6 +1,5 @@
 from conans import ConanFile, CMake, tools
 import os
-from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_debug_release
 
 class Conan(ConanFile):
     name = "glew"
@@ -12,12 +11,14 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
-    exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.diff", "CMakeLists.txt", "global_settings.cmake"]
+    exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = "%s-%s" % (name, version)
     zip_name = "%s.tgz" % zip_folder_name
     build_subfolder = "build"
     source_subfolder = "source"
+
+    def build_requirements(self):
+        self.build_requires.add("cmake_utils/0.1.0#7f17deeced79eecd4a03ba2d327bee3e5e794732")
 
     def source(self):
         tools.download("https://github.com/nigels-com/glew/releases/download/%s/%s" % (self.zip_folder_name, self.zip_name), self.zip_name)
@@ -31,10 +32,12 @@ class Conan(ConanFile):
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def build(self):
+        from cmake_utils import cmake_init, cmake_build_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder)
+        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
 
     def package(self):
+        from cmake_utils import cmake_init, cmake_install_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
         cmake_install_debug_release(cmake, self.build_subfolder) 
         if self.settings.compiler == "Visual Studio":
