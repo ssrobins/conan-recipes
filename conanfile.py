@@ -1,6 +1,5 @@
 from conans import ConanFile, CMake, tools
 import os
-from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_debug_release
 
 class Conan(ConanFile):
     name = "libpng"
@@ -12,16 +11,18 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
-    exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.diff", "CMakeLists.txt", "global_settings.cmake"]
+    exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = "libpng-%s" % version
     zip_name = "%s.tar.gz" % zip_folder_name
     build_subfolder = "build"
     source_subfolder = "source"
     maj_min_ver = str().join(version.split(".")[0:2])
 
+    def build_requirements(self):
+        self.build_requires.add("cmake_utils/0.1.0#7f17deeced79eecd4a03ba2d327bee3e5e794732")
+
     def requirements(self):
-        self.requires.add("zlib/1.2.11#d1fe00af882267a3f4ab756c782b7cc58eccaac7")
+        self.requires.add("zlib/1.2.11#1ad0aa510215b1bbae6066e9a032fa04ad02743e")
 
     def source(self):
         tools.download("http://dnqpy.com/libs/%s" % self.zip_name, self.zip_name)
@@ -35,10 +36,12 @@ class Conan(ConanFile):
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def build(self):
+        from cmake_utils import cmake_init, cmake_build_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder)
+        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
 
     def package(self):
+        from cmake_utils import cmake_init, cmake_install_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
         cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.compiler == "Visual Studio":
