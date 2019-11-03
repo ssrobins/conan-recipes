@@ -1,6 +1,5 @@
 from conans import ConanFile, CMake, tools
 import os, shutil
-from cmake_utils import cmake_init, cmake_build_debug_release
 
 class Conan(ConanFile):
     name = "sdl2_mixer"
@@ -12,15 +11,17 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
-    exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.txt", "CMakeLists-%s.txt" % name, "global_settings.cmake"]
+    exports_sources = ["CMakeLists.txt", "CMakeLists-%s.txt" % name]
     zip_folder_name = "SDL2_mixer-%s" % version
     zip_name = "%s.tar.gz" % zip_folder_name
     build_subfolder = "build"
     source_subfolder = "source"
+
+    def build_requirements(self):
+        self.build_requires.add("cmake_utils/0.1.0#7f17deeced79eecd4a03ba2d327bee3e5e794732")
     
     def requirements(self):
-        self.requires.add("sdl2/2.0.8#e119e81196414d99c32c6ef72a8c2624b9408171")
+        self.requires.add("sdl2/2.0.8#e429f599c8c7350ba1edb0e501cfb81c23df0e84")
 
     def source(self):
         tools.download("https://www.libsdl.org/projects/SDL_mixer/release/%s" % self.zip_name, self.zip_name)
@@ -30,8 +31,9 @@ class Conan(ConanFile):
         shutil.move("CMakeLists-%s.txt" % self.name, os.path.join(self.source_subfolder, "CMakeLists.txt"))
 
     def build(self):
+        from cmake_utils import cmake_init, cmake_build_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder)
+        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
 
     def package(self):
         self.copy("SDL_mixer.h", dst="include", src=self.source_subfolder)
