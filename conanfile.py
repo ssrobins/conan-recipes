@@ -30,7 +30,7 @@ class Conan(ConanFile):
     def build(self):
         from cmake_utils import cmake_init, cmake_build_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder)
+        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
 
     def package(self):
         self.copy("bzlib.h", dst="include", src=self.source_subfolder)
