@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.14)
 
-include(cmake/global_settings.cmake)
-
-# Helper functions
-include(cmake/add_executable_custom.cmake)
-include(cmake/add_test_executable.cmake)
-
 include(conanbuildinfo.cmake)
 conan_basic_setup(TARGETS)
+
+include(${CONAN_CMAKE_UTILS_ROOT}/global_settings.cmake)
+
+# Helper functions
+include(${CONAN_CMAKE_UTILS_ROOT}/add_executable_custom.cmake)
+include(${CONAN_CMAKE_UTILS_ROOT}/add_test_executable.cmake)
 
 enable_testing()
 

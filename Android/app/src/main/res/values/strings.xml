@@ -1,3 +1,0 @@
-<resources>
-    <string name="app_name">${target_name}</string>
-</resources>
