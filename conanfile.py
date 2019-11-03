@@ -1,6 +1,5 @@
 from conans import ConanFile, CMake, tools
 import os
-from cmake_utils import cmake_init, cmake_build_debug_release, cmake_install_debug_release
 
 class Conan(ConanFile):
     name = "sfml"
@@ -13,11 +12,14 @@ class Conan(ConanFile):
     generators = "cmake"
     revision_mode = "scm"
     exports = "cmake_utils.py"
-    exports_sources = ["AudioDevice.diff", "CMakeLists.txt", "global_settings.cmake"]
+    exports_sources = ["AudioDevice.diff", "CMakeLists.txt"]
     zip_folder_name = "SFML-%s" % version
     zip_name = "%s-sources.zip" % zip_folder_name
     build_subfolder = "build"
     source_subfolder = "source"
+
+    def build_requirements(self):
+        self.build_requires.add("cmake_utils/0.1.0#7f17deeced79eecd4a03ba2d327bee3e5e794732")
 
     def source(self):
         tools.download("https://www.sfml-dev.org/files/%s" % self.zip_name, self.zip_name)
@@ -29,10 +31,12 @@ class Conan(ConanFile):
         tools.patch(base_path=os.path.join(self.source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
 
     def build(self):
+        from cmake_utils import cmake_init, cmake_build_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder)
+        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
 
     def package(self):
+        from cmake_utils import cmake_init, cmake_install_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
         cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.compiler == "Visual Studio":
