@@ -1,6 +1,5 @@
 from conans import ConanFile, CMake, tools
 import os
-from cmake_utils import cmake_init, cmake_build_debug_release
 
 class Conan(ConanFile):
     name = "gtest"
@@ -12,12 +11,14 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
-    exports = "cmake_utils.py"
-    exports_sources = ["CMakeLists.txt", "global_settings.cmake"]
+    exports_sources = ["CMakeLists.txt"]
     zip_folder_name = "googletest-release-%s" % version
     zip_name = "release-%s.tar.gz" % version
     build_subfolder = "build"
     source_subfolder = "source"
+
+    def build_requirements(self):
+        self.build_requires.add("cmake_utils/0.1.0#7f17deeced79eecd4a03ba2d327bee3e5e794732")
 
     def source(self):
         tools.download("https://github.com/google/googletest/archive/%s" % self.zip_name, self.zip_name)
@@ -26,8 +27,9 @@ class Conan(ConanFile):
         os.rename(self.zip_folder_name, self.source_subfolder)
 
     def build(self):
+        from cmake_utils import cmake_init, cmake_build_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder)
+        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
 
     def package(self):
         self.copy("*.h", dst="include/gtest", src=os.path.join(self.source_subfolder, "googletest", "include", "gtest"))
