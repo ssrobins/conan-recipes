@@ -7,6 +7,7 @@ stages:
 
 before_script:
   - conan --version
+  - conan remote add bintray-stever https://api.bintray.com/conan/stever/conan --insert --force
   - conan user --password $CONAN_API_KEY --remote bintray-stever stever
 
 build:
