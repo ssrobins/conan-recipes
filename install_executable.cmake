@@ -11,7 +11,7 @@ function(install_executable target_name)
     if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/assets)
         get_target_property(is_mac_bundle ${target_name} MACOSX_BUNDLE)
         if(APPLE)
-            if(${is_mac_bundle} STREQUAL TRUE)
+            if(${is_mac_bundle})
                 if(IOS)
                     set(assets_dest_dir assets)
                 else()
@@ -33,7 +33,8 @@ function(install_executable target_name)
                 ${CMAKE_CURRENT_SOURCE_DIR}/assets
                 $<TARGET_FILE_DIR:${target_name}>/${assets_dest_dir}
         )
-        if(NOT IOS AND NOT ${is_mac_bundle} STREQUAL TRUE AND NOT ANDROID)
+
+        if(NOT IOS AND NOT ${is_mac_bundle} AND NOT ANDROID)
             install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${target_name} COMPONENT ${component_name})
         endif()
 
@@ -54,7 +55,7 @@ function(install_executable target_name)
     if(APPLE AND NOT IOS)
         if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/icon.icns)
             get_target_property(is_mac_bundle ${target_name} MACOSX_BUNDLE)
-            if(${is_mac_bundle} STREQUAL TRUE)
+            if(${is_mac_bundle})
                 add_custom_command(
                     TARGET ${target_name}
                     POST_BUILD
