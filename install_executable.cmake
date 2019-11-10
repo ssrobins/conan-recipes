@@ -9,8 +9,9 @@ function(install_executable target_name)
 
     # Stage assets so they are available at runtime in the build directory and install directory
     if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/assets)
-        get_target_property(is_mac_bundle ${target_name} MACOSX_BUNDLE)
+        set(is_mac_bundle 0)
         if(APPLE)
+            get_target_property(is_mac_bundle ${target_name} MACOSX_BUNDLE)
             if(${is_mac_bundle})
                 if(IOS)
                     set(assets_dest_dir assets)
