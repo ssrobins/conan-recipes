@@ -1,5 +1,8 @@
 function(target_assets target_name assets_path)
-    get_filename_component(assets_dir ${assets_path} NAME)
+    get_filename_component(assets_dir "${assets_path}" NAME)
+
+    get_filename_component(assets_path "${assets_path}"
+        REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
     set(is_mac_bundle 0)
     if(APPLE)
