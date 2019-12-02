@@ -8,7 +8,8 @@ function(xcode_package component)
     message("Building ipa for ${package_name}")
 
     execute_process(
-        COMMAND xcodebuild -exportArchive -archivePath ${package_name}.xcarchive -exportOptionsPlist export_options.plist -exportPath .
+        COMMAND xcodebuild -exportArchive -archivePath ${package_name}.xcarchive -allowProvisioningUpdates
+            -exportOptionsPlist export_options.plist -exportPath .
         WORKING_DIRECTORY ${CPACK_TEMPORARY_DIRECTORY}/${component}
         RESULT_VARIABLE xcode_package_result
     )
