@@ -15,6 +15,9 @@ def main():
         
     folder_path = command_args.folderPath
     folder = os.path.basename(folder_path)
+
+    if "path = " + folder_path in project_data:
+        return
     
     id1 = str(uuid.uuid4().hex)
     id2 = str(uuid.uuid4().hex)
