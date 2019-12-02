@@ -13,6 +13,7 @@ class Conan(ConanFile):
     def package(self):
         self.copy("*.cmake")
         self.copy("*.in")
+        self.copy("*.plist")
         self.copy("*.py")
 
     def package_info(self):
