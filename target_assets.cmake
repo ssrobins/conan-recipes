@@ -8,25 +8,17 @@ function(target_assets target_name assets_path)
         get_filename_component(assets_path "${assets_path}"
             REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-        set(is_mac_bundle 0)
-        if(APPLE)
-            get_target_property(is_mac_bundle ${target_name} MACOSX_BUNDLE)
-            if(${is_mac_bundle})
-                if(IOS)
-                    set(assets_dest_dir ${assets_dir})
-                    add_custom_command(
-                        TARGET ${target_name}
-                        PRE_BUILD
-                        COMMAND python3 ${CONAN_CMAKE_UTILS_ROOT}/add_xcode_folder_reference.py
-                            --project=${CMAKE_BINARY_DIR}/${PROJECT_NAME}.xcodeproj/project.pbxproj
-                            --folderPath=${assets_path} --target=${target_name}
-                    )
-                else()
-                    set(assets_dest_dir ../Resources/${assets_dir})
-                endif()
-            else()
-                set(assets_dest_dir ${assets_dir})
-            endif()
+        if(IOS)
+            set(assets_dest_dir ${assets_dir})
+            add_custom_command(
+                TARGET ${target_name}
+                PRE_BUILD
+                COMMAND python3 ${CONAN_CMAKE_UTILS_ROOT}/add_xcode_folder_reference.py
+                    --project=${CMAKE_BINARY_DIR}/${PROJECT_NAME}.xcodeproj/project.pbxproj
+                    --folderPath=${assets_path} --target=${target_name}
+            )
+        elseif(APPLE)
+            set(assets_dest_dir $<IF:$<BOOL:$<TARGET_PROPERTY:${target_name},MACOSX_BUNDLE>>,../Resources/${assets_dir},${assets_dir}>)
         elseif(ANDROID)
             set(assets_dest_dir Android/app/src/main/assets/${assets_dir})
         else()
@@ -41,9 +33,10 @@ function(target_assets target_name assets_path)
                 $<TARGET_FILE_DIR:${target_name}>/${assets_dest_dir}
         )
 
+        set(assets_install_dir $<IF:$<BOOL:$<TARGET_PROPERTY:${target_name},MACOSX_BUNDLE>>,${target_name}.app/Contents/Resources,>)
         set(component_name ${target_name}_${PROJECT_VERSION}_${platform})
-        if(NOT IOS AND NOT ${is_mac_bundle} AND NOT ANDROID)
-            install(DIRECTORY ${assets_path} DESTINATION ${target_name} COMPONENT ${component_name})
+        if(NOT IOS AND NOT ANDROID)
+            install(DIRECTORY ${assets_path} DESTINATION ${target_name}/${assets_install_dir} COMPONENT ${component_name})
         endif()
 
         # Stage assets so Visual Studio will find them.
