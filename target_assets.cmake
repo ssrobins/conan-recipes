@@ -33,11 +33,11 @@ function(target_assets target_name assets_path)
                 $<TARGET_FILE_DIR:${target_name}>/${assets_dest_dir}
         )
 
-        if(APPLE AND NOT IOS)
-            set(assets_install_dir $<IF:$<BOOL:$<TARGET_PROPERTY:${target_name},MACOSX_BUNDLE>>,${target_name}.app/Contents/Resources,>)
-        endif()
-        set(component_name ${target_name}_${PROJECT_VERSION}_${platform})
         if(NOT IOS AND NOT ANDROID)
+            if(APPLE)
+                set(assets_install_dir $<IF:$<BOOL:$<TARGET_PROPERTY:${target_name},MACOSX_BUNDLE>>,${target_name}.app/Contents/Resources,>)
+            endif()
+            set(component_name ${target_name}_${PROJECT_VERSION}_${platform})
             install(DIRECTORY ${assets_path} DESTINATION ${target_name}/${assets_install_dir} COMPONENT ${component_name})
         endif()
 
