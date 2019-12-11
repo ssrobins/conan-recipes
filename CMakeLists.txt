@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 
 include(conanbuildinfo.cmake)
 conan_basic_setup()

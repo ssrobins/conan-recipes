@@ -22,7 +22,7 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires.add("bzip2/1.0.8#c3854a71d9acfa32d1335afa9a5a6c767728ab84")
-        self.requires.add("libpng/1.6.37#1c402e5f3dce526ac836af9cdc268d1c40a75f82")
+        self.requires.add("libpng/1.6.37#72c51efbb89252ade380398a8ec5316af59c119f")
         self.requires.add("zlib/1.2.11#1ad0aa510215b1bbae6066e9a032fa04ad02743e")
 
     def source(self):
