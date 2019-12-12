@@ -21,8 +21,8 @@ class Conan(ConanFile):
         self.build_requires.add("cmake_utils/0.1.0#7f17deeced79eecd4a03ba2d327bee3e5e794732")
 
     def requirements(self):
-        self.requires.add("libpng/1.6.37#1c402e5f3dce526ac836af9cdc268d1c40a75f82")
-        self.requires.add("sdl2/2.0.8#5471132184e2acc3e2f1e9ed4a121c4a076cc39e")
+        self.requires.add("libpng/1.6.37#231a57f840d4ea02851a2acbf4b3823e5be9d9c9")
+        self.requires.add("sdl2/2.0.8#7654479279c54a466533bce5050df86b4afeb51d")
 
     def source(self):
         tools.download("https://www.libsdl.org/projects/SDL_image/release/%s" % self.zip_name, self.zip_name)
