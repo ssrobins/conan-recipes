@@ -32,7 +32,7 @@ if(MSVC)
     )
 endif()
 
-target_include_directories(SDL2_image PUBLIC
-    .
+target_link_libraries(SDL2_image
+    CONAN_PKG::libpng
+    CONAN_PKG::sdl2
 )
-
