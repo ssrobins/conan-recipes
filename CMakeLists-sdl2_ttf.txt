@@ -11,6 +11,7 @@ if(MSVC)
     )
 endif()
 
-target_include_directories(SDL2_ttf PUBLIC
-    .
+target_link_libraries(SDL2_ttf
+    CONAN_PKG::freetype
+    CONAN_PKG::sdl2
 )
