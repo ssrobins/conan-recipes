@@ -51,6 +51,6 @@ target_compile_definitions(SDL2_mixer PRIVATE
     -DMUSIC_WAV
 )
 
-target_include_directories(SDL2_mixer PUBLIC
-    .
+target_link_libraries(SDL2_mixer
+    CONAN_PKG::sdl2
 )

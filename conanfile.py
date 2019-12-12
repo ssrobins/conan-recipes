@@ -21,7 +21,7 @@ class Conan(ConanFile):
         self.build_requires.add("cmake_utils/0.1.0#7f17deeced79eecd4a03ba2d327bee3e5e794732")
     
     def requirements(self):
-        self.requires.add("sdl2/2.0.8#5471132184e2acc3e2f1e9ed4a121c4a076cc39e")
+        self.requires.add("sdl2/2.0.8#7654479279c54a466533bce5050df86b4afeb51d")
 
     def source(self):
         tools.download("https://www.libsdl.org/projects/SDL_mixer/release/%s" % self.zip_name, self.zip_name)
