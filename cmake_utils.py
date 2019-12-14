@@ -3,6 +3,7 @@ from conans import tools
 
 def cmake_init(settings, cmake, build_folder):
     if settings.os == "Android":
+        cmake.generator = "Ninja"
         if settings.arch == "armv7":
             cmake.definitions["ANDROID_ABI"] = "armeabi-v7a"
         elif settings.arch == "armv8":
@@ -14,15 +15,19 @@ def cmake_init(settings, cmake, build_folder):
     elif settings.os == "iOS":
         cmake.generator = "Xcode"
         cmake.definitions["CMAKE_SYSTEM_NAME"] = "iOS"
-        cmake.definitions["CMAKE_OSX_DEPLOYMENT_TARGET"] = "8.0"
+        if settings.os.version:
+            cmake.definitions["CMAKE_OSX_DEPLOYMENT_TARGET"] = settings.os.version
         if settings.arch == "x86_64":
             cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "x86_64"
         else:
             cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7 arm64"
         cmake.definitions["CMAKE_TRY_COMPILE_TARGET_TYPE"] = "STATIC_LIBRARY"
+    elif settings.os == "Linux":
+        cmake.generator = "Ninja"
     elif settings.os == "Macos":
         cmake.generator = "Xcode"
-        cmake.definitions["CMAKE_OSX_DEPLOYMENT_TARGET"] = settings.os.version
+        if settings.os.version:
+            cmake.definitions["CMAKE_OSX_DEPLOYMENT_TARGET"] = settings.os.version
     return cmake
 
 def configure_cmake(cmake, build_subfolder, config=None):
