@@ -7,10 +7,6 @@ endif()
 
 set(company dnqpy)
 
-if(APPLE AND NOT IOS)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version" FORCE)
-endif()
-
 if(IOS)
     set(xcode_code_sign_identity "iPhone Developer")
 elseif(APPLE)

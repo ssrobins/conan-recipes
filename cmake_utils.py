@@ -22,6 +22,7 @@ def cmake_init(settings, cmake, build_folder):
         cmake.definitions["CMAKE_TRY_COMPILE_TARGET_TYPE"] = "STATIC_LIBRARY"
     elif settings.os == "Macos":
         cmake.generator = "Xcode"
+        cmake.definitions["CMAKE_OSX_DEPLOYMENT_TARGET"] = settings.os.version
     return cmake
 
 def configure_cmake(cmake, build_subfolder, config=None):
