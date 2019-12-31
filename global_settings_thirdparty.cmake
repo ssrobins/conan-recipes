@@ -1,6 +1,14 @@
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if(CMAKE_GENERATOR STREQUAL Xcode)
+    configure_file(
+        ${CMAKE_CURRENT_LIST_DIR}/WorkspaceSettings.xcsettings
+        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.xcodeproj/project.xcworkspace/xcuserdata/$ENV{USER}.xcuserdatad/WorkspaceSettings.xcsettings
+        COPYONLY
+    )
+endif()
+
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
 if(MSVC)

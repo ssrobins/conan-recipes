@@ -17,6 +17,14 @@ if(APPLE)
     set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.${company}.\${PRODUCT_NAME:identifier}")
 endif()
 
+if(CMAKE_GENERATOR STREQUAL Xcode)
+    configure_file(
+        ${CMAKE_CURRENT_LIST_DIR}/WorkspaceSettings.xcsettings
+        ${CMAKE_BINARY_DIR}/${PROJECT_NAME}.xcodeproj/project.xcworkspace/xcuserdata/$ENV{USER}.xcuserdatad/WorkspaceSettings.xcsettings
+        COPYONLY
+    )
+endif()
+
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
 if(MSVC)
