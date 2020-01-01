@@ -18,7 +18,7 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires.add("cmake_utils/0.3.0#0ec3922f6b2df47dc695bacdbc5491fb972f0a75")
+        self.build_requires.add("cmake_utils/0.3.1#1cf9333e6fba1b7350ec8d4d06f737b54d163eef")
 
     def requirements(self):
         self.requires.add("bzip2/1.0.8#19078e4f77bb5084eb41e9cbe476409920018ec2")
