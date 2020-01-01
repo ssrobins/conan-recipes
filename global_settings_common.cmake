@@ -49,6 +49,10 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 endif()
 
 if(ANDROID)
-    set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -g0")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -g0")
+    add_compile_options(
+        $<$<CONFIG:Release>:-g0> # Don’t generate any debug info
+    )
+    add_link_options(
+        $<$<CONFIG:Release>:-g0> # Don’t generate any debug info
+    )
 endif()
