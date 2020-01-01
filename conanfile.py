@@ -12,7 +12,7 @@ class Conan(ConanFile):
     generators = "cmake"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
-    zip_folder_name = "Box2D-%s" % version
+    zip_folder_name = "%s-%s" % (name, version)
     zip_name = "v%s.tar.gz" % version
     build_subfolder = "build"
     source_subfolder = "source"
