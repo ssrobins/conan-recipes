@@ -20,7 +20,7 @@ class Conan(ConanFile):
     build_subfolder = "build"
 
     def build_requirements(self):
-        self.build_requires.add("cmake_utils/0.3.0#0ec3922f6b2df47dc695bacdbc5491fb972f0a75")
+        self.build_requires.add("cmake_utils/0.3.1#1cf9333e6fba1b7350ec8d4d06f737b54d163eef")
         self.build_requires.add("gtest/1.10.0#39adcd397319f61148b40f694b47ab5b3e6fa320")
 
     def requirements(self):
