@@ -18,4 +18,4 @@ build:
     - lscpu
     - cat /proc/meminfo | grep MemTotal
     - ./build.sh
-    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm
+    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
