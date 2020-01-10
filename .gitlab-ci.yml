@@ -20,7 +20,7 @@ before_script:
     - cat /proc/meminfo | grep MemTotal
     - java -version
     - ./build_$android_arch.sh
-    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm
+    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
   except:
     variables:
       - $desktop_only == "true"
@@ -39,7 +39,7 @@ ios:
   stage: build
   script:
     - ./build_ios.sh
-    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm
+    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
   tags:
     - mac
   except:
@@ -54,13 +54,13 @@ linux:
     - cat /proc/meminfo | grep MemTotal
     - gcc --version
     - ./build_linux.sh
-    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm
+    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
 
 mac:
   stage: build
   script:
     - ./build_mac.sh
-    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm
+    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
   tags:
     - mac
 
@@ -68,6 +68,6 @@ windows:
   stage: build
   script:
     - .\build_windows.bat
-    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm
+    - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
   tags:
     - windows
