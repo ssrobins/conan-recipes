@@ -70,4 +70,4 @@ windows:
     - .\build_windows.bat
     - conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
   tags:
-    - windows
+    - windows-self-hosted
