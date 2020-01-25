@@ -18,12 +18,12 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires.add("cmake_utils/0.3.1#1cf9333e6fba1b7350ec8d4d06f737b54d163eef")
+        self.build_requires.add("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
 
     def requirements(self):
-        self.requires.add("bzip2/1.0.8#19078e4f77bb5084eb41e9cbe476409920018ec2")
-        self.requires.add("libpng/1.6.37#25a502818834d863ef33d29dda4ef11918398da5")
-        self.requires.add("zlib/1.2.11#962c767b8d15f87a313c8a13dfbba1f8b837949e")
+        self.requires.add("bzip2/1.0.8#777773c2d5ce904a333c9a98df86c3f3f848e06d")
+        self.requires.add("libpng/1.6.37#f16019d7df750fab4cb41e559ab04e14615b7967")
+        self.requires.add("zlib/1.2.11#75fcaf34fb01804beebfe637a638e9652a3e0f01")
 
     def source(self):
         tools.download("http://dnqpy.com/libs/%s" % self.zip_name, self.zip_name)
