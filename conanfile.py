@@ -19,10 +19,10 @@ class Conan(ConanFile):
     maj_min_ver = str().join(version.split(".")[0:2])
 
     def build_requirements(self):
-        self.build_requires.add("cmake_utils/0.3.1#1cf9333e6fba1b7350ec8d4d06f737b54d163eef")
+        self.build_requires.add("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
 
     def requirements(self):
-        self.requires.add("zlib/1.2.11#055e5ede2e6ce9a128b5a62b07159477aba871bb")
+        self.requires.add("zlib/1.2.11#75fcaf34fb01804beebfe637a638e9652a3e0f01")
 
     def source(self):
         tools.download("http://dnqpy.com/libs/%s" % self.zip_name, self.zip_name)
