@@ -7,13 +7,13 @@ class Conan(ConanFile):
     description = "OpenGL extension wrangler library"
     homepage = "https://github.com/nigels-com/glew"
     license = "https://github.com/nigels-com/glew/blob/master/LICENSE.txt"
-    url = "https://gitlab.com/ssrobins/conan-" + name
+    url = f"https://gitlab.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
-    zip_folder_name = "%s-%s" % (name, version)
-    zip_name = "%s.tgz" % zip_folder_name
+    zip_folder_name = f"{name}-{version}"
+    zip_name = f"{zip_folder_name}.tgz"
     build_subfolder = "build"
     source_subfolder = "source"
 
@@ -26,9 +26,7 @@ class Conan(ConanFile):
         self.build_requires.add("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
 
     def source(self):
-        tools.download("https://github.com/nigels-com/glew/releases/download/%s/%s" % (self.zip_folder_name, self.zip_name), self.zip_name)
-        tools.unzip(self.zip_name)
-        os.unlink(self.zip_name)
+        tools.get(f"https://github.com/nigels-com/glew/releases/download/{self.zip_folder_name}/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
         # Apply a patch to fix error LNK2001: unresolved external symbol _memset
