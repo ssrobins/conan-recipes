@@ -7,13 +7,13 @@ class Conan(ConanFile):
     description = "Freely available software library to render fonts"
     homepage = "https://www.freetype.org/"
     license = "FTL https://www.freetype.org/license.html"
-    url = "https://gitlab.com/ssrobins/conan-" + name
+    url = f"https://gitlab.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
-    zip_folder_name = "%s-%s" % (name, version)
-    zip_name = "%s.tar.gz" % zip_folder_name
+    zip_folder_name = f"{name}-{version}"
+    zip_name = f"{zip_folder_name}.tar.gz"
     build_subfolder = "build"
     source_subfolder = "source"
 
@@ -26,9 +26,7 @@ class Conan(ConanFile):
         self.requires.add("zlib/1.2.11#75fcaf34fb01804beebfe637a638e9652a3e0f01")
 
     def source(self):
-        tools.download("http://dnqpy.com/libs/%s" % self.zip_name, self.zip_name)
-        tools.unzip(self.zip_name)
-        os.unlink(self.zip_name)
+        tools.get(f"http://dnqpy.com/libs/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
     def build(self):
