@@ -7,13 +7,13 @@ class Conan(ConanFile):
     description = "A compression library based on Burrows–Wheeler algorithm"
     homepage = "http://www.bzip.org/"
     license = "BSD-like license"
-    url = "https://gitlab.com/ssrobins/conan-" + name
+    url = f"https://gitlab.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
-    exports_sources = ["CMakeLists.txt", "CMakeLists-%s.txt" % name]
-    zip_folder_name = "%s-%s" % (name, version)
-    zip_name = "%s.tar.gz" % zip_folder_name
+    exports_sources = ["CMakeLists.txt", f"CMakeLists-{name}.txt"]
+    zip_folder_name = f"{name}-{version}"
+    zip_name = f"{zip_folder_name}.tar.gz"
     build_subfolder = "build"
     source_subfolder = "source"
 
@@ -21,11 +21,9 @@ class Conan(ConanFile):
         self.build_requires.add("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
 
     def source(self):
-        tools.download("http://dnqpy.com/libs/%s" % self.zip_name, self.zip_name)
-        tools.unzip(self.zip_name)
-        os.unlink(self.zip_name)
+        tools.get(f"http://dnqpy.com/libs/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
-        shutil.move("CMakeLists-%s.txt" % self.name, os.path.join(self.source_subfolder, "CMakeLists.txt"))
+        shutil.move(f"CMakeLists-{self.name}.txt", os.path.join(self.source_subfolder, "CMakeLists.txt"))
 
     def build(self):
         from cmake_utils import cmake_init, cmake_build_debug_release
