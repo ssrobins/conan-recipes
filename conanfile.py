@@ -7,13 +7,13 @@ class Conan(ConanFile):
     description = "Google's C++ test framework"
     homepage = "https://github.com/google/googletest"
     license = "BSD-3-Clause"
-    url = "https://gitlab.com/ssrobins/conan-" + name
+    url = f"https://gitlab.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
-    zip_folder_name = "googletest-release-%s" % version
-    zip_name = "release-%s.tar.gz" % version
+    zip_folder_name = f"googletest-release-{version}"
+    zip_name = f"release-{version}.tar.gz"
     build_subfolder = "build"
     source_subfolder = "source"
 
@@ -21,9 +21,7 @@ class Conan(ConanFile):
         self.build_requires.add("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
 
     def source(self):
-        tools.download("https://github.com/google/googletest/archive/%s" % self.zip_name, self.zip_name)
-        tools.unzip(self.zip_name)
-        os.unlink(self.zip_name)
+        tools.get(f"https://github.com/google/googletest/archive/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
     def build(self):
