@@ -7,13 +7,13 @@ class Conan(ConanFile):
     description = "A library that loads image files as SDL surfaces and textures"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
     license = "Zlib"
-    url = "https://gitlab.com/ssrobins/conan-" + name
+    url = f"https://gitlab.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
-    exports_sources = ["CMakeLists.txt", "CMakeLists-%s.txt" % name]
-    zip_folder_name = "SDL2_image-%s" % version
-    zip_name = "%s.tar.gz" % zip_folder_name
+    exports_sources = ["CMakeLists.txt", f"CMakeLists-{name}.txt"]
+    zip_folder_name = f"SDL2_image-{version}"
+    zip_name = f"{zip_folder_name}.tar.gz"
     build_subfolder = "build"
     source_subfolder = "source"
 
@@ -25,11 +25,9 @@ class Conan(ConanFile):
         self.requires.add("sdl2/2.0.8#60fdb231f6e74bb622017585003a2c09c82d8b35")
 
     def source(self):
-        tools.download("https://www.libsdl.org/projects/SDL_image/release/%s" % self.zip_name, self.zip_name)
-        tools.unzip(self.zip_name)
-        os.unlink(self.zip_name)
+        tools.get(f"https://www.libsdl.org/projects/SDL_image/release/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
-        shutil.move("CMakeLists-%s.txt" % self.name, os.path.join(self.source_subfolder, "CMakeLists.txt"))
+        shutil.move(f"CMakeLists-{self.name}.txt", os.path.join(self.source_subfolder, "CMakeLists.txt"))
 
     def build(self):
         from cmake_utils import cmake_init, cmake_build_debug_release
