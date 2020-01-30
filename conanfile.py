@@ -7,14 +7,14 @@ class Conan(ConanFile):
     description = "Simple and fast multimedia library"
     homepage = "https://www.sfml-dev.org/"
     license = "Zlib"
-    url = "https://gitlab.com/ssrobins/conan-" + name
+    url = f"https://gitlab.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
     exports = "cmake_utils.py"
     exports_sources = ["AudioDevice.diff", "CMakeLists.txt"]
-    zip_folder_name = "SFML-%s" % version
-    zip_name = "%s-sources.zip" % zip_folder_name
+    zip_folder_name = f"SFML-{version}"
+    zip_name = f"{zip_folder_name}-sources.zip"
     build_subfolder = "build"
     source_subfolder = "source"
 
@@ -32,9 +32,7 @@ class Conan(ConanFile):
         self.build_requires.add("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
 
     def source(self):
-        tools.download("https://www.sfml-dev.org/files/%s" % self.zip_name, self.zip_name)
-        tools.unzip(self.zip_name)
-        os.unlink(self.zip_name)
+        tools.get(f"https://www.sfml-dev.org/files/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
         # Replace auto_ptr with unique_ptr to fix build errors when using the C++17 standard
@@ -68,6 +66,6 @@ class Conan(ConanFile):
         elif self.settings.os == "Macos":
             frameworks = ["Carbon", "Cocoa", "CoreFoundation", "CoreGraphics", "IOKit", "OpenGL"]
             for framework in frameworks:
-                self.cpp_info.exelinkflags.append("-framework %s" % framework)
+                self.cpp_info.exelinkflags.append(f"-framework {framework}")
             self.cpp_info.exelinkflags.append("-ObjC")
         self.cpp_info.defines = ["SFML_STATIC"]
