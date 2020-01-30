@@ -9,15 +9,15 @@ class Conan(ConanFile):
                   "(Also Free, Not to Mention Unencumbered by Patents)"
     homepage = "https://zlib.net/"
     license = "Zlib"
-    url = "https://gitlab.com/ssrobins/conan-" + name
+    url = f"https://gitlab.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=False"
     generators = "cmake"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
-    zip_folder_name = "%s-%s" % (name, version)
-    zip_name = "%s.tar.gz" % zip_folder_name
+    zip_folder_name = f"{name}-{version}"
+    zip_name = f"{zip_folder_name}.tar.gz"
     build_subfolder = "build"
     source_subfolder = "source"
 
@@ -25,10 +25,8 @@ class Conan(ConanFile):
         self.build_requires.add("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
 
     def source(self):
-        tools.download("https://zlib.net/%s" % self.zip_name, self.zip_name)
-        tools.unzip(self.zip_name)
-        files.rmdir("%s/contrib" % self.zip_folder_name)
-        os.unlink(self.zip_name)
+        tools.get(f"https://zlib.net/{self.zip_name}",
+            sha256="c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1")
         os.rename(self.zip_folder_name, self.source_subfolder)
         
         # Patch the CMakeLists.txt file with:
