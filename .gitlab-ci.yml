@@ -13,7 +13,7 @@ before_script:
   - conan user --password $CONAN_API_KEY --remote bintray-stever stever
 
 .android:
-  image: registry.gitlab.com/ssrobins/docker-android-build:jdk8u212-b04-ndk21
+  image: registry.gitlab.com/ssrobins/docker-android-build:jdk8u242-ndk21
   stage: build
   script:
     - lscpu

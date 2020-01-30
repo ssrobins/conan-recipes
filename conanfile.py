@@ -4,9 +4,9 @@ class Conan(ConanFile):
     name = "ssrobins_engine"
     version = "0.2.0"
     description = "Thin game engine wrapper"
-    homepage = "https://gitlab.com/ssrobins/conan-" + name
+    homepage = f"https://gitlab.com/ssrobins/conan-{name}"
     license = "MIT"
-    url = "https://gitlab.com/ssrobins/conan-" + name
+    url = f"https://gitlab.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
