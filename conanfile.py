@@ -9,13 +9,13 @@ class Conan(ConanFile):
                   "via OpenGL and Direct3D."
     homepage = "https://www.libsdl.org"
     license = "Zlib https://www.libsdl.org/license.php"
-    url = "https://gitlab.com/ssrobins/conan-" + name
+    url = f"https://gitlab.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
-    zip_folder_name = "SDL2-%s" % version
-    zip_name = "%s.tar.gz" % zip_folder_name
+    zip_folder_name = f"SDL2-{version}"
+    zip_name = f"{zip_folder_name}.tar.gz"
     build_subfolder = "build"
     source_subfolder = "source"
 
@@ -28,9 +28,7 @@ class Conan(ConanFile):
         self.build_requires.add("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
 
     def source(self):
-        tools.download("https://www.libsdl.org/release/%s" % self.zip_name, self.zip_name)
-        tools.unzip(self.zip_name)
-        os.unlink(self.zip_name)
+        tools.get(f"https://www.libsdl.org/release/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
         
         # Apply a patch to the SDL2 CMakeLists.txt file with the following changes:
@@ -69,7 +67,7 @@ class Conan(ConanFile):
             self.cpp_info.libs.append("iconv")
             frameworks = ["Cocoa", "Carbon", "IOKit", "CoreVideo", "CoreAudio", "AudioToolbox", "ForceFeedback"]
             for framework in frameworks:
-                self.cpp_info.exelinkflags.append("-framework %s" % framework)
+                self.cpp_info.exelinkflags.append(f"-framework {framework}")
         elif self.settings.os == "Android":
             system_libs = ["android", "GLESv2", "log"]
             self.cpp_info.debug.libs.extend(system_libs)
@@ -77,6 +75,6 @@ class Conan(ConanFile):
         elif self.settings.os == "iOS":
             frameworks = ["AVFoundation", "CoreGraphics", "CoreMotion", "Foundation", "GameController", "Metal", "OpenGLES", "QuartzCore", "UIKit", "CoreVideo", "IOKit", "CoreAudio", "AudioToolbox"]
             for framework in frameworks:
-                self.cpp_info.exelinkflags.append("-framework %s" % framework)
+                self.cpp_info.exelinkflags.append(f"-framework {framework}")
         elif self.settings.os == "Android":
             self.cpp_info.libs.extend(["android"])
