@@ -16,6 +16,12 @@ endif()
 add_subdirectory(source)
 
 if(MSVC)
+    # Workaround for issue in Windows SDK 10.0.18362.0
+    target_compile_definitions(SDL2-static
+      PRIVATE
+        WINDOWS_IGNORE_PACKING_MISMATCH
+    )
+
     target_compile_options(SDL2-static
       PRIVATE
         /Fd$<TARGET_FILE_DIR:SDL2-static>/SDL2-static$<$<CONFIG:Debug>:d>.pdb
