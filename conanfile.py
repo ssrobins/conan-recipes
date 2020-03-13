@@ -18,7 +18,7 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires.add("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
+        self.build_requires("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
     
     def source(self):
         tools.get(f"https://github.com/erincatto/Box2D/archive/{self.zip_name}")
