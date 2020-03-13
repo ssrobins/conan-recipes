@@ -47,6 +47,10 @@ function(add_sdl2_executable target_name)
             ${CMAKE_CURRENT_BINARY_DIR}/Android/app/build.gradle
         )
         configure_file (
+            ${package_root_path}/Android/local.properties
+            ${CMAKE_CURRENT_BINARY_DIR}/Android/local.properties
+        )
+        configure_file (
             ${package_root_path}/Android/templates/MainActivity.java
             ${CMAKE_CURRENT_BINARY_DIR}/Android/app/src/main/java/com/${company}/${target_name}/MainActivity.java
         )
