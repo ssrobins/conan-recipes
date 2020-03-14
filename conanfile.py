@@ -18,10 +18,10 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
+        self.build_requires("cmake_utils/0.3.1#09e87aa7b71951c0c77bbf861baaaa53c3d55830")
     
     def requirements(self):
-        self.requires("sdl2/2.0.8#60fdb231f6e74bb622017585003a2c09c82d8b35")
+        self.requires("sdl2/2.0.8#51a526f605844c5d5f73275bf3fe1ad121509866")
 
     def source(self):
         tools.get(f"https://www.libsdl.org/projects/SDL_mixer/release/{self.zip_name}")
