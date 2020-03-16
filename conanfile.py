@@ -22,7 +22,7 @@ class Conan(ConanFile):
         self.build_requires("cmake_utils/0.3.1#d093c585be2418d6a664babbec39e71d6b5cd11d")
 
     def requirements(self):
-        self.requires("zlib/1.2.11#de8c3de7c5b657cd43fcee20acc5de53e9ca9a25")
+        self.requires("zlib/1.2.11#ca26ed795b42476e695beedafde7512202ba2d94")
 
     def source(self):
         tools.get(f"http://dnqpy.com/libs/{self.zip_name}",
