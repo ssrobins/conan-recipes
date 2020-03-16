@@ -3,7 +3,7 @@ from conans import tools
 
 def cmake_init(settings, cmake, build_folder):
     if settings.os == "Android":
-        cmake.generator = "Ninja"
+        cmake.generator = "Ninja Multi-Config"
         if settings.arch == "armv7":
             cmake.definitions["ANDROID_ABI"] = "armeabi-v7a"
         elif settings.arch == "armv8":
@@ -23,7 +23,7 @@ def cmake_init(settings, cmake, build_folder):
             cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7 arm64"
         cmake.definitions["CMAKE_TRY_COMPILE_TARGET_TYPE"] = "STATIC_LIBRARY"
     elif settings.os == "Linux":
-        cmake.generator = "Ninja"
+        cmake.generator = "Ninja Multi-Config"
     elif settings.os == "Macos":
         cmake.generator = "Xcode"
         if settings.os.version:
@@ -36,21 +36,11 @@ def configure_cmake(cmake, build_subfolder, config=None):
     cmake.configure(build_dir=build_subfolder)
 
 def cmake_build_debug_release(cmake, build_subfolder, run):
-    if cmake.is_multi_configuration:
+    for config in ("Debug", "Release"):
         configure_cmake(cmake, build_subfolder)
-        cmake.build(args=["--config", "Debug", "--verbose"])
-        cmake.build(args=["--config", "Release", "--verbose"])
+        cmake.build(args=["--config", config, "--verbose"])
         with tools.chdir(build_subfolder):
-            run("ctest -C Debug --output-on-failure")
-            run("ctest -C Release --output-on-failure")
-    else:
-        for config in ("Debug", "Release"):
-            configure_cmake(cmake, build_subfolder, config)
-            cmake.build(["--verbose"])
-            with tools.chdir(build_subfolder):
-                run("ctest -C " + config + " --output-on-failure")
-            shutil.rmtree(os.path.join(build_subfolder, "CMakeFiles"))
-            os.remove(os.path.join(build_subfolder, "CMakeCache.txt"))
+            run(f"ctest -C {config} --output-on-failure")
 
 def cmake_install_debug_release(cmake, build_subfolder):
     if cmake.is_multi_configuration:
