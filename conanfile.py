@@ -23,7 +23,7 @@ class Conan(ConanFile):
             installer.install("freeglut3-dev")
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#7b308615a235fdf046db096dd35325c0375c2f88")
+        self.build_requires("cmake_utils/0.3.1#ef4b17b719b492e121bed4400564c46a83b67077")
 
     def source(self):
         tools.get(f"https://github.com/nigels-com/glew/releases/download/{self.zip_folder_name}/{self.zip_name}")
