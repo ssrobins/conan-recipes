@@ -18,7 +18,7 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#ef4b17b719b492e121bed4400564c46a83b67077")
+        self.build_requires("cmake_utils/0.3.1#d093c585be2418d6a664babbec39e71d6b5cd11d")
 
     def source(self):
         tools.get(f"https://github.com/google/googletest/archive/{self.zip_name}")
