@@ -43,13 +43,6 @@ def cmake_build_debug_release(cmake, build_subfolder, run):
             run(f"ctest -C {config} --output-on-failure")
 
 def cmake_install_debug_release(cmake, build_subfolder):
-    if cmake.is_multi_configuration:
-        configure_cmake(cmake, build_subfolder)
-        cmake.install(args=["--config", "Debug"])
-        cmake.install(args=["--config", "Release"])
-    else:
-        for config in ("Debug", "Release"):
-            configure_cmake(cmake, build_subfolder, config)
-            cmake.install()
-            shutil.rmtree(os.path.join(build_subfolder, "CMakeFiles"))
-            os.remove(os.path.join(build_subfolder, "CMakeCache.txt"))
+    configure_cmake(cmake, build_subfolder)
+    cmake.install(args=["--config", "Debug"])
+    cmake.install(args=["--config", "Release"])
