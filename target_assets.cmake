@@ -9,7 +9,7 @@ function(target_assets target_name assets_path)
             REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
         if(IOS)
-            set(assets_dest_dir ${assets_dir})
+            set(assets_dest_path $<TARGET_FILE_DIR:${target_name}>/${assets_dir})
             add_custom_command(
                 TARGET ${target_name}
                 PRE_BUILD
@@ -18,11 +18,11 @@ function(target_assets target_name assets_path)
                     --folderPath=${assets_path} --target=${target_name}
             )
         elseif(APPLE)
-            set(assets_dest_dir $<IF:$<BOOL:$<TARGET_PROPERTY:${target_name},MACOSX_BUNDLE>>,../Resources/${assets_dir},${assets_dir}>)
+            set(assets_dest_path $<TARGET_FILE_DIR:${target_name}>/$<IF:$<BOOL:$<TARGET_PROPERTY:${target_name},MACOSX_BUNDLE>>,../Resources/${assets_dir},${assets_dir}>)
         elseif(ANDROID)
-            set(assets_dest_dir Android/app/src/main/assets/${assets_dir})
+            set(assets_dest_path ${CMAKE_CURRENT_BINARY_DIR}/Android/app/src/main/assets/${assets_dir})
         else()
-            set(assets_dest_dir ${assets_dir})
+            set(assets_dest_path $<TARGET_FILE_DIR:${target_name}>/${assets_dir})
         endif()
 
         add_custom_command(
@@ -30,7 +30,7 @@ function(target_assets target_name assets_path)
             PRE_BUILD
             COMMAND cmake -E copy_directory
                 ${assets_path}
-                $<TARGET_FILE_DIR:${target_name}>/${assets_dest_dir}
+                ${assets_dest_path}
         )
 
         if(NOT IOS AND NOT ANDROID)
