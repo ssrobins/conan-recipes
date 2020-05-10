@@ -18,11 +18,11 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#d093c585be2418d6a664babbec39e71d6b5cd11d")
+        self.build_requires("cmake_utils/0.3.1#b92e3b563e31a4fe0e55849f3bfdb55eb7b06284")
     
     def requirements(self):
-        self.requires("freetype/2.10.1#0b3e6d785894831578678a6071b8b51e99eb58ff")
-        self.requires("sdl2/2.0.8#ecad87bc0bf63f851560e29d3b2e0d1881051544")
+        self.requires("freetype/2.10.2#aee10261250086cab45e98dcb00d439a8dcd9efd")
+        self.requires("sdl2/2.0.8#86edff7dd2e2ec1bef243a477b57e8d1e824ec13")
 
     def source(self):
         tools.get(f"https://www.libsdl.org/projects/SDL_ttf/release/{self.zip_name}")
