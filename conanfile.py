@@ -31,6 +31,9 @@ class Conan(ConanFile):
     def build_requirements(self):
         self.build_requires("cmake_utils/0.3.1#b92e3b563e31a4fe0e55849f3bfdb55eb7b06284")
 
+    def requirements(self):
+        self.requires("freetype/2.10.2#623f3f456d41e8ff4e98fce64da2134c536a6422")
+
     def source(self):
         tools.get(f"https://www.sfml-dev.org/files/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
