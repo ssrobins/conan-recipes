@@ -4,7 +4,7 @@ android {
     compileSdkVersion ${android_sdk_version}
     defaultConfig {
         applicationId "com.${company}.${target_name}"
-        minSdkVersion $ENV{android_min_sdk_version}
+        minSdkVersion ${android_min_sdk_version}
         targetSdkVersion ${android_sdk_version}
         versionCode ${version_code}
         versionName "${PROJECT_VERSION}"
