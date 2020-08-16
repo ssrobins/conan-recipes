@@ -36,7 +36,14 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
+    task cmake(type:Exec) {
+        workingDir '${CMAKE_SOURCE_DIR}'
+        commandLine '${CMAKE_COMMAND}', '--build', '${CMAKE_BINARY_DIR}', '--target', '${target_name}', '--verbose'
+    }
 }
+
+preBuild.dependsOn cmake
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
