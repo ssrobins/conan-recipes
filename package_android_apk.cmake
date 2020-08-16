@@ -8,7 +8,7 @@ function(gradle_build component)
     message("\n\nBuilding APK for ${package_name}")
 
     execute_process(
-        COMMAND sh ./gradlew assemble${CPACK_BUILD_CONFIG}
+        COMMAND ./gradlew assemble${CPACK_BUILD_CONFIG}
         WORKING_DIRECTORY ${CPACK_TEMPORARY_DIRECTORY}/${component}
         RESULT_VARIABLE gradle_result
     )
