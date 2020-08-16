@@ -1,8 +1,10 @@
 function(install_executable target_name)
     set(component_name ${target_name}_${PROJECT_VERSION}_${platform})
 
+    set(androidstudio_path ${CMAKE_BINARY_DIR}/AndroidStudio/${target_name})
+
     if(ANDROID)
-        install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Android DESTINATION . COMPONENT ${component_name})
+        install(DIRECTORY ${androidstudio_path} DESTINATION . COMPONENT ${component_name})
     elseif(IOS)
         configure_file(${CONAN_CMAKE_UTILS_ROOT}/export_options.plist export_options.plist)
         install(FILES ${CMAKE_CURRENT_BINARY_DIR}/export_options.plist DESTINATION . COMPONENT ${component_name})

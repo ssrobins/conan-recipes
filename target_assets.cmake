@@ -2,6 +2,8 @@ function(target_assets target_name assets_path)
     set(assets_path_list ${ARGV})
     list(REMOVE_AT assets_path_list 0)
 
+    set(androidstudio_path ${CMAKE_BINARY_DIR}/AndroidStudio/${target_name})
+
     foreach(assets_path ${assets_path_list})
         get_filename_component(assets_dir "${assets_path}" NAME)
 
@@ -20,7 +22,7 @@ function(target_assets target_name assets_path)
         elseif(APPLE)
             set(assets_dest_path $<TARGET_FILE_DIR:${target_name}>/$<IF:$<BOOL:$<TARGET_PROPERTY:${target_name},MACOSX_BUNDLE>>,../Resources/${assets_dir},${assets_dir}>)
         elseif(ANDROID)
-            set(assets_dest_path ${CMAKE_CURRENT_BINARY_DIR}/Android/app/src/main/assets/${assets_dir})
+            set(assets_dest_path ${androidstudio_path}/app/src/main/assets/${assets_dir})
         else()
             set(assets_dest_path $<TARGET_FILE_DIR:${target_name}>/${assets_dir})
         endif()
