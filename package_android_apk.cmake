@@ -9,7 +9,7 @@ function(gradle_build component)
 
     execute_process(
         COMMAND sh ./gradlew assemble${CPACK_BUILD_CONFIG}
-        WORKING_DIRECTORY ${CPACK_TEMPORARY_DIRECTORY}/${component}/Android
+        WORKING_DIRECTORY ${CPACK_TEMPORARY_DIRECTORY}/${component}
         RESULT_VARIABLE gradle_result
     )
     if(gradle_result)
@@ -17,7 +17,7 @@ function(gradle_build component)
     endif()
 
     file(GLOB_RECURSE apk_files
-        "${CPACK_TEMPORARY_DIRECTORY}/${component}/Android/app/build/outputs/apk/*.apk"
+        "${CPACK_TEMPORARY_DIRECTORY}/${component}/app/build/outputs/apk/*.apk"
     )
     file(COPY ${apk_files} DESTINATION ${CPACK_PACKAGE_DIRECTORY})
 endfunction(gradle_build)
