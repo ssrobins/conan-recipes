@@ -9,12 +9,13 @@ function(gradle_build component)
 
     if(WIN32)
         set(gradle_command gradlew.bat)
+        set(gradle_extra_params -Dorg.gradle.daemon.idletimeout=1000)
     else()
         set(gradle_command ./gradlew)
     endif()
 
     execute_process(
-        COMMAND ${gradle_command} assemble${CPACK_BUILD_CONFIG} -Dorg.gradle.daemon.idletimeout=1000
+        COMMAND ${gradle_command} assemble${CPACK_BUILD_CONFIG} ${gradle_extra_params}
         WORKING_DIRECTORY ${CPACK_TEMPORARY_DIRECTORY}/${component}
         RESULT_VARIABLE gradle_result
     )
