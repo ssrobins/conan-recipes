@@ -7,8 +7,14 @@ function(gradle_build component)
 
     message("\n\nBuilding APK for ${package_name}")
 
+    if(WIN32)
+        set(gradle_command gradlew.bat)
+    else()
+        set(gradle_command ./gradlew)
+    endif()
+
     execute_process(
-        COMMAND ./gradlew assemble${CPACK_BUILD_CONFIG}
+        COMMAND ${gradle_command} assemble${CPACK_BUILD_CONFIG} -Dorg.gradle.daemon.idletimeout=1000
         WORKING_DIRECTORY ${CPACK_TEMPORARY_DIRECTORY}/${component}
         RESULT_VARIABLE gradle_result
     )
