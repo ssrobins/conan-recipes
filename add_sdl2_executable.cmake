@@ -48,6 +48,8 @@ function(add_sdl2_executable target_name)
             ${package_root_path}/Android/app/build.gradle
             ${androidstudio_path}/app/build.gradle
         )
+        string(REGEX REPLACE "\\\\" "/" ANDROID_NDK_ROOT $ENV{ANDROID_NDK_ROOT})
+        string(REGEX REPLACE "\\\\" "/" ANDROID_SDK_ROOT $ENV{ANDROID_SDK_ROOT})
         configure_file (
             ${package_root_path}/Android/local.properties
             ${androidstudio_path}/local.properties
