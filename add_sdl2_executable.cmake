@@ -50,6 +50,8 @@ function(add_sdl2_executable target_name)
         )
         string(REGEX REPLACE "\\\\" "/" ANDROID_NDK_ROOT $ENV{ANDROID_NDK_ROOT})
         string(REGEX REPLACE "\\\\" "/" ANDROID_SDK_ROOT $ENV{ANDROID_SDK_ROOT})
+        get_filename_component(cmake_dir "${CMAKE_COMMAND}" DIRECTORY)
+        get_filename_component(cmake_dir "${cmake_dir}" DIRECTORY)
         configure_file (
             ${package_root_path}/Android/local.properties
             ${androidstudio_path}/local.properties
