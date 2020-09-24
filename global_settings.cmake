@@ -1,7 +1,7 @@
 include(${CMAKE_CURRENT_LIST_DIR}/global_settings_common.cmake)
 
 if(ANDROID)
-    set(android_sdk_version 29)
+    set(android_sdk_version 30)
 endif()
 
 set(company dnqpy)
