@@ -2,7 +2,7 @@ function(gradle_build component)
     if(component)
         set(package_name ${component})
     else()
-        set(package_name ${CPACK_PACKAGE_NAME})
+        get_filename_component(package_name ${CPACK_TEMPORARY_DIRECTORY} NAME)
     endif()
 
     message("\n\nBuilding APK for ${package_name}")
@@ -22,6 +22,11 @@ function(gradle_build component)
     if(gradle_result)
         message(FATAL_ERROR "Gradle error")
     endif()
+
+    file(GLOB_RECURSE apk_path_original "${CPACK_TEMPORARY_DIRECTORY}/${component}/*.apk")
+    set(apk_path_new "${CPACK_TEMPORARY_DIRECTORY}/${component}/${package_name}_${CPACK_ANDROID_ABI}.apk")
+    file(RENAME ${apk_path_original} ${apk_path_new})
+    file(COPY ${apk_path_new} DESTINATION ${CPACK_PACKAGE_DIRECTORY})
 
     file(GLOB_RECURSE apk_files
         "${CPACK_TEMPORARY_DIRECTORY}/${component}/app/build/outputs/apk/*.apk"

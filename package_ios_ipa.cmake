@@ -17,10 +17,10 @@ function(xcode_package component)
         message(FATAL_ERROR "Xcode error")
     endif()
 
-    file(GLOB_RECURSE ipa_files
-        "${CPACK_TEMPORARY_DIRECTORY}/${component}/*.ipa"
-    )
-    file(COPY ${ipa_files} DESTINATION ${CPACK_PACKAGE_DIRECTORY})
+    file(GLOB ipa_path_original "${CPACK_TEMPORARY_DIRECTORY}/${component}/*.ipa")
+    set(ipa_path_new "${CPACK_TEMPORARY_DIRECTORY}/${component}/${package_name}.ipa")
+    file(RENAME ${ipa_path_original} ${ipa_path_new})
+    file(COPY ${ipa_path_new} DESTINATION ${CPACK_PACKAGE_DIRECTORY})
 endfunction(xcode_package)
 
 
