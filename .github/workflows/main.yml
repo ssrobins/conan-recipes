@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  CONAN_REVISIONS_ENABLED: 1
+  CONAN_SYSREQUIRES_SUDO: 0
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    container: ghcr.io/ssrobins/docker-linux-build:gcc9.3.0
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Print environment variables
+        run: env
+
+      - name: Install Conan
+        run: pip3 install conan --upgrade
+
+      - name: Print versions
+        run: |
+          cmake --version
+          conan --version
+
+      - name: Build
+        run: ./build.sh
+
+      - name: Conan package upload
+        run: |
+          conan user --password ${{ secrets.CONAN_API_KEY }} --remote bintray-stever stever
+          conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
