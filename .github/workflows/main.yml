@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  CONAN_REVISIONS_ENABLED: 1
+  CONAN_SYSREQUIRES_SUDO: 0
+
+jobs:
+  builds:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux
+            os: ubuntu-20.04
+            container: ghcr.io/ssrobins/docker-linux-build:gcc9.3.0
+            script: ./build_linux.sh
+          - name: macos
+            os: macos-10.15
+            script: ./build_mac.sh
+          - name: windows
+            os: windows-2019
+            script: .\build_windows.bat
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Print environment variables
+        run: env
+
+      - name: Install Conan
+        run: pip3 install conan --upgrade
+
+      - name: Print versions
+        run: |
+          cmake --version
+          conan --version
+
+      - name: Build
+        run: ${{ matrix.script }}
+        env:
+          DEVELOPER_DIR: /Applications/Xcode_12.0.0.app/Contents/Developer
+
+      - name: Conan package upload
+        run: |
+          conan user --password ${{ secrets.CONAN_API_KEY }} --remote bintray-stever stever
+          conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
