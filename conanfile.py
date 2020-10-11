@@ -7,7 +7,7 @@ class Conan(ConanFile):
     description = "A sample multi-channel audio mixer library"
     homepage = "https://www.libsdl.org/projects/SDL_mixer/"
     license = "Zlib"
-    url = f"https://gitlab.com/ssrobins/conan-{name}"
+    url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
@@ -18,10 +18,10 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#217df94bdd79aaa9b2aec1a8bd8b4eca73411f25")
+        self.build_requires("cmake_utils/0.3.1#724fce6f13f84579d39b6983af6213c414d69e7b")
     
     def requirements(self):
-        self.requires("sdl2/2.0.8#b16a079e0dd4a2a068a287212aaf9ec0cfaa1fa0")
+        self.requires("sdl2/2.0.8#e824c9c0c6aaad95da3437224a23f50cf6295b8a")
 
     def source(self):
         tools.get(f"https://www.libsdl.org/projects/SDL_mixer/release/{self.zip_name}")
