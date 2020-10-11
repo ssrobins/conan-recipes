@@ -7,7 +7,7 @@ class Conan(ConanFile):
     description = "Simple and fast multimedia library"
     homepage = "https://www.sfml-dev.org/"
     license = "Zlib"
-    url = f"https://gitlab.com/ssrobins/conan-{name}"
+    url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
@@ -29,10 +29,10 @@ class Conan(ConanFile):
             installer.install("libxrandr-dev")
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#217df94bdd79aaa9b2aec1a8bd8b4eca73411f25")
+        self.build_requires("cmake_utils/0.3.1#724fce6f13f84579d39b6983af6213c414d69e7b")
 
     def requirements(self):
-        self.requires("freetype/2.10.2#7d99d40f4525fb7c598c904e8ed503b923693fdb")
+        self.requires("freetype/2.10.3#4c236b3a594caf5df3846148f80686fe44037cb9")
 
     def source(self):
         tools.get(f"https://www.sfml-dev.org/files/{self.zip_name}")
