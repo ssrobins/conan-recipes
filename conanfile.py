@@ -21,7 +21,7 @@ class Conan(ConanFile):
         self.build_requires("cmake_utils/0.3.1#724fce6f13f84579d39b6983af6213c414d69e7b")
     
     def requirements(self):
-        self.requires("freetype/2.10.3#4c236b3a594caf5df3846148f80686fe44037cb9")
+        self.requires("freetype/2.10.3#21d5e54e781f51125a9b6b1d9a3b9fe5aa21e928")
         self.requires("sdl2/2.0.8#e824c9c0c6aaad95da3437224a23f50cf6295b8a")
 
     def source(self):
