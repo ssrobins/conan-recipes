@@ -9,7 +9,7 @@ class Conan(ConanFile):
                   "via OpenGL and Direct3D."
     homepage = "https://www.libsdl.org"
     license = "Zlib https://www.libsdl.org/license.php"
-    url = f"https://gitlab.com/ssrobins/conan-{name}"
+    url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
@@ -25,7 +25,7 @@ class Conan(ConanFile):
             installer.install("libasound2-dev")
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#217df94bdd79aaa9b2aec1a8bd8b4eca73411f25")
+        self.build_requires("cmake_utils/0.3.1#724fce6f13f84579d39b6983af6213c414d69e7b")
 
     def source(self):
         tools.get(f"https://www.libsdl.org/release/{self.zip_name}")
