@@ -4,9 +4,9 @@ class Conan(ConanFile):
     name = "ssrobins_engine"
     version = "0.2.0"
     description = "Thin game engine wrapper"
-    homepage = f"https://gitlab.com/ssrobins/conan-{name}"
+    homepage = f"https://github.com/ssrobins/conan-{name}"
     license = "MIT"
-    url = f"https://gitlab.com/ssrobins/conan-{name}"
+    url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
@@ -20,13 +20,13 @@ class Conan(ConanFile):
     build_subfolder = "build"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#217df94bdd79aaa9b2aec1a8bd8b4eca73411f25")
-        self.build_requires("gtest/1.10.0#af5a75e307b6039ab662434cb838441f1342fb51")
+        self.build_requires("cmake_utils/0.3.1#724fce6f13f84579d39b6983af6213c414d69e7b")
+        self.build_requires("gtest/1.10.0#7c3aed2f3f8f76d9bf994bcf17364ef0fa583452")
 
     def requirements(self):
-        self.requires("sdl2/2.0.8#b16a079e0dd4a2a068a287212aaf9ec0cfaa1fa0")
-        self.requires("sdl2_image/2.0.5#5f88748804f984c2827a78502850ae808dcd801a")
-        self.requires("sdl2_ttf/2.0.15#0a9c42d9afe2523e1af87256a8d55eb917b6bac9")
+        self.requires("sdl2/2.0.8#e824c9c0c6aaad95da3437224a23f50cf6295b8a")
+        self.requires("sdl2_image/2.0.5#485aa2e04720fe028ef6ab6ede2476ba179cc0cd")
+        self.requires("sdl2_ttf/2.0.15#9fbc935d3c9b230d366497f4d9698a1ee7aaff9a")
 
     def build(self):
         from cmake_utils import cmake_init, cmake_build_debug_release
