@@ -7,7 +7,7 @@ class Conan(ConanFile):
     description = "Official PNG image format reference library"
     homepage = "http://www.libpng.org"
     license = "Libpng http://www.libpng.org/pub/png/src/libpng-LICENSE.txt"
-    url = f"https://gitlab.com/ssrobins/conan-{name}"
+    url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
@@ -19,10 +19,10 @@ class Conan(ConanFile):
     maj_min_ver = str().join(version.split(".")[0:2])
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#217df94bdd79aaa9b2aec1a8bd8b4eca73411f25")
+        self.build_requires("cmake_utils/0.3.1#724fce6f13f84579d39b6983af6213c414d69e7b")
 
     def requirements(self):
-        self.requires("zlib/1.2.11#066f0e866525a86d8bb2187ae82806bb2e5bddbb")
+        self.requires("zlib/1.2.11#752537e2232a115f64b3b36a84eb56e92e42356b")
 
     def source(self):
         tools.get(f"http://dnqpy.com/libs/{self.zip_name}",
