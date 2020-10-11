@@ -9,7 +9,7 @@ class Conan(ConanFile):
                   "(Also Free, Not to Mention Unencumbered by Patents)"
     homepage = "https://zlib.net/"
     license = "Zlib"
-    url = f"https://gitlab.com/ssrobins/conan-{name}"
+    url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "compiler", "arch"
     options = {"shared": [True, False]}
     default_options = "shared=False"
@@ -22,7 +22,7 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#217df94bdd79aaa9b2aec1a8bd8b4eca73411f25")
+        self.build_requires("cmake_utils/0.3.1#724fce6f13f84579d39b6983af6213c414d69e7b")
 
     def source(self):
         tools.get(f"https://zlib.net/{self.zip_name}",
