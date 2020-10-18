@@ -11,6 +11,7 @@ set(CMAKE_FIND_ROOT_PATH ${CONAN_CMAKE_MODULE_PATH} ${CMAKE_FIND_ROOT_PATH})
 option(FT_WITH_BZIP2 "Support bzip2 compressed fonts." ON)
 option(FT_WITH_PNG "Support PNG compressed OpenType embedded bitmaps." ON)
 option(FT_WITH_ZLIB "Use system zlib instead of internal library." ON)
+set(CMAKE_DISABLE_FIND_PACKAGE_BrotliDec true)
 
 add_subdirectory(source)
 
