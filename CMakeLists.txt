@@ -16,10 +16,13 @@ endif()
 add_subdirectory(source)
 
 if(MSVC)
-    # Workaround for issue in Windows SDK 10.0.18362.0
     target_compile_definitions(SDL2-static
       PRIVATE
+        # Workaround for issue with Windows SDK 10.0.18362.0
         WINDOWS_IGNORE_PACKING_MISMATCH
+
+        # Work around error LNK2005: __ftol2_sse already defined in SDL2.lib(SDL_stdlib.obj)
+        HAVE_LIBC
     )
 
     target_compile_options(SDL2-static
