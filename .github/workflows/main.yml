@@ -22,11 +22,11 @@ jobs:
         include:
           - name: androidarm
             os: ubuntu-20.04
-            container: ghcr.io/ssrobins/docker-android-build:jdk8u265-ndk21d
+            container: ghcr.io/ssrobins/docker-android-build:jdk8u275-ndk21d
             script: ./build_android-v7a.sh
           - name: androidarm64
             os: ubuntu-20.04
-            container: ghcr.io/ssrobins/docker-android-build:jdk8u265-ndk21d
+            container: ghcr.io/ssrobins/docker-android-build:jdk8u275-ndk21d
             script: ./build_android-v8a.sh
           - name: ios
             os: macos-10.15
