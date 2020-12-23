@@ -32,6 +32,7 @@ class Conan(ConanFile):
         # Apply a patch to the libpng CMakeLists.txt file with the following changes:
         # https://sourceforge.net/p/libpng/code/merge-requests/4/
         # https://github.com/glennrp/libpng/pull/318
+        # https://github.com/glennrp/libpng/pull/359
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
     def build(self):
