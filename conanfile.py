@@ -1,9 +1,10 @@
 from conans import ConanFile, CMake, tools
 import os
+import shutil
 
 class Conan(ConanFile):
     name = "sdl2"
-    version = "2.0.8"
+    version = "2.0.14"
     description = "A cross-platform development library designed to provide low level " \
                   "access to audio, keyboard, mouse, joystick, and graphics hardware " \
                   "via OpenGL and Direct3D."
@@ -13,7 +14,11 @@ class Conan(ConanFile):
     settings = "os", "compiler", "arch"
     generators = "cmake"
     revision_mode = "scm"
-    exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
+    exports_sources = [
+        "CMakeLists.diff",
+        "CMakeLists.txt",
+        "HIDDeviceManager.diff",
+        "SDL_uikitappdelegate.diff"]
     zip_folder_name = f"SDL2-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"
     build_subfolder = "build"
@@ -32,12 +37,11 @@ class Conan(ConanFile):
         os.rename(self.zip_folder_name, self.source_subfolder)
         
         # Apply a patch to the SDL2 CMakeLists.txt file with the following changes:
-        # https://bugzilla.libsdl.org/show_bug.cgi?id=4143
-        # https://bugzilla.libsdl.org/show_bug.cgi?id=4178
-        # https://bugzilla.libsdl.org/show_bug.cgi?id=4194
-        # https://bugzilla.libsdl.org/show_bug.cgi?id=4195
-        # https://bugzilla.libsdl.org/show_bug.cgi?id=4419
+        # https://bugzilla.libsdl.org/show_bug.cgi?id=5415
+        # https://bugzilla.libsdl.org/show_bug.cgi?id=5417
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
+        tools.patch(base_path=self.source_subfolder, patch_file="HIDDeviceManager.diff")
+        tools.patch(base_path=self.source_subfolder, patch_file="SDL_uikitappdelegate.diff")
 
     def build(self):
         from cmake_utils import cmake_init, cmake_build_debug_release
@@ -58,7 +62,7 @@ class Conan(ConanFile):
         self.cpp_info.debug.libs = ["SDL2d", "SDL2maind"]
         self.cpp_info.release.libs = ["SDL2", "SDL2main"]
         if self.settings.os == "Windows":
-            self.cpp_info.libs.extend(["imm32", "version", "winmm"])
+            self.cpp_info.libs.extend(["Imm32", "SetupAPI", "Version", "WinMM"])
         if self.settings.os == "Linux":
             system_libs = ["dl", "m", "pthread"]
             self.cpp_info.debug.libs.extend(system_libs)
@@ -69,11 +73,14 @@ class Conan(ConanFile):
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append(f"-framework {framework}")
         elif self.settings.os == "Android":
-            system_libs = ["android", "GLESv2", "log"]
+            self.cpp_info.debug.libs.append("hidapid")
+            self.cpp_info.release.libs.append("hidapi")
+            system_libs = ["android", "GLESv1_CM", "GLESv2", "log"]
             self.cpp_info.debug.libs.extend(system_libs)
             self.cpp_info.release.libs.extend(system_libs)
         elif self.settings.os == "iOS":
-            frameworks = ["AVFoundation", "CoreGraphics", "CoreMotion", "Foundation", "GameController", "Metal", "OpenGLES", "QuartzCore", "UIKit", "CoreVideo", "IOKit", "CoreAudio", "AudioToolbox"]
+            self.cpp_info.libs.append("iconv")
+            frameworks = ["AVFoundation", "CoreBluetooth", "CoreGraphics", "CoreHaptics", "CoreMotion", "Foundation", "GameController", "Metal", "OpenGLES", "QuartzCore", "UIKit", "CoreVideo", "IOKit", "CoreAudio", "AudioToolbox"]
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append(f"-framework {framework}")
         elif self.settings.os == "Android":
