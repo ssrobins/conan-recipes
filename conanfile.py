@@ -22,7 +22,7 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("libpng/1.6.37#5fdffcb5b1dbf1c16b4d0d825adf5757ee3e38b3")
-        self.requires("sdl2/2.0.8#f45c74e900f09457e388645638c72802bd4cd081")
+        self.requires("sdl2/2.0.14#766b7457c4be1aa4a5f59052374658437c2ca691")
 
     def source(self):
         tools.get(f"https://www.libsdl.org/projects/SDL_image/release/{self.zip_name}")
