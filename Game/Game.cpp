@@ -26,14 +26,6 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
     }
     display.setDisplaySize(displayMode.w, displayMode.h, screenScale, false);
 
-    // This works around a blue tinting of the graphics
-    // experienced on an LG G7 ThinQ Android phone.
-    // A similar problem is discussed here:
-    // https://bugzilla.libsdl.org/show_bug.cgi?id=2291
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
-
     window = SDL_CreateWindow(title,
         SDL_WINDOWPOS_CENTERED,
         SDL_WINDOWPOS_CENTERED,
