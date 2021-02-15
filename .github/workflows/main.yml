@@ -35,6 +35,7 @@ jobs:
         run: ./build.sh
 
       - name: Conan package upload
+        if: github.ref == 'refs/heads/main'
         run: |
-          conan user --password ${{ secrets.CONAN_API_KEY }} --remote bintray-stever stever
-          conan upload $(conan inspect --raw name .) --all --remote bintray-stever --confirm --parallel
+          conan user --password ${{ secrets.ARTIFACTORY_API_KEY }} --remote artifactory-ssrobins ${{ secrets.ARTIFACTORY_USER }}
+          conan upload $(conan inspect --raw name .) --all --remote artifactory-ssrobins --confirm --parallel
