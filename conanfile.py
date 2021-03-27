@@ -20,13 +20,13 @@ class Conan(ConanFile):
     build_subfolder = "build"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#e474aafdec36cf92d97e781b844f390f3170f29f")
-        self.build_requires("gtest/1.10.0#f11a61df1ef0e30586c1ac7ca39110dba29b2bd7")
+        self.build_requires("cmake_utils/0.3.1#da30d52b2c5db13fc90a22140f704d67c7635319")
+        self.build_requires("gtest/1.10.0#a2327ae0fc8d73335445e3951ae998a6f0887be4")
 
     def requirements(self):
-        self.requires("sdl2/2.0.14#f467b416e317c6dae86ecfd38fbf5c2ab2072a2c")
-        self.requires("sdl2_image/2.0.5#27fa745b36466e5fa4cdcad0493a788770d6216e")
-        self.requires("sdl2_ttf/2.0.15#7a30d33cd508497b6240635961f408f4eb321f01")
+        self.requires("sdl2/2.0.14#e219925dea4ac723af26595deffea181936f9b2a")
+        self.requires("sdl2_image/2.0.5#31f246ecdb098421a7acb98548a2e23e64f7f3ba")
+        self.requires("sdl2_ttf/2.0.15#3dbcecbf77df8a325a7ace114110220f7a6c4f85")
 
     def build(self):
         from cmake_utils import cmake_init, cmake_build_debug_release
