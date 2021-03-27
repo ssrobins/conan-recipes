@@ -22,18 +22,18 @@ jobs:
         include:
           - name: androidarm
             os: ubuntu-20.04
-            container: ghcr.io/ssrobins/docker-android-build:jdk8u275-ndk22
+            container: ghcr.io/ssrobins/docker-android-build:jdk8u282-ndk22b
             script: ./build_android-v7a.sh
           - name: androidarm64
             os: ubuntu-20.04
-            container: ghcr.io/ssrobins/docker-android-build:jdk8u275-ndk22
+            container: ghcr.io/ssrobins/docker-android-build:jdk8u282-ndk22b
             script: ./build_android-v8a.sh
           - name: ios
             os: macos-10.15
             script: ./build_ios.sh
           - name: linux
             os: ubuntu-20.04
-            container: ghcr.io/ssrobins/docker-linux-build:gcc9.3.0
+            container: ghcr.io/ssrobins/docker-linux-build:gcc10.2.0
             script: ./build_linux.sh
           - name: macos
             os: macos-10.15
@@ -59,7 +59,7 @@ jobs:
       - name: Build
         run: ${{ matrix.script }}
         env:
-          DEVELOPER_DIR: /Applications/Xcode_12.app/Contents/Developer
+          DEVELOPER_DIR: /Applications/Xcode_12.4.app/Contents/Developer
 
       - name: Conan package upload
         if: github.ref == 'refs/heads/main'
