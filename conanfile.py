@@ -25,7 +25,7 @@ class Conan(ConanFile):
         self.requires("zlib/1.2.11#81367936b1246dcd321c573b020117d018f86982")
 
     def source(self):
-        tools.get(f"http://dnqpy.com/libs/{self.zip_name}",
+        tools.get(f"https://sourceforge.net/projects/libpng/files/libpng16/{self.version}/{self.zip_name}",
             sha256="daeb2620d829575513e35fecc83f0d3791a620b9b93d800b763542ece9390fb4")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
