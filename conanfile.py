@@ -21,7 +21,7 @@ class Conan(ConanFile):
         self.build_requires("cmake_utils/0.3.1#e474aafdec36cf92d97e781b844f390f3170f29f")
 
     def source(self):
-        tools.get(f"http://dnqpy.com/libs/{self.zip_name}")
+        tools.get(f"https://sourceware.org/pub/bzip2/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
         shutil.move(f"CMakeLists-{self.name}.txt", os.path.join(self.source_subfolder, "CMakeLists.txt"))
 
