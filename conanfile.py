@@ -26,7 +26,7 @@ class Conan(ConanFile):
         self.requires("zlib/1.2.11#81367936b1246dcd321c573b020117d018f86982")
 
     def source(self):
-        tools.get(f"http://dnqpy.com/libs/{self.zip_name}")
+        tools.get(f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
     def build(self):
