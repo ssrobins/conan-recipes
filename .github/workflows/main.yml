@@ -10,6 +10,7 @@ on:
 env:
   CONAN_REVISIONS_ENABLED: 1
   CONAN_SYSREQUIRES_SUDO: 0
+  CONAN_V2_MODE: 1
 
 jobs:
   build:
@@ -32,7 +33,7 @@ jobs:
           conan --version
 
       - name: Build
-        run: ./build.sh
+        run: ./conan.py
 
       - name: Conan package upload
         if: github.ref == 'refs/heads/main'
