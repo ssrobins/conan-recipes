@@ -3,7 +3,7 @@ import os
 
 class Conan(ConanFile):
     name = "gtest"
-    version = "1.10.0"
+    version = "1.11.0"
     description = "Google's C++ test framework"
     homepage = "https://github.com/google/googletest"
     license = "BSD-3-Clause"
