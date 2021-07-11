@@ -57,7 +57,7 @@ jobs:
           conan --version
 
       - name: Build
-        run: ${{ matrix.script }} --config Release
+        run: ${{ matrix.script }}
         env:
           DEVELOPER_DIR: /Applications/Xcode_12.4.app/Contents/Developer
 
