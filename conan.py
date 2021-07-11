@@ -5,8 +5,6 @@ import os.path
 import subprocess
 
 def main():
-    os.environ["CONAN_REVISIONS_ENABLED"] = "1"
-
     platform = {
         "androidarm": "-s os=Android -s os.api_level=16 -s arch=armv7 -s compiler=clang -s compiler.version=11 -s compiler.libcxx=libc++",
         "androidarm64": "-s os=Android -s os.api_level=21 -s arch=armv8 -s compiler=clang -s compiler.version=11 -s compiler.libcxx=libc++",

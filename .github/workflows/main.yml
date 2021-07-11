@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 
 env:
+  CONAN_REVISIONS_ENABLED: 1
   CONAN_SYSREQUIRES_SUDO: 0
 
 jobs:
