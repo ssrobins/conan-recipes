@@ -23,24 +23,24 @@ jobs:
           - name: androidarm
             os: ubuntu-20.04
             container: ghcr.io/ssrobins/docker-android-build:jdk8u292-ndk22b
-            script: ./build_android-v7a.sh
+            script: ./conan.py androidarm
           - name: androidarm64
             os: ubuntu-20.04
             container: ghcr.io/ssrobins/docker-android-build:jdk8u292-ndk22b
-            script: ./build_android-v8a.sh
+            script: ./conan.py androidarm64
           - name: ios
             os: macos-10.15
-            script: ./build_ios.sh
+            script: ./conan.py ios
           - name: linux
             os: ubuntu-20.04
             container: ghcr.io/ssrobins/docker-linux-build:gcc11.1.0
-            script: ./build_linux.sh
+            script: ./conan.py linux
           - name: macos
             os: macos-10.15
-            script: ./build_mac.sh
+            script: ./conan.py macos
           - name: windows
             os: windows-2019
-            script: .\build_windows.bat
+            script: py conan.py windows
     steps:
       - name: Checkout
         uses: actions/checkout@v2
