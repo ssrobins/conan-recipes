@@ -32,7 +32,7 @@ class Conan(ConanFile):
         self.build_requires("cmake_utils/0.3.1#77d5f06b9b20302a5410e41ed45e7bbea7de90a5")
 
     def requirements(self):
-        self.requires("freetype/2.10.4#8bfd75ce7db1fda51f29e31c631ff01058b2db6e")
+        self.requires("freetype/2.10.4#5d8dae7b96784b6c723ead50ba409ec0b77d8e12")
 
     def source(self):
         tools.get(f"https://www.sfml-dev.org/files/{self.zip_name}")
