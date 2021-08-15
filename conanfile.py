@@ -4,7 +4,7 @@ import shutil
 
 class Conan(ConanFile):
     name = "sdl2"
-    version = "2.0.14"
+    version = "2.0.16"
     description = "A cross-platform development library designed to provide low level " \
                   "access to audio, keyboard, mouse, joystick, and graphics hardware " \
                   "via OpenGL and Direct3D."
@@ -35,13 +35,9 @@ class Conan(ConanFile):
     def source(self):
         tools.get(f"https://www.libsdl.org/release/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
-        
-        # Apply a patch to the SDL2 CMakeLists.txt file with the following changes:
-        # https://bugzilla.libsdl.org/show_bug.cgi?id=5415
-        # https://bugzilla.libsdl.org/show_bug.cgi?id=5417
+
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
         tools.patch(base_path=self.source_subfolder, patch_file="HIDDeviceManager.diff")
-        tools.patch(base_path=self.source_subfolder, patch_file="SDL_uikitappdelegate.diff")
 
     def build(self):
         from cmake_utils import cmake_init, cmake_build_debug_release
@@ -69,13 +65,13 @@ class Conan(ConanFile):
             self.cpp_info.release.libs.extend(system_libs)
         elif self.settings.os == "Macos":
             self.cpp_info.libs.append("iconv")
-            frameworks = ["Cocoa", "Carbon", "IOKit", "CoreVideo", "CoreAudio", "AudioToolbox", "ForceFeedback"]
+            frameworks = ["Cocoa", "Carbon", "IOKit", "CoreVideo", "CoreAudio", "AudioToolbox", "ForceFeedback", "Metal"]
             for framework in frameworks:
                 self.cpp_info.exelinkflags.append(f"-framework {framework}")
         elif self.settings.os == "Android":
             self.cpp_info.debug.libs.append("hidapid")
             self.cpp_info.release.libs.append("hidapi")
-            system_libs = ["android", "GLESv1_CM", "GLESv2", "log"]
+            system_libs = ["android", "GLESv1_CM", "GLESv2", "log", "OpenSLES"]
             self.cpp_info.debug.libs.extend(system_libs)
             self.cpp_info.release.libs.extend(system_libs)
         elif self.settings.os == "iOS":

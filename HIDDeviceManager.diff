@@ -1,6 +1,6 @@
 --- android-project/app/src/main/java/org/libsdl/app/HIDDeviceManager.java
 +++ HIDDeviceManager.java
-@@ -104,37 +104,11 @@
+@@ -105,37 +105,11 @@
      private HIDDeviceManager(final Context context) {
          mContext = context;
  

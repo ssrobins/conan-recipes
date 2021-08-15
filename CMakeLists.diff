@@ -1,58 +1,11 @@
 --- CMakeLists.txt
 +++ CMakeLists.txt
-@@ -1668,7 +1668,11 @@
-     message_error("SDL_FILE must be enabled to build on MacOS X")
-   endif()
- 
--  file(GLOB MISC_SOURCES ${SDL2_SOURCE_DIR}/src/misc/macosx/*.m)
-+  if(IOS OR TVOS)
-+    file(GLOB MISC_SOURCES ${SDL2_SOURCE_DIR}/src/misc/ios/*.m)
-+  else()
-+    file(GLOB MISC_SOURCES ${SDL2_SOURCE_DIR}/src/misc/macosx/*.m)
-+  endif()
-   set(SOURCE_FILES ${SOURCE_FILES} ${MISC_SOURCES})
-   set(HAVE_SDL_MISC TRUE)
- 
-@@ -2201,9 +2205,7 @@
- add_library(SDL2main STATIC ${SDLMAIN_SOURCES})
- target_include_directories(SDL2main PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include> $<INSTALL_INTERFACE:include/SDL2>)
- set(_INSTALL_LIBS "SDL2main")
--if (NOT ANDROID)
--  set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
--endif()
-+set_target_properties(SDL2main PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
- endif()
- 
- if (ANDROID AND HAVE_HIDAPI)
-@@ -2242,9 +2244,8 @@
-   target_include_directories(SDL2 PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include> $<INSTALL_INTERFACE:include/SDL2>)
-   if(ANDROID)
-     target_include_directories(SDL2 PRIVATE ${ANDROID_NDK}/sources/android/cpufeatures)
--  else()
--    set_target_properties(SDL2 PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
-   endif()
-+  set_target_properties(SDL2 PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
-   if(IOS OR TVOS)
-     set_property(TARGET SDL2 APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc")
-     target_compile_definitions(SDL2 PRIVATE IOS_DYLIB=1)
-@@ -2253,7 +2254,8 @@
+@@ -2602,7 +2602,7 @@
  
  if(ANDROID)
    if(HAVE_HIDAPI)
 -    add_library(hidapi SHARED ${SDL2_SOURCE_DIR}/src/hidapi/android/hid.cpp)
 +    add_library(hidapi STATIC ${SDL2_SOURCE_DIR}/src/hidapi/android/hid.cpp)
-+    set_target_properties(hidapi PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
-   endif()
- 
-   if(MSVC AND NOT LIBC)
-@@ -2290,9 +2292,8 @@
-   target_include_directories(SDL2-static PUBLIC "$<BUILD_INTERFACE:${SDL2_SOURCE_DIR}/include>" $<INSTALL_INTERFACE:include> $<INSTALL_INTERFACE:include/SDL2>)
-   if(ANDROID)
-     target_include_directories(SDL2-static PRIVATE ${ANDROID_NDK}/sources/android/cpufeatures)
--  else()
--    set_target_properties(SDL2-static PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
-   endif()
-+  set_target_properties(SDL2-static PROPERTIES DEBUG_POSTFIX "${SDL_CMAKE_DEBUG_POSTFIX}")
-   if(IOS OR TVOS)
-     set_property(TARGET SDL2-static APPEND_STRING PROPERTY COMPILE_FLAGS "-fobjc-arc")
+     # alias target for in-tree builds
+     add_library(SDL2::hidapi ALIAS hidapi)
    endif()
