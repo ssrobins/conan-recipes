@@ -22,11 +22,11 @@ jobs:
         include:
           - name: androidarm
             os: ubuntu-20.04
-            container: ghcr.io/ssrobins/docker-android-build:jdk8u292-ndk22b
+            container: ghcr.io/ssrobins/docker-android-build:jdk8u302-ndk23
             script: ./conan.py androidarm
           - name: androidarm64
             os: ubuntu-20.04
-            container: ghcr.io/ssrobins/docker-android-build:jdk8u292-ndk22b
+            container: ghcr.io/ssrobins/docker-android-build:jdk8u302-ndk23
             script: ./conan.py androidarm64
           - name: ios
             os: macos-10.15
