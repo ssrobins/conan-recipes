@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion ${android_sdk_version}
-    ndkVersion ${ANDROID_NDK_ROOT}
     defaultConfig {
         applicationId "com.${company}.${target_name}"
         minSdkVersion ${android_min_sdk_version}
