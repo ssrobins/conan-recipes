@@ -9,7 +9,6 @@ on:
 
 env:
   CONAN_REVISIONS_ENABLED: 1
-  CONAN_SYSREQUIRES_SUDO: 0
 
 jobs:
   builds:
@@ -21,8 +20,7 @@ jobs:
       matrix:
         include:
           - name: linux
-            os: ubuntu-20.04
-            container: ghcr.io/ssrobins/docker-linux-build:gcc11.1.0
+            os: ubuntu-18.04
             script: ./conan.py linux
           - name: macos
             os: macos-10.15
@@ -33,6 +31,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Install required packages
+        if: matrix.name == 'linux'
+        run: sudo apt-get install ninja-build python3-setuptools -y
 
       - name: Print environment variables
         run: env
