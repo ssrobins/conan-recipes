@@ -32,7 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install required packages
+      - name: Install required Linux packages
         if: matrix.name == 'linux'
         run: sudo apt-get install ninja-build python3-setuptools -y
 
