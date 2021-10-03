@@ -9,13 +9,11 @@ on:
 
 env:
   CONAN_REVISIONS_ENABLED: 1
-  CONAN_SYSREQUIRES_SUDO: 0
   CONAN_V2_MODE: 1
 
 jobs:
   build:
     runs-on: ubuntu-20.04
-    container: ghcr.io/ssrobins/docker-linux-build:gcc11.1.0
 
     steps:
       - name: Checkout
