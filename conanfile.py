@@ -21,9 +21,9 @@ class Conan(ConanFile):
         self.build_requires("cmake_utils/0.3.1#a1d53d179d9736ff032b5f5de3e4c3e2eebcb1f0")
 
     def requirements(self):
-        self.requires("bzip2/1.0.8#e73d5386cbc2e98ae91e79f621884409cb06b8c9")
-        self.requires("libpng/1.6.37#7b292f0666fae2b79b9065098621aed43eb94cc8")
-        self.requires("zlib/1.2.11#4220992f43a609448a3a493e4d5817fa04d8bf49")
+        self.requires("bzip2/1.0.8#3f3cfeeb73f51fdc98af94fbb7b57504317ec036")
+        self.requires("libpng/1.6.37#3832ec222b59f15b00f2b7d414fb5db811c71014")
+        self.requires("zlib/1.2.11#a96deaa46133223bdc6fb0a9ae9a441b9ca44079")
 
     def source(self):
         tools.get(f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}")
