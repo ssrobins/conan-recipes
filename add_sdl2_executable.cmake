@@ -1,7 +1,9 @@
 set(package_root_path ${CONAN_ANDROID_SDL2_ROOT})
 
 function(add_sdl2_executable target_name)
-    add_executable_custom(${target_name})
+    set(properties ${ARGV})
+    list(REMOVE_AT properties 0)
+    add_executable_custom(${target_name} ${properties})
 
     set(androidstudio_path ${CMAKE_BINARY_DIR}/AndroidStudio/${target_name})
 

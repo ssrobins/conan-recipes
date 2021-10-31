@@ -1,10 +1,13 @@
 set(current_file_path ${CMAKE_CURRENT_LIST_DIR})
 
 function(add_executable_custom target_name)
+    set(properties ${ARGV})
+    list(REMOVE_AT properties 0)
+
     if(ANDROID)
         add_library(${target_name} SHARED)
     else()
-        add_executable(${target_name})
+        add_executable(${target_name} ${properties})
     endif()
 
     if(APPLE)
@@ -25,7 +28,6 @@ function(add_executable_custom target_name)
         endif()
 
         set_target_properties(${target_name} PROPERTIES
-            MACOSX_BUNDLE TRUE
             XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
             XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage"
             XCODE_ATTRIBUTE_ENABLE_BITCODE "${xcode_bitcode}"

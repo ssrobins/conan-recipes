@@ -1,4 +1,4 @@
-function(target_assets target_name assets_path)
+function(target_assets target_name)
     set(assets_path_list ${ARGV})
     list(REMOVE_AT assets_path_list 0)
 
@@ -10,35 +10,31 @@ function(target_assets target_name assets_path)
         get_filename_component(assets_path "${assets_path}"
             REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-        if(IOS)
-            set(assets_dest_path $<TARGET_FILE_DIR:${target_name}>/${assets_dir})
+        get_target_property(MACOSX_BUNDLE ${target_name} MACOSX_BUNDLE)
+
+        if(APPLE AND MACOSX_BUNDLE)
+            target_sources(${target_name} PRIVATE
+                ${assets_path}
+            )
+            set_source_files_properties(${assets_path} PROPERTIES
+                MACOSX_PACKAGE_LOCATION Resources
+            )
+        else()
+            if(ANDROID)
+                set(assets_dest_path ${androidstudio_path}/app/src/main/assets/${assets_dir})
+            else()
+                set(assets_dest_path $<TARGET_FILE_DIR:${target_name}>/${assets_dir})
+            endif()
             add_custom_command(
                 TARGET ${target_name}
                 PRE_BUILD
-                COMMAND python3 ${CONAN_CMAKE_UTILS_ROOT}/add_xcode_folder_reference.py
-                    --project=${CMAKE_BINARY_DIR}/${PROJECT_NAME}.xcodeproj/project.pbxproj
-                    --folderPath=${assets_path} --target=${target_name}
+                COMMAND cmake -E copy_directory
+                    ${assets_path}
+                    ${assets_dest_path}
             )
-        elseif(APPLE)
-            set(assets_dest_path $<TARGET_FILE_DIR:${target_name}>/$<IF:$<BOOL:$<TARGET_PROPERTY:${target_name},MACOSX_BUNDLE>>,../Resources/${assets_dir},${assets_dir}>)
-        elseif(ANDROID)
-            set(assets_dest_path ${androidstudio_path}/app/src/main/assets/${assets_dir})
-        else()
-            set(assets_dest_path $<TARGET_FILE_DIR:${target_name}>/${assets_dir})
         endif()
 
-        add_custom_command(
-            TARGET ${target_name}
-            PRE_BUILD
-            COMMAND cmake -E copy_directory
-                ${assets_path}
-                ${assets_dest_path}
-        )
-
-        if(NOT IOS AND NOT ANDROID)
-            if(APPLE)
-                set(assets_install_dir $<IF:$<BOOL:$<TARGET_PROPERTY:${target_name},MACOSX_BUNDLE>>,${target_name}.app/Contents/Resources,>)
-            endif()
+        if(NOT APPLE AND NOT ANDROID)
             set(component_name ${target_name}_${PROJECT_VERSION}_${platform})
             install(DIRECTORY ${assets_path} DESTINATION ${target_name}/${assets_install_dir} COMPONENT ${component_name})
         endif()

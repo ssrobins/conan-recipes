@@ -13,20 +13,4 @@ function(install_executable target_name)
     else()
         install(TARGETS ${target_name} DESTINATION ${target_name} COMPONENT ${component_name})
     endif()
-
-    # Stage Mac bundle icon
-    if(APPLE AND NOT IOS)
-        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/icon.icns)
-            get_target_property(is_mac_bundle ${target_name} MACOSX_BUNDLE)
-            if(${is_mac_bundle})
-                add_custom_command(
-                    TARGET ${target_name}
-                    POST_BUILD
-                    COMMAND cmake -E copy
-                        ${CMAKE_CURRENT_SOURCE_DIR}/icon.icns
-                        $<TARGET_FILE_DIR:${target_name}>/../Resources/icon.icns
-                )
-            endif()
-        endif()
-    endif()
 endfunction(install_executable)
