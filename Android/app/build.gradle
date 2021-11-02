@@ -37,9 +37,16 @@ android {
         }
     }
 
+    def buildConfig = ""
+    if(project.getGradle().startParameter.taskNames.get(0).contains("Debug")) {
+        buildConfig = "Debug"
+    } else {
+        buildConfig = "Release"
+    }
+
     task cmake(type:Exec) {
         workingDir '${CMAKE_SOURCE_DIR}'
-        commandLine '${CMAKE_COMMAND}', '--build', '${CMAKE_BINARY_DIR}', '--target', '${target_name}', '--verbose'
+        commandLine '${CMAKE_COMMAND}', '--build', '${CMAKE_BINARY_DIR}', '--target', '${target_name}', '--config', "$buildConfig", '--verbose'
     }
 }
 
