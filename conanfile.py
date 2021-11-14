@@ -2,7 +2,7 @@ from conans import ConanFile
 
 class Conan(ConanFile):
     name = "android_sdl2"
-    version = "0.1.0"
+    version = "1.0.0"
     description = "Android Gradle project for SDL2"
     license = "MIT"
     url = f"https://github.com/ssrobins/conan-{name}"
