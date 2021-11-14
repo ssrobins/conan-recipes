@@ -29,6 +29,8 @@ def cmake_init(settings, cmake, build_folder):
             cmake.definitions["CMAKE_OSX_DEPLOYMENT_TARGET"] = settings.os.version
     elif settings.os == "Windows":
         cmake.generator = "Visual Studio 17 2022"
+        if settings.arch == "x86":
+            cmake.generator_platform = "Win32"
     return cmake
 
 def configure_cmake(cmake, build_subfolder, config=None):
