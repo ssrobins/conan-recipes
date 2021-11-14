@@ -30,7 +30,7 @@ class Conan(ConanFile):
             installer.install("libasound2-dev")
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#77d5f06b9b20302a5410e41ed45e7bbea7de90a5")
+        self.build_requires("cmake_utils/2.0.0#7b02a2c723c3968f05cddb483fdf8e0999d4b2e5")
 
     def source(self):
         tools.get(f"https://www.libsdl.org/release/{self.zip_name}")
