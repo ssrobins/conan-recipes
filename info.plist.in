@@ -28,6 +28,10 @@
 	<string>${MACOSX_BUNDLE_BUNDLE_VERSION}</string>
 	<key>CSResourcesFileMapped</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>${bluetooth_statement}</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>${bluetooth_statement}</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>${MACOSX_BUNDLE_COPYRIGHT}</string>
         <key>NSHighResolutionCapable</key>
