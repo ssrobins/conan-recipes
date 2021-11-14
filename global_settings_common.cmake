@@ -1,6 +1,3 @@
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
 
 # The following code is a workaround for this issue:
