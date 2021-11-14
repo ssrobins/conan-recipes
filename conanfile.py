@@ -22,7 +22,7 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/2.0.0#7b02a2c723c3968f05cddb483fdf8e0999d4b2e5")
+        self.build_requires("cmake_utils/2.0.1#bc87acc9a67867fb20e22e3c51eb4c070a9f9758")
 
     def source(self):
         tools.get(f"https://zlib.net/{self.zip_name}",
