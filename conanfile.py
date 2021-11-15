@@ -18,11 +18,11 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#a1d53d179d9736ff032b5f5de3e4c3e2eebcb1f0")
+        self.build_requires("cmake_utils/2.0.1#bc87acc9a67867fb20e22e3c51eb4c070a9f9758")
 
     def requirements(self):
-        self.requires("libpng/1.6.37#3832ec222b59f15b00f2b7d414fb5db811c71014")
-        self.requires("sdl2/2.0.16#e48e0f700a2932b3c19dcc83fac49275cf8d5efc")
+        self.requires("libpng/1.6.37#781b088398bd272b0a1ca689aa4bcda1cba98bf5")
+        self.requires("sdl2/2.0.16#981fb2a6cd1fdd6549281347f8dd33972d4d619b")
 
     def source(self):
         tools.get(f"https://www.libsdl.org/projects/SDL_image/release/{self.zip_name}")
@@ -38,7 +38,7 @@ class Conan(ConanFile):
         self.copy("SDL_image.h", dst="include", src=self.source_subfolder)
         self.copy("*.lib", dst="lib", src=self.build_subfolder, keep_path=False)
         self.copy("build/lib/*.a", dst="lib", keep_path=False)
-        if self.settings.compiler == "Visual Studio":
+        if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
 
     def package_info(self):
