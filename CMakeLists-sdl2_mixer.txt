@@ -40,13 +40,6 @@ add_library(SDL2_mixer STATIC
 
 set_target_properties(SDL2_mixer PROPERTIES DEBUG_POSTFIX d)
 
-if(MSVC)
-    target_compile_options(SDL2_mixer
-      PRIVATE
-        /Fd$<TARGET_FILE_DIR:SDL2_mixer>/SDL2_mixer$<$<CONFIG:Debug>:d>.pdb
-    )
-endif()
-
 target_compile_definitions(SDL2_mixer PRIVATE
     -DMUSIC_WAV
 )
