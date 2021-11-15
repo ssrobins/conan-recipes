@@ -50,7 +50,7 @@ class Conan(ConanFile):
         cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.os == "Android":
             self.copy("*.java", dst="android", src=os.path.join(self.source_subfolder, "android-project", "app", "src", "main", "java", "org", "libsdl", "app"))
-        elif self.settings.compiler == "Visual Studio":
+        elif self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
 
     def package_info(self):
