@@ -14,10 +14,3 @@ option(FT_WITH_ZLIB "Use system zlib instead of internal library." ON)
 set(CMAKE_DISABLE_FIND_PACKAGE_BrotliDec true)
 
 add_subdirectory(source)
-
-if(MSVC)
-    target_compile_options(freetype
-      PRIVATE
-        /Fd$<TARGET_FILE_DIR:freetype>/freetype$<$<CONFIG:Debug>:d>.pdb
-    )
-endif()

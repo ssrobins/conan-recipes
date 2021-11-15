@@ -18,12 +18,12 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#a1d53d179d9736ff032b5f5de3e4c3e2eebcb1f0")
+        self.build_requires("cmake_utils/2.0.1#bc87acc9a67867fb20e22e3c51eb4c070a9f9758")
 
     def requirements(self):
-        self.requires("bzip2/1.0.8#3f3cfeeb73f51fdc98af94fbb7b57504317ec036")
-        self.requires("libpng/1.6.37#3832ec222b59f15b00f2b7d414fb5db811c71014")
-        self.requires("zlib/1.2.11#a96deaa46133223bdc6fb0a9ae9a441b9ca44079")
+        self.requires("bzip2/1.0.8#d259ec1920b4868a3d1b0546bdd75819584908e2")
+        self.requires("libpng/1.6.37#781b088398bd272b0a1ca689aa4bcda1cba98bf5")
+        self.requires("zlib/1.2.11#1bda563cdc74c2f0e05af87c21fa5fdb43bc023e")
 
     def source(self):
         tools.get(f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}")
@@ -38,7 +38,7 @@ class Conan(ConanFile):
         from cmake_utils import cmake_init, cmake_install_debug_release
         cmake = cmake_init(self.settings, CMake(self), self.build_folder)
         cmake_install_debug_release(cmake, self.build_subfolder)
-        if self.settings.compiler == "Visual Studio":
+        if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
         
     def package_info(self):
