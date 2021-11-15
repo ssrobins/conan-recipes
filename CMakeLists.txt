@@ -20,10 +20,3 @@ endif()
 add_subdirectory(source)
 
 set_target_properties(png_static PROPERTIES DEBUG_POSTFIX d)
-
-if(MSVC)
-    target_compile_options(png_static
-      PRIVATE
-        /Fd$<TARGET_FILE_DIR:png_static>/png_static$<$<CONFIG:Debug>:d>.pdb
-    )
-endif()
