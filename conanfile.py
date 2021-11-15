@@ -49,7 +49,7 @@ class Conan(ConanFile):
         self.copy("*.h", dst="include", src=self.build_folder, keep_path=False)
         self.copy("build/lib/zlibstatic*.lib", dst="lib", keep_path=False)
         self.copy("build/lib/*.a", dst="lib", keep_path=False)
-        if self.settings.compiler == "Visual Studio":
+        if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
 
     def package_info(self):

@@ -12,10 +12,3 @@ option(BUILD_ZLIB_SHARED "Build zlib shared library" OFF)
 add_subdirectory(source)
 
 set_target_properties(zlibstatic PROPERTIES DEBUG_POSTFIX d)
-
-if(MSVC)
-    target_compile_options(zlibstatic
-      PRIVATE
-        /Fd$<TARGET_FILE_DIR:zlibstatic>/zlibstatic$<$<CONFIG:Debug>:d>.pdb
-    )
-endif()
