@@ -4,13 +4,6 @@ add_library(SDL2_ttf STATIC
 
 set_target_properties(SDL2_ttf PROPERTIES DEBUG_POSTFIX d)
 
-if(MSVC)
-    target_compile_options(SDL2_ttf
-      PRIVATE
-        /Fd$<TARGET_FILE_DIR:SDL2_ttf>/SDL2_ttf$<$<CONFIG:Debug>:d>.pdb
-    )
-endif()
-
 target_link_libraries(SDL2_ttf
     CONAN_PKG::freetype
     CONAN_PKG::sdl2
