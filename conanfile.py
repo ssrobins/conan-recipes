@@ -18,7 +18,7 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#4e0d039dacfbd69fa83ed0ee35f7f8209f199efb")
+        self.build_requires("cmake_utils/2.0.1#bc87acc9a67867fb20e22e3c51eb4c070a9f9758")
 
     def source(self):
         tools.get(f"https://sourceware.org/pub/bzip2/{self.zip_name}")
@@ -34,7 +34,7 @@ class Conan(ConanFile):
         self.copy("bzlib.h", dst="include", src=self.source_subfolder)
         self.copy("*.lib", dst="lib", keep_path=False)
         self.copy("build/lib/*.a", dst="lib", keep_path=False)
-        if self.settings.compiler == "Visual Studio":
+        if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
 
     def package_info(self):
