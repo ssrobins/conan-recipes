@@ -2,7 +2,7 @@ from conans import ConanFile, CMake
 
 class Conan(ConanFile):
     name = "ssrobins_engine"
-    version = "0.3.0"
+    version = "1.0.0"
     description = "Thin game engine wrapper"
     homepage = f"https://github.com/ssrobins/conan-{name}"
     license = "MIT"
