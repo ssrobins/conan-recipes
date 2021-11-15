@@ -38,7 +38,7 @@ class Conan(ConanFile):
         self.copy("*.lib", dst="lib", src=self.build_subfolder, keep_path=False)
         self.copy("build/lib/*.a", dst="lib", keep_path=False)
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            self.copy("*.pdb", dst="lib", keep_path=False, excludes="*Test*")
 
     def package_info(self):
         self.cpp_info.debug.libs = ["Gamed", "Displayd", "ErrorHandlerd"]
