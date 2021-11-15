@@ -5,13 +5,6 @@ add_library(Game STATIC
 
 set_target_properties(Game PROPERTIES DEBUG_POSTFIX d)
 
-if(MSVC)
-    target_compile_options(Game
-      PRIVATE
-        /Fd$<TARGET_FILE_DIR:Game>/Game$<$<CONFIG:Debug>:d>.pdb
-    )
-endif()
-
 target_include_directories(Game
   PUBLIC
     .

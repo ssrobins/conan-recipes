@@ -20,13 +20,13 @@ class Conan(ConanFile):
     build_subfolder = "build"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/0.3.1#a1d53d179d9736ff032b5f5de3e4c3e2eebcb1f0")
-        self.build_requires("gtest/1.11.0#da27a76e3c6d8034aee23541c0c4e9720f224ecc")
+        self.build_requires("cmake_utils/2.0.1#bc87acc9a67867fb20e22e3c51eb4c070a9f9758")
+        self.build_requires("gtest/1.11.0#8fd6a2a8d5711b4ddb33e9addc96ab35cdb9f538")
 
     def requirements(self):
-        self.requires("sdl2/2.0.16#e48e0f700a2932b3c19dcc83fac49275cf8d5efc")
-        self.requires("sdl2_image/2.0.5#d22c1f7caea43b4a632b80b0595055aad5e305bd")
-        self.requires("sdl2_ttf/2.0.15#9c52fbd7a761e88d01ed6ff541ff83904363d5a8")
+        self.requires("sdl2/2.0.16#981fb2a6cd1fdd6549281347f8dd33972d4d619b")
+        self.requires("sdl2_image/2.0.5#0d18e9666494bcc60d8096656101216931651379")
+        self.requires("sdl2_ttf/2.0.15#7805ed7bec2ab000fe8d54734b1b978e7298e4cd")
 
     def build(self):
         from cmake_utils import cmake_init, cmake_build_debug_release
@@ -37,7 +37,7 @@ class Conan(ConanFile):
         self.copy("*.h", dst="include", keep_path=False)
         self.copy("*.lib", dst="lib", src=self.build_subfolder, keep_path=False)
         self.copy("build/lib/*.a", dst="lib", keep_path=False)
-        if self.settings.compiler == "Visual Studio":
+        if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
 
     def package_info(self):
