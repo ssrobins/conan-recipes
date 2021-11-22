@@ -36,6 +36,10 @@ jobs:
         if: matrix.name == 'linux'
         run: sudo apt-get install ninja-build python3-setuptools -y
 
+      - name: Install required macOS packages
+        if: matrix.name == 'macos'
+        run: brew install ninja
+
       - name: Print environment variables
         run: env
 
