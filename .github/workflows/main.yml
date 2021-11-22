@@ -48,6 +48,10 @@ jobs:
         if: contains(matrix.name, 'android') || matrix.name == 'linux'
         run: sudo apt-get install ninja-build python3-setuptools -y
 
+      - name: Install required macOS packages
+        if: matrix.name == 'ios' || matrix.name == 'macos'
+        run: brew install ninja
+
       - name: Install Conan
         run: pip3 install conan --upgrade
 
