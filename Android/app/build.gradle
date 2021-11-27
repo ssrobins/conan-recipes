@@ -20,6 +20,12 @@ android {
         }
     }
 
+    lintOptions {
+        // Work around false positive linter error:
+        // Error: MainActivity must extend android.app.Activity [Instantiatable]
+        disable "Instantiatable"
+    }
+
     signingConfigs {
         release {
             storeFile file(ANDROID_KEY_STORE_PATH)
