@@ -46,6 +46,9 @@ function(add_sdl2_executable target_name)
             ${package_root_path}/Android/app/src/main/AndroidManifest.xml
             ${androidstudio_path}/app/src/main/AndroidManifest.xml
         )
+        if(NOT android_sdk_version)
+            message(FATAL_ERROR "Set android_sdk_version CMake variable to the desired target SDK version")
+        endif()
         configure_file (
             ${package_root_path}/Android/app/build.gradle
             ${androidstudio_path}/app/build.gradle
