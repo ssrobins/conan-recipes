@@ -18,29 +18,6 @@ function(add_sdl2_executable target_name)
                 ${androidstudio_path}/app/src/main/java/org/libsdl/app
         )
 
-        if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/assets_dontship/Android)
-            execute_process(
-                COMMAND ${CMAKE_COMMAND} -E copy
-                    ${CMAKE_CURRENT_SOURCE_DIR}/assets_dontship/Android/icon_48x48.png
-                    ${androidstudio_path}/app/src/main/res/mipmap-mdpi/ic_launcher.png
-                COMMAND ${CMAKE_COMMAND} -E copy
-                    ${CMAKE_CURRENT_SOURCE_DIR}/assets_dontship/Android/icon_72x72.png
-                    ${androidstudio_path}/app/src/main/res/mipmap-hdpi/ic_launcher.png
-                COMMAND ${CMAKE_COMMAND} -E copy
-                    ${CMAKE_CURRENT_SOURCE_DIR}/assets_dontship/Android/icon_96x96.png
-                    ${androidstudio_path}/app/src/main/res/mipmap-xhdpi/ic_launcher.png
-                COMMAND ${CMAKE_COMMAND} -E copy
-                    ${CMAKE_CURRENT_SOURCE_DIR}/assets_dontship/Android/icon_144x144.png
-                    ${androidstudio_path}/app/src/main/res/mipmap-xxhdpi/ic_launcher.png
-                COMMAND ${CMAKE_COMMAND} -E copy
-                    ${CMAKE_CURRENT_SOURCE_DIR}/assets_dontship/Android/icon_192x192.png
-                    ${androidstudio_path}/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
-                COMMAND ${CMAKE_COMMAND} -E copy
-                    ${CMAKE_CURRENT_SOURCE_DIR}/assets_dontship/Android/icon_512x512.png
-                    ${androidstudio_path}/app/src/main/ic_launcher-web.png
-            )
-        endif()
-
         # Process files so they include target-specific properties
         configure_file (
             ${package_root_path}/Android/app/src/main/AndroidManifest.xml
