@@ -29,10 +29,10 @@ class Conan(ConanFile):
             installer.install("libxrandr-dev")
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/3.0.0#4e7b4d9bfca394477325cdfc8eacce8b1c82583e")
+        self.build_requires("cmake_utils/5.0.0#1ecfed8c68a43ea17d321701cc8a91df21d06453")
 
     def requirements(self):
-        self.requires("freetype/2.11.0#d187189ca77a9a0b632428db6a9c71194c428a6e")
+        self.requires("freetype/2.11.1#abaecdc62a47af80f7839421354ff321446da0e1")
 
     def source(self):
         tools.get(f"https://www.sfml-dev.org/files/{self.zip_name}")
