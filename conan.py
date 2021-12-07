@@ -13,7 +13,7 @@ def main():
         "ios": "-s os=iOS -s arch=armv7 -s os.version=9.0 -s compiler.version=13.0 -s compiler.cppstd=17",
         "linux": "-s compiler=gcc -s compiler.version=7 -s compiler.libcxx=libstdc++11 -s compiler.cppstd=17",
         "macos": "-s os.version=10.9 -s compiler.version=13.0 -s compiler.cppstd=17",
-        "windows": "-s arch=x86 -s compiler=msvc -s compiler.version=19.30 -s compiler.runtime=static -s compiler.cppstd=17"
+        "windows": "-s arch=x86 -s compiler=msvc -s compiler.version=193 -s compiler.runtime=static -s compiler.cppstd=17"
     }
 
     parser = argparse.ArgumentParser()
