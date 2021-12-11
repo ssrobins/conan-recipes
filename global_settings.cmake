@@ -75,6 +75,12 @@ else()
 endif()
 
 # Settings for install and packaging
+if(IOS)
+    # Ensure iOS 'archive' step can locate dependent libraries for linking
+    # without running the build first
+    # https://stackoverflow.com/questions/33020245
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY .)
+endif()
 set(CMAKE_INSTALL_PREFIX ${PROJECT_BINARY_DIR}/_install)
 set(CPACK_PACKAGE_DIRECTORY ${PROJECT_BINARY_DIR}/_package)
 set(CPACK_COMPONENTS_GROUPING IGNORE)
