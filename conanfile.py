@@ -31,6 +31,7 @@ class Conan(ConanFile):
 
     def package(self):
         self.copy("include/*.h", dst=".", src=self.source_subfolder)
+        self.copy("*.h", dst="include/ogg", src=self.build_folder, keep_path=False)
         self.copy("*.lib", dst="lib", src=self.build_subfolder, keep_path=False)
         self.copy("build/lib/*.a", dst="lib", keep_path=False)
         if self.settings.compiler == "msvc":
