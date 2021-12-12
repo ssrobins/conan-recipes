@@ -41,9 +41,11 @@ add_library(SDL2_mixer STATIC
 set_target_properties(SDL2_mixer PROPERTIES DEBUG_POSTFIX d)
 
 target_compile_definitions(SDL2_mixer PRIVATE
-    -DMUSIC_WAV
+    MUSIC_OGG
+    MUSIC_WAV
 )
 
 target_link_libraries(SDL2_mixer
     CONAN_PKG::sdl2
+    CONAN_PKG::vorbis
 )

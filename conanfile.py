@@ -22,6 +22,7 @@ class Conan(ConanFile):
     
     def requirements(self):
         self.requires("sdl2/2.0.18#f9abc4b1f200e751c41e1aab3026eeb7370b0d46")
+        self.requires("vorbis/1.3.7#6c0082787f1881f6c8a589304b45c20014a83ba9")
 
     def source(self):
         tools.get(f"https://www.libsdl.org/projects/SDL_mixer/release/{self.zip_name}")
