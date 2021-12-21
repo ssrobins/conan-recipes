@@ -17,5 +17,6 @@ target_link_libraries(Game
     ErrorHandler
     CONAN_PKG::sdl2
     CONAN_PKG::sdl2_image
+    CONAN_PKG::sdl2_mixer
     CONAN_PKG::sdl2_ttf
 )

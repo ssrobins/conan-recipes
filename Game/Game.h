@@ -2,6 +2,7 @@
 
 #include "Display.h"
 #include "SDL.h"
+#include "SDL_mixer.h"
 #include <chrono>
 #include <string>
 
@@ -19,6 +20,8 @@ public:
     void renderClear();
     void renderPresent();
     void renderFillRect(const SDL_Rect& rect, const SDL_Color& color);
+    void playMusic(const std::string& musicPath);
+    void stopMusic();
     int getScreenWidth() { return display.getScreenWidth(); }
     int getScreenHeight() { return display.getScreenHeight(); }
     int getGameWidth() { return display.getGameWidth(); }
@@ -37,6 +40,7 @@ private:
     SDL_Window *window;
     SDL_Renderer* renderer;
     SDL_Rect renderRect;
+    Mix_Music* music;
 
     std::string basePath = 
     #if __ANDROID__

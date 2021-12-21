@@ -168,3 +168,26 @@ void Game::renderFillRect(const SDL_Rect& rect, const SDL_Color& color)
     setRenderDrawColor(color);
     SDL_RenderFillRect(renderer, &rect);
 }
+
+void Game::playMusic(const std::string& musicPath)
+{
+    std::string fullMusicPath = basePath + musicPath;
+
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+    {
+        throw Exception(Mix_GetError());
+    }
+    music = Mix_LoadMUS(fullMusicPath.c_str());
+    if(music == nullptr)
+    {
+        throw Exception(Mix_GetError());
+    }
+    Mix_PlayMusic(music, -1);
+}
+
+void Game::stopMusic()
+{
+    Mix_FadeOutMusic(100);
+    Mix_FreeMusic(music);
+    music = nullptr;
+}

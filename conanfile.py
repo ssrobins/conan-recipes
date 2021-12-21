@@ -2,7 +2,7 @@ from conans import ConanFile, CMake
 
 class Conan(ConanFile):
     name = "ssrobins_engine"
-    version = "1.1.0"
+    version = "1.2.0"
     description = "Thin game engine wrapper"
     homepage = f"https://github.com/ssrobins/conan-{name}"
     license = "MIT"
@@ -26,6 +26,7 @@ class Conan(ConanFile):
     def requirements(self):
         self.requires("sdl2/2.0.18#f9abc4b1f200e751c41e1aab3026eeb7370b0d46")
         self.requires("sdl2_image/2.0.5#1f05694b2e3ce443d4e6358e5d5132adc1198114")
+        self.requires("sdl2_mixer/2.0.4#d0ec5667eb6132eb971c09a3507ced0c50fd72e5")
         self.requires("sdl2_ttf/2.0.15#3ef2e3b1e6657361c440ccc3bc49266b9a4af6be")
 
     def build(self):
