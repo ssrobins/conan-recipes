@@ -44,7 +44,7 @@ android {
     }
 
     def buildConfig = ""
-    if(project.getGradle().startParameter.taskNames.get(0).contains("Debug")) {
+    if(gradle.startParameter.taskNames.toString().contains("Debug")) {
         buildConfig = "Debug"
     } else {
         buildConfig = "Release"
