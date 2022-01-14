@@ -15,6 +15,7 @@ function(add_executable_custom target_name)
             MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
             MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
             MACOSX_BUNDLE_INFO_PLIST "${current_file_path}/info.plist.in"
+            XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
             XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "${xcode_code_sign_identity}"
             XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "${xcode_dev_team}"
         )
@@ -28,8 +29,6 @@ function(add_executable_custom target_name)
         endif()
 
         set_target_properties(${target_name} PROPERTIES
-            XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
-            XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME "LaunchImage"
             XCODE_ATTRIBUTE_ENABLE_BITCODE "${xcode_bitcode}"
             XCODE_ATTRIBUTE_INSTALL_PATH "$(LOCAL_APPS_DIR)"
             XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2" # 1=iPhone/iPod, 2=iPad
