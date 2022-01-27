@@ -51,7 +51,7 @@ function(add_sdl2_executable target_name)
         add_custom_command(
             TARGET ${target_name}
             POST_BUILD
-            COMMAND cmake -E copy
+            COMMAND ${CMAKE_COMMAND} -E copy
                 $<TARGET_FILE:${target_name}>
                 ${androidstudio_path}/app/src/main/jniLibs/${CMAKE_ANDROID_ARCH_ABI}/$<TARGET_FILE_NAME:${target_name}>
         )

@@ -28,7 +28,7 @@ function(target_assets target_name)
             add_custom_command(
                 TARGET ${target_name}
                 PRE_BUILD
-                COMMAND cmake -E copy_directory
+                COMMAND ${CMAKE_COMMAND} -E copy_directory
                     ${assets_path}
                     ${assets_dest_path}
             )
@@ -45,7 +45,7 @@ function(target_assets target_name)
             add_custom_command(
                 TARGET ${target_name}
                 POST_BUILD
-                COMMAND cmake -E copy_directory
+                COMMAND ${CMAKE_COMMAND} -E copy_directory
                     ${assets_path}
                     ${CMAKE_CURRENT_BINARY_DIR}/assets
             )
