@@ -18,6 +18,7 @@ function(add_executable_custom target_name)
             XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME "AppIcon"
             XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "${xcode_code_sign_identity}"
             XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "${xcode_dev_team}"
+            XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${MACOSX_BUNDLE_GUI_IDENTIFIER}"
         )
     endif()
 
