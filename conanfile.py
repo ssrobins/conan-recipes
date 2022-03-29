@@ -19,10 +19,10 @@ class Conan(ConanFile):
     maj_min_ver = str().join(version.split(".")[0:2])
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/5.0.0#1ecfed8c68a43ea17d321701cc8a91df21d06453")
+        self.build_requires("cmake_utils/6.1.0#9ced9bcfd95178b35d2ec5955b725a5652dbda26")
 
     def requirements(self):
-        self.requires("zlib/1.2.11#d4f0926217661284546b547bd9a6f2bf5b6127ec")
+        self.requires("zlib/1.2.12#49733ddb61eea4e49491653dfcde362a397f66e4")
 
     def source(self):
         tools.get(f"https://sourceforge.net/projects/libpng/files/libpng16/{self.version}/{self.zip_name}",
