@@ -4,7 +4,7 @@ import shutil
 
 class Conan(ConanFile):
     name = "sdl2"
-    version = "2.0.20"
+    version = "2.0.22"
     description = "A cross-platform development library designed to provide low level " \
                   "access to audio, keyboard, mouse, joystick, and graphics hardware " \
                   "via OpenGL and Direct3D."
