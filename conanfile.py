@@ -3,7 +3,7 @@ import os
 
 class Conan(ConanFile):
     name = "freetype"
-    version = "2.12.0"
+    version = "2.12.1"
     description = "Freely available software library to render fonts"
     homepage = "https://www.freetype.org/"
     license = "FTL https://www.freetype.org/license.html"
@@ -27,7 +27,7 @@ class Conan(ConanFile):
 
     def source(self):
         tools.get(f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}",
-            sha256="7940a46eeb0255baaa87c553d72778c4f8daa2b8888c8e2a05766a2a8686740c")
+            sha256="efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
     def build(self):
