@@ -26,13 +26,13 @@ jobs:
             os: ubuntu-20.04
             script: ./conan.py androidarm64
           - name: ios
-            os: macos-11
+            os: macos-12
             script: ./conan.py ios
           - name: linux
             os: ubuntu-18.04
             script: ./conan.py linux
           - name: macos
-            os: macos-11
+            os: macos-12
             script: ./conan.py macos
           - name: windows
             os: windows-2022
@@ -67,7 +67,7 @@ jobs:
       - name: Build
         run: ${{ matrix.script }}
         env:
-          DEVELOPER_DIR: /Applications/Xcode_13.1.app/Contents/Developer
+          DEVELOPER_DIR: /Applications/Xcode_13.3.1.app/Contents/Developer
 
       - name: Conan package upload
         if: github.ref == 'refs/heads/main'

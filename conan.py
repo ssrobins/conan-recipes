@@ -10,9 +10,9 @@ def main():
     platform = {
         "androidarm": "-s os=Android -s os.api_level=16 -s arch=armv7 -s compiler=clang -s compiler.version=12 -s compiler.libcxx=c++_static -s compiler.cppstd=17",
         "androidarm64": "-s os=Android -s os.api_level=21 -s arch=armv8 -s compiler=clang -s compiler.version=12 -s compiler.libcxx=c++_static -s compiler.cppstd=17",
-        "ios": "-s os=iOS -s arch=armv7 -s os.version=9.0 -s compiler.version=13.0 -s compiler.cppstd=17",
+        "ios": "-s os=iOS -s arch=armv7 -s os.version=9.0 -s compiler.version=13.1 -s compiler.cppstd=17",
         "linux": "-s compiler=gcc -s compiler.version=7 -s compiler.libcxx=libstdc++11 -s compiler.cppstd=17",
-        "macos": "-s os.version=10.9 -s compiler.version=13.0 -s compiler.cppstd=17",
+        "macos": "-s os.version=10.9 -s compiler.version=13.1 -s compiler.cppstd=17",
         "windows": "-s arch=x86 -s compiler=msvc -s compiler.version=193 -s compiler.runtime=static -s compiler.cppstd=17"
     }
 
