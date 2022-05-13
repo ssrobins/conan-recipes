@@ -394,10 +394,3 @@ TEST(display, fullscreenStandardRes32Tile)
     EXPECT_EQ(0, display.getOutlineOffsetWidth());
     EXPECT_EQ(0, display.getOutlineOffsetHeight());
 }
-
-
-int main(int argc, char** argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
