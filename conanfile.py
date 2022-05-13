@@ -38,8 +38,8 @@ class Conan(ConanFile):
             self.copy("*.pdb", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.debug.libs = ["gmockd", "gmock_maind", "gtestd", "gtest_maind"]
-        self.cpp_info.release.libs = ["gmock", "gmock_main", "gtest", "gtest_main"]
+        self.cpp_info.debug.libs = ["gmock_maind", "gmockd", "gtest_maind", "gtestd"]
+        self.cpp_info.release.libs = ["gmock_main", "gmock", "gtest_main", "gtest"]
         if self.settings.os == "Linux":
             system_libs = ["pthread"]
             self.cpp_info.debug.libs.extend(system_libs)
