@@ -11,8 +11,9 @@ class Conan(ConanFile):
     homepage = "https://www.libsdl.org"
     license = "Zlib https://www.libsdl.org/license.php"
     url = f"https://github.com/ssrobins/conan-{name}"
-    settings = "os", "compiler", "arch"
+    settings = "os", "arch", "compiler", "build_type"
     generators = "cmake"
+    _cmake = None
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"SDL2-{version}"
@@ -26,21 +27,35 @@ class Conan(ConanFile):
             installer.install("libasound2-dev")
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/3.0.0#4e7b4d9bfca394477325cdfc8eacce8b1c82583e")
+        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
 
     def source(self):
         tools.get(f"https://www.libsdl.org/release/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
+    def _configure_cmake(self):
+        if self._cmake:
+            return self._cmake
+        self._cmake = CMake(self)
+        if self.settings.os != "Windows":
+            self._cmake.generator = "Ninja Multi-Config"
+        if self.settings.os == "Android":
+            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
+        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
+            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
+        elif self.settings.os == "Windows" and self.settings.arch == "x86":
+            self._cmake.generator_platform = "Win32"
+        self._cmake.configure(build_dir=self.build_subfolder)
+        return self._cmake
+
     def build(self):
-        from cmake_utils import cmake_init, cmake_build_debug_release
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
+        cmake = self._configure_cmake()
+        cmake.build(args=["--verbose"])
+        with tools.chdir(self.build_subfolder):
+            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake.install()
 
     def package(self):
-        from cmake_utils import cmake_init, cmake_install_debug_release
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.os == "Android":
             self.copy("*.java", dst="android", src=os.path.join(self.source_subfolder, "android-project", "app", "src", "main", "java", "org", "libsdl", "app"))
         elif self.settings.compiler == "msvc":
@@ -48,33 +63,14 @@ class Conan(ConanFile):
 
     def package_info(self):
         self.cpp_info.includedirs = [os.path.join("include", "SDL2")]
-        self.cpp_info.debug.libs = ["SDL2d", "SDL2maind"]
-        self.cpp_info.release.libs = ["SDL2", "SDL2main"]
-        if self.settings.os == "Windows":
-            self.cpp_info.libs.extend(["Imm32", "SetupAPI", "Version", "WinMM"])
-        if self.settings.os == "Linux":
-            system_libs = ["dl", "m", "pthread"]
-            self.cpp_info.debug.libs.extend(system_libs)
-            self.cpp_info.release.libs.extend(system_libs)
-        elif self.settings.os == "Macos":
-            self.cpp_info.libs.append("iconv")
-            self.cpp_info.frameworks.extend([
-                "AudioToolbox",
-                "Carbon",
-                "Cocoa",
-                "CoreAudio",
-                "CoreHaptics",
-                "CoreVideo",
-                "ForceFeedback",
-                "GameController",
-                "IOKit",
-                "Metal"])
-        elif self.settings.os == "Android":
-            system_libs = ["android", "GLESv1_CM", "GLESv2", "log", "OpenSLES"]
-            self.cpp_info.debug.libs.extend(system_libs)
-            self.cpp_info.release.libs.extend(system_libs)
+        if self.settings.build_type == "Debug":
+            self.cpp_info.libs = ["SDL2d", "SDL2maind"]
+        else:
+            self.cpp_info.libs = ["SDL2", "SDL2main"]
+        if self.settings.os == "Android":
+            self.cpp_info.system_libs.extend(["android", "GLESv1_CM", "GLESv2", "log", "OpenSLES"])
         elif self.settings.os == "iOS":
-            self.cpp_info.libs.append("iconv")
+            self.cpp_info.system_libs.append("iconv")
             self.cpp_info.frameworks.extend([
                 "AudioToolbox",
                 "AVFoundation",
@@ -91,5 +87,20 @@ class Conan(ConanFile):
                 "OpenGLES",
                 "QuartzCore",
                 "UIKit"])
-        elif self.settings.os == "Android":
-            self.cpp_info.libs.extend(["android"])
+        elif self.settings.os == "Macos":
+            self.cpp_info.system_libs.append("iconv")
+            self.cpp_info.frameworks.extend([
+                "AudioToolbox",
+                "Carbon",
+                "Cocoa",
+                "CoreAudio",
+                "CoreHaptics",
+                "CoreVideo",
+                "ForceFeedback",
+                "GameController",
+                "IOKit",
+                "Metal"])
+        elif self.settings.os == "Linux":
+            self.cpp_info.system_libs.extend(["dl", "m", "pthread"])
+        elif self.settings.os == "Windows":
+            self.cpp_info.system_libs.extend(["Imm32", "SetupAPI", "Version", "WinMM"])
