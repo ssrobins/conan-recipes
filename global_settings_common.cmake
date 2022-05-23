@@ -1,5 +1,3 @@
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
-
 # The following code is a workaround for this issue:
 # https://gitlab.kitware.com/cmake/cmake/issues/20160
 if(CMAKE_GENERATOR STREQUAL Xcode)
