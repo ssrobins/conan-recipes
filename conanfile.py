@@ -23,8 +23,8 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("bzip2/1.0.8#1b33da2d177250fe500bd4506de0d2a4175dbbc3")
-        self.requires("libpng/1.6.37#4c5a09a29b076718e8031c3e3a01aab7b30f4644")
-        self.requires("zlib/1.2.12#d1cb042e463dd5107bf96584e8ced5e1ffa0c5fa")
+        self.requires("libpng/1.6.37#466b4e81c9ab8f4c1463d16653cdcf7f78e59600")
+        self.requires("zlib/1.2.12#bf7e6dca57ab84899f1b9144f33aeffaeddd7da4")
 
     def source(self):
         tools.get(f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}",
