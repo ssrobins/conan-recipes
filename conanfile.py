@@ -8,8 +8,9 @@ class Conan(ConanFile):
     homepage = "https://www.sfml-dev.org/"
     license = "Zlib"
     url = f"https://github.com/ssrobins/conan-{name}"
-    settings = "os", "compiler", "arch"
+    settings = "os", "arch", "compiler", "build_type"
     generators = "cmake"
+    _cmake = None
     revision_mode = "scm"
     exports = "cmake_utils.py"
     exports_sources = ["AudioDevice.diff", "CMakeLists.txt"]
@@ -29,10 +30,10 @@ class Conan(ConanFile):
             installer.install("libxrandr-dev")
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/6.1.0#9ced9bcfd95178b35d2ec5955b725a5652dbda26")
+        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
 
     def requirements(self):
-        self.requires("freetype/2.12.1#0980a44fe32150cfb8bcb7fb6ea7f989dd55d725")
+        self.requires("freetype/2.12.1#2e35e973e17761add823680b306153d36c0f16d0")
 
     def source(self):
         tools.get(f"https://www.sfml-dev.org/files/{self.zip_name}")
@@ -41,34 +42,52 @@ class Conan(ConanFile):
         # Replace auto_ptr with unique_ptr to fix build errors when using the C++17 standard
         tools.patch(base_path=os.path.join(self.source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
 
+    def _configure_cmake(self):
+        if self._cmake:
+            return self._cmake
+        self._cmake = CMake(self)
+        if self.settings.os != "Windows":
+            self._cmake.generator = "Ninja Multi-Config"
+        if self.settings.os == "Android":
+            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
+        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
+            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
+        elif self.settings.os == "Windows" and self.settings.arch == "x86":
+            self._cmake.generator_platform = "Win32"
+        self._cmake.configure(build_dir=self.build_subfolder)
+        return self._cmake
+
     def build(self):
-        from cmake_utils import cmake_init, cmake_build_debug_release
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
+        cmake = self._configure_cmake()
+        cmake.build(args=["--verbose"])
+        with tools.chdir(self.build_subfolder):
+            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake.install()
 
     def package(self):
-        from cmake_utils import cmake_init, cmake_install_debug_release
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.cpp_info.debug.libs = ["sfml-graphics-s-d", "sfml-window-s-d", "sfml-system-s-d"]
-        self.cpp_info.release.libs = ["sfml-graphics-s", "sfml-window-s", "sfml-system-s"]
+        if self.settings.build_type == "Debug":
+            self.cpp_info.libs = ["sfml-graphics-s-d", "sfml-window-s-d", "sfml-system-s-d"]
+        else:
+            self.cpp_info.libs = ["sfml-graphics-s", "sfml-window-s", "sfml-system-s"]
         if self.settings.os == "Windows":
-            system_libs = ["opengl32", "winmm"]
-            self.cpp_info.debug.libs.append("sfml-main-d")
-            self.cpp_info.release.libs.append("sfml-main")
-            self.cpp_info.debug.libs.extend(system_libs)
-            self.cpp_info.release.libs.extend(system_libs)
+            if self.settings.build_type == "Debug":
+                self.cpp_info.libs.append("sfml-main-d")
+            else:
+                self.cpp_info.libs.append("sfml-main")
+            self.cpp_info.system_libs.extend(["opengl32", "winmm"])
         elif self.settings.os == "Linux":
-            system_libs = ["GL", "pthread", "udev", "X11", "Xrandr"]
-            self.cpp_info.debug.libs.extend(system_libs)
-            self.cpp_info.release.libs.extend(system_libs)
+            self.cpp_info.system_libs.extend(["GL", "pthread", "udev", "X11", "Xrandr"])
         elif self.settings.os == "Macos":
-            frameworks = ["Carbon", "Cocoa", "CoreFoundation", "CoreGraphics", "IOKit", "OpenGL"]
-            for framework in frameworks:
-                self.cpp_info.exelinkflags.append(f"-framework {framework}")
+            self.cpp_info.frameworks.extend([
+                "Carbon",
+                "Cocoa",
+                "CoreFoundation",
+                "CoreGraphics",
+                "IOKit",
+                "OpenGL"])
             self.cpp_info.exelinkflags.append("-ObjC")
         self.cpp_info.defines = ["SFML_STATIC"]
