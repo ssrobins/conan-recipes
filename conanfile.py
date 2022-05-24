@@ -8,8 +8,9 @@ class Conan(ConanFile):
     homepage = "https://xiph.org/vorbis/"
     license = "BSD license"
     url = f"https://github.com/ssrobins/conan-{name}"
-    settings = "os", "compiler", "arch"
-    generators = "cmake"
+    settings = "os", "arch", "compiler", "build_type"
+    generators = "cmake", "cmake_find_package_multi"
+    _cmake = None
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"lib{name}-{version}"
@@ -18,19 +19,36 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/5.1.0#2c0d8f9dda3cac137976849bb3851fd6c4999de0")
+        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
 
     def requirements(self):
-        self.requires("ogg/1.3.5#d615ae768dcf235654392fb87b4af397f0897a23")
+        self.requires("ogg/1.3.5#85a67c96e8fe063a9a33ee51d6c23daf0a686b19")
 
     def source(self):
         tools.get(f"https://downloads.xiph.org/releases/{self.name}/{self.zip_name}")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
+    def _configure_cmake(self):
+        if self._cmake:
+            return self._cmake
+        self._cmake = CMake(self)
+        if self.settings.os != "Windows":
+            self._cmake.generator = "Ninja Multi-Config"
+        if self.settings.os == "Android":
+            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
+        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
+            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
+        elif self.settings.os == "Windows" and self.settings.arch == "x86":
+            self._cmake.generator_platform = "Win32"
+        self._cmake.configure(build_dir=self.build_subfolder)
+        return self._cmake
+
     def build(self):
-        from cmake_utils import cmake_init, cmake_build_debug_release
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
+        cmake = self._configure_cmake()
+        cmake.build(args=["--verbose"])
+        with tools.chdir(self.build_subfolder):
+            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake.install()
 
     def package(self):
         self.copy("include/*.h", dst=".", src=self.source_subfolder)
@@ -41,5 +59,7 @@ class Conan(ConanFile):
 
     def package_info(self):
         self.cpp_info.includedirs = ["include"]
-        self.cpp_info.debug.libs = ["vorbisfiled", "vorbisencd", "vorbisd"]
-        self.cpp_info.release.libs = ["vorbisfile", "vorbisenc", "vorbis"]
+        if self.settings.build_type == "Debug":
+            self.cpp_info.libs = ["vorbisfiled", "vorbisencd", "vorbisd"]
+        else:
+            self.cpp_info.libs = ["vorbisfile", "vorbisenc", "vorbis"]
