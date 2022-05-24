@@ -56,7 +56,6 @@ class Conan(ConanFile):
             self.copy("*.pdb", dst="lib", keep_path=False)
         
     def package_info(self):
-        self.cpp_info.includedirs = [os.path.join("include", "ogg")]
         if self.settings.build_type == "Debug":
             self.cpp_info.libs = ["oggd"]
         else:
