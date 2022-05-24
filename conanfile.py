@@ -23,7 +23,7 @@ class Conan(ConanFile):
         self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
 
     def requirements(self):
-        self.requires("zlib/1.2.12#d1cb042e463dd5107bf96584e8ced5e1ffa0c5fa")
+        self.requires("zlib/1.2.12#bf7e6dca57ab84899f1b9144f33aeffaeddd7da4")
 
     def source(self):
         tools.get(f"https://sourceforge.net/projects/libpng/files/libpng16/{self.version}/{self.zip_name}",
