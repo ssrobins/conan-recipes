@@ -8,8 +8,9 @@ class Conan(ConanFile):
     homepage = "https://www.freetype.org/"
     license = "FTL https://www.freetype.org/license.html"
     url = f"https://github.com/ssrobins/conan-{name}"
-    settings = "os", "compiler", "arch"
+    settings = "os", "arch", "compiler", "build_type"
     generators = "cmake"
+    _cmake = None
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"{name}-{version}"
@@ -18,31 +19,47 @@ class Conan(ConanFile):
     source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/6.1.0#9ced9bcfd95178b35d2ec5955b725a5652dbda26")
+        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
 
     def requirements(self):
-        self.requires("bzip2/1.0.8#580f7301c2f8fcd91c9776ca1a4651e7bad123a1")
-        self.requires("libpng/1.6.37#727f83ef089858ec67d8692f1d4f122c5a9bf041")
-        self.requires("zlib/1.2.12#49733ddb61eea4e49491653dfcde362a397f66e4")
+        self.requires("bzip2/1.0.8#1b33da2d177250fe500bd4506de0d2a4175dbbc3")
+        self.requires("libpng/1.6.37#4c5a09a29b076718e8031c3e3a01aab7b30f4644")
+        self.requires("zlib/1.2.12#d1cb042e463dd5107bf96584e8ced5e1ffa0c5fa")
 
     def source(self):
         tools.get(f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}",
             sha256="efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938")
         os.rename(self.zip_folder_name, self.source_subfolder)
 
+    def _configure_cmake(self):
+        if self._cmake:
+            return self._cmake
+        self._cmake = CMake(self)
+        if self.settings.os != "Windows":
+            self._cmake.generator = "Ninja Multi-Config"
+        if self.settings.os == "Android":
+            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
+        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
+            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
+        elif self.settings.os == "Windows" and self.settings.arch == "x86":
+            self._cmake.generator_platform = "Win32"
+        self._cmake.configure(build_dir=self.build_subfolder)
+        return self._cmake
+
     def build(self):
-        from cmake_utils import cmake_init, cmake_build_debug_release
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
+        cmake = self._configure_cmake()
+        cmake.build(args=["--verbose"])
+        with tools.chdir(self.build_subfolder):
+            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake.install()
 
     def package(self):
-        from cmake_utils import cmake_init, cmake_install_debug_release
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
         
     def package_info(self):
         self.cpp_info.includedirs = [os.path.join("include", "freetype2")]
-        self.cpp_info.debug.libs = ["freetyped"]
-        self.cpp_info.release.libs = ["freetype"]
+        if self.settings.build_type == "Debug":
+            self.cpp_info.libs = ["freetyped"]
+        else:
+            self.cpp_info.libs = ["freetype"]
