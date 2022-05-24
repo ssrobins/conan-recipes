@@ -9,6 +9,7 @@ on:
 
 env:
   CONAN_REVISIONS_ENABLED: 1
+  DEVELOPER_DIR: /Applications/Xcode_13.3.1.app/Contents/Developer
 
 jobs:
   builds:
@@ -51,10 +52,11 @@ jobs:
           cmake --version
           conan --version
 
-      - name: Build
-        run: ${{ matrix.script }}
-        env:
-          DEVELOPER_DIR: /Applications/Xcode_13.3.1.app/Contents/Developer
+      - name: Build Debug
+        run: ${{ matrix.script }} --config Debug
+
+      - name: Build Release
+        run: ${{ matrix.script }} --config Release
 
       - name: Conan package upload
         if: github.ref == 'refs/heads/main'
