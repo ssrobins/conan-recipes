@@ -8,8 +8,9 @@ class Conan(ConanFile):
     homepage = "http://www.libpng.org"
     license = "Libpng http://www.libpng.org/pub/png/src/libpng-LICENSE.txt"
     url = f"https://github.com/ssrobins/conan-{name}"
-    settings = "os", "compiler", "arch"
+    settings = "os", "arch", "compiler", "build_type"
     generators = "cmake"
+    _cmake = None
     revision_mode = "scm"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = f"libpng-{version}"
@@ -19,10 +20,10 @@ class Conan(ConanFile):
     maj_min_ver = str().join(version.split(".")[0:2])
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/6.1.0#9ced9bcfd95178b35d2ec5955b725a5652dbda26")
+        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
 
     def requirements(self):
-        self.requires("zlib/1.2.12#49733ddb61eea4e49491653dfcde362a397f66e4")
+        self.requires("zlib/1.2.12#d1cb042e463dd5107bf96584e8ced5e1ffa0c5fa")
 
     def source(self):
         tools.get(f"https://sourceforge.net/projects/libpng/files/libpng16/{self.version}/{self.zip_name}",
@@ -35,22 +36,40 @@ class Conan(ConanFile):
         # https://github.com/glennrp/libpng/pull/359
         tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
 
+    def _configure_cmake(self):
+        if self._cmake:
+            return self._cmake
+        self._cmake = CMake(self)
+        if self.settings.os != "Windows":
+            self._cmake.generator = "Ninja Multi-Config"
+        if self.settings.os == "Android":
+            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
+        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
+            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
+        elif self.settings.os == "Windows" and self.settings.arch == "x86":
+            self._cmake.generator_platform = "Win32"
+        self._cmake.configure(build_dir=self.build_subfolder)
+        return self._cmake
+
     def build(self):
-        from cmake_utils import cmake_init, cmake_build_debug_release
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_build_debug_release(cmake, self.build_subfolder, self.run)
+        cmake = self._configure_cmake()
+        cmake.build(args=["--verbose"])
+        with tools.chdir(self.build_subfolder):
+            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake.install()
 
     def package(self):
-        from cmake_utils import cmake_init, cmake_install_debug_release
-        cmake = cmake_init(self.settings, CMake(self), self.build_folder)
-        cmake_install_debug_release(cmake, self.build_subfolder)
         if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
 
     def package_info(self):
         if self.settings.os == "Windows":
-            self.cpp_info.debug.libs = [f"libpng{self.maj_min_ver}_staticd"]
-            self.cpp_info.release.libs = [f"libpng{self.maj_min_ver}_static"]
+            if self.settings.build_type == "Debug":
+                self.cpp_info.libs = [f"libpng{self.maj_min_ver}_staticd"]
+            else:
+                self.cpp_info.libs = [f"libpng{self.maj_min_ver}_static"]
         else:
-            self.cpp_info.debug.libs = [f"png{self.maj_min_ver}d"]
-            self.cpp_info.release.libs = [f"png{self.maj_min_ver}"]
+            if self.settings.build_type == "Debug":
+                self.cpp_info.libs = [f"png{self.maj_min_ver}d"]
+            else:
+                self.cpp_info.libs = [f"png{self.maj_min_ver}"]
