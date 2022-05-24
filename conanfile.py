@@ -27,9 +27,9 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("sdl2/2.0.22#9eef18bc748aef7bfc89e085ee925b18e60741c6")
-        self.requires("sdl2_image/2.0.5#e26fdbd1e2710ba168a365baf3f6a7e02e5b812f")
+        self.requires("sdl2_image/2.0.5#adea406ed8786514cb55f535a780794c6cd00856")
         self.requires("sdl2_mixer/2.0.4#08f602c34c374893ef75d96a088135f05fd255fa")
-        self.requires("sdl2_ttf/2.0.18#5c7f2c543789076844a35650087149c6f9f95574")
+        self.requires("sdl2_ttf/2.0.18#2683bd3d57796202e132ef82773d70633885092e")
 
     def _configure_cmake(self):
         if self._cmake:
