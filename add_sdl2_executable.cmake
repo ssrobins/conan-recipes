@@ -1,4 +1,7 @@
-set(package_root_path ${CONAN_ANDROID_SDL2_ROOT})
+if(ANDROID)
+    find_package(android_sdl2 REQUIRED)
+    set(package_root_path ${android_sdl2_PACKAGE_FOLDER_RELEASE})
+endif()
 
 function(add_sdl2_executable target_name)
     set(properties ${ARGV})
