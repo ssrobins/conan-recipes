@@ -17,7 +17,7 @@ function(add_sdl2_executable target_name)
                 ${package_root_path}/Android
                 ${androidstudio_path}
             COMMAND ${CMAKE_COMMAND} -E copy_directory
-                ${CONAN_SDL2_ROOT}/android
+                ${sdl2_PACKAGE_FOLDER_RELEASE}/android
                 ${androidstudio_path}/app/src/main/java/org/libsdl/app
         )
 

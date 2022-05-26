@@ -2,7 +2,7 @@ from conans import ConanFile
 
 class Conan(ConanFile):
     name = "cmake_utils"
-    version = "9.0.0"
+    version = "9.0.1"
     description = "Shared CMake utilities"
     license = "MIT"
     url = f"https://github.com/ssrobins/conan-{name}"
