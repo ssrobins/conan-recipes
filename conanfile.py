@@ -19,7 +19,7 @@ class Conan(ConanFile):
     zip_name = f"{zip_folder_name}.tar.gz"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
+        self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
 
     @property
     def _source_subfolder(self):
@@ -39,8 +39,10 @@ class Conan(ConanFile):
         tc = CMakeToolchain(self)
         tc.generator = "Ninja Multi-Config"
         tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
-        if self.settings.os == "iOS" and self.settings.arch != "x86_64":
-            tc.blocks["apple_system"].values["cmake_osx_architectures"] = "armv7;arm64"
+        if self.settings.os == "iOS":
+            tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
+            if self.settings.arch != "x86_64":
+                tc.blocks["apple_system"].values["cmake_osx_architectures"] = "armv7;arm64"
         tc.generate()
         deps = CMakeDeps(self)
         deps.generate()

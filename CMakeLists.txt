@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.17)
 
 project(Project)
 
-set(CMAKE_FIND_ROOT_PATH ${CMAKE_BINARY_DIR})
+list(INSERT CMAKE_FIND_ROOT_PATH 0 ${CMAKE_BINARY_DIR})
 
 find_package(cmake_utils REQUIRED)
 
