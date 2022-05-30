@@ -56,6 +56,14 @@ jobs:
       - name: Install Conan
         run: pip3 install conan --upgrade
 
+      - name: Customize Conan profile
+        if: contains(matrix.name, 'android')
+        run: |
+          conan profile new ~/.conan/profiles/default --detect
+          echo [conf] >> ~/.conan/profiles/default
+          echo tools.android:ndk_path=$ANDROID_NDK_ROOT >> ~/.conan/profiles/default
+          cat ~/.conan/profiles/default
+
       - name: Print versions
         run: |
           cmake --version
