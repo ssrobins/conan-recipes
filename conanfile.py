@@ -1,6 +1,6 @@
-from conans import ConanFile, CMake, tools
+from conans import ConanFile, tools
+from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 import os
-import shutil
 
 class Conan(ConanFile):
     name = "sdl2"
@@ -12,14 +12,11 @@ class Conan(ConanFile):
     license = "Zlib https://www.libsdl.org/license.php"
     url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "cmake"
-    _cmake = None
+    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"SDL2-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"
-    build_subfolder = "build"
-    source_subfolder = "source"
 
     def system_requirements(self):
         if self.settings.os == "Linux":
@@ -29,35 +26,41 @@ class Conan(ConanFile):
     def build_requirements(self):
         self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
 
-    def source(self):
-        tools.get(f"https://www.libsdl.org/release/{self.zip_name}")
-        os.rename(self.zip_folder_name, self.source_subfolder)
+    @property
+    def _source_subfolder(self):
+        return "source"
 
-    def _configure_cmake(self):
-        if self._cmake:
-            return self._cmake
-        self._cmake = CMake(self)
-        if self.settings.os != "Windows":
-            self._cmake.generator = "Ninja Multi-Config"
-        if self.settings.os == "Android":
-            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
-        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
-            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
-        elif self.settings.os == "Windows" and self.settings.arch == "x86":
-            self._cmake.generator_platform = "Win32"
-        self._cmake.configure(build_dir=self.build_subfolder)
-        return self._cmake
+    def layout(self):
+        self.folders.build = "build"
+        self.folders.generators = self.folders.build
+
+    def source(self):
+        tools.get(f"https://www.libsdl.org/release/{self.zip_name}",
+            destination=self._source_subfolder,
+            strip_root=True)
+
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.generator = "Ninja Multi-Config"
+        tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
+        if self.settings.os == "iOS":
+            tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
+            if self.settings.arch != "x86_64":
+                tc.blocks["apple_system"].values["cmake_osx_architectures"] = "armv7;arm64"
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
 
     def build(self):
-        cmake = self._configure_cmake()
-        cmake.build(args=["--verbose"])
-        with tools.chdir(self.build_subfolder):
-            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+        self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
         cmake.install()
 
     def package(self):
         if self.settings.os == "Android":
-            self.copy("*.java", dst="android", src=os.path.join(self.source_subfolder, "android-project", "app", "src", "main", "java", "org", "libsdl", "app"))
+            self.copy("*.java", dst="android", src=os.path.join(self._source_subfolder, "android-project", "app", "src", "main", "java", "org", "libsdl", "app"))
         elif self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
 
