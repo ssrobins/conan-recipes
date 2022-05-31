@@ -5,6 +5,6 @@ add_library(SDL2_ttf STATIC
 set_target_properties(SDL2_ttf PROPERTIES DEBUG_POSTFIX d)
 
 target_link_libraries(SDL2_ttf
-    CONAN_PKG::freetype
-    CONAN_PKG::sdl2
+    freetype::freetype
+    sdl2::sdl2
 )
