@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.17)
 
-include(conanbuildinfo.cmake)
-conan_basic_setup(TARGETS)
+project(Project)
 
-include(${CONAN_CMAKE_UTILS_ROOT}/global_settings_thirdparty.cmake)
+list(INSERT CMAKE_FIND_ROOT_PATH 0 ${CMAKE_BINARY_DIR})
 
-# Force find_package() to look in the Conan package directories first
-set(CMAKE_FIND_ROOT_PATH ${CONAN_CMAKE_MODULE_PATH} ${CMAKE_FIND_ROOT_PATH})
+find_package(cmake_utils REQUIRED)
+
+include(${cmake_utils_PACKAGE_FOLDER_DEBUG}${cmake_utils_PACKAGE_FOLDER_RELEASE}/global_settings_thirdparty.cmake)
 
 option(FT_WITH_BZIP2 "Support bzip2 compressed fonts." ON)
 option(FT_WITH_PNG "Support PNG compressed OpenType embedded bitmaps." ON)

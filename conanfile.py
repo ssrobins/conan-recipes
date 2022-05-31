@@ -1,4 +1,5 @@
-from conans import ConanFile, CMake, tools
+from conans import ConanFile, tools
+from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 import os
 
 class Conan(ConanFile):
@@ -9,48 +10,51 @@ class Conan(ConanFile):
     license = "FTL https://www.freetype.org/license.html"
     url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "cmake"
-    _cmake = None
+    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"{name}-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"
-    build_subfolder = "build"
-    source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
+        self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
 
     def requirements(self):
-        self.requires("bzip2/1.0.8#1b33da2d177250fe500bd4506de0d2a4175dbbc3")
-        self.requires("libpng/1.6.37#466b4e81c9ab8f4c1463d16653cdcf7f78e59600")
-        self.requires("zlib/1.2.12#bf7e6dca57ab84899f1b9144f33aeffaeddd7da4")
+        self.requires("bzip2/1.0.8#fc0e46b2840777637662a9eeae897f293ccc60da")
+        self.requires("libpng/1.6.37#8ac680c34b654eb42bb10f2be7b16deaff0863a1")
+        self.requires("zlib/1.2.12#4b5878245233a18058eeb97baf680fb2656dc5c0")
+
+    @property
+    def _source_subfolder(self):
+        return "source"
+
+    def layout(self):
+        self.folders.build = "build"
+        self.folders.generators = self.folders.build
 
     def source(self):
         tools.get(f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}",
-            sha256="efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938")
-        os.rename(self.zip_folder_name, self.source_subfolder)
+            sha256="efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938",
+            destination=self._source_subfolder,
+            strip_root=True)
 
-    def _configure_cmake(self):
-        if self._cmake:
-            return self._cmake
-        self._cmake = CMake(self)
-        if self.settings.os != "Windows":
-            self._cmake.generator = "Ninja Multi-Config"
-        if self.settings.os == "Android":
-            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
-        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
-            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
-        elif self.settings.os == "Windows" and self.settings.arch == "x86":
-            self._cmake.generator_platform = "Win32"
-        self._cmake.configure(build_dir=self.build_subfolder)
-        return self._cmake
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.generator = "Ninja Multi-Config"
+        tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
+        if self.settings.os == "iOS":
+            tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
+            if self.settings.arch != "x86_64":
+                tc.blocks["apple_system"].values["cmake_osx_architectures"] = "armv7;arm64"
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
 
     def build(self):
-        cmake = self._configure_cmake()
-        cmake.build(args=["--verbose"])
-        with tools.chdir(self.build_subfolder):
-            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+        self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
         cmake.install()
 
     def package(self):
