@@ -19,7 +19,7 @@ class Conan(ConanFile):
         self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
 
     def requirements(self):
-        self.requires("ogg/1.3.5#d05fe2f0a5c8e5f49b0156d60ac3f3fb85ac573c")
+        self.requires("ogg/1.3.5#2b422466d531fd71ea3c70f3ea0111c2c100b4b0")
 
     @property
     def _source_subfolder(self):
