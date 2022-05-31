@@ -1,5 +1,7 @@
-from conans import ConanFile, CMake, tools
-import os, shutil
+from conans import ConanFile, tools
+from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+import os
+import shutil
 
 class Conan(ConanFile):
     name = "sdl2_mixer"
@@ -9,52 +11,56 @@ class Conan(ConanFile):
     license = "Zlib"
     url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "cmake"
-    _cmake = None
+    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt", f"CMakeLists-{name}.txt"]
     zip_folder_name = f"SDL2_mixer-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"
-    build_subfolder = "build"
-    source_subfolder = "source"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
+        self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
     
     def requirements(self):
-        self.requires("sdl2/2.0.22#9eef18bc748aef7bfc89e085ee925b18e60741c6")
-        self.requires("vorbis/1.3.7#6cb3266a1766ef5b119ade3fd4ccd5cae4093c48")
+        self.requires("sdl2/2.0.22#033c463681632cc4f061211ee3559820d53ec1a4")
+        self.requires("vorbis/1.3.7#05ed92dcc392a62a0f69aa6c390c3e85822b824c")
+
+    @property
+    def _source_subfolder(self):
+        return "source"
+
+    def layout(self):
+        self.folders.build = "build"
+        self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://www.libsdl.org/projects/SDL_mixer/release/{self.zip_name}")
-        os.rename(self.zip_folder_name, self.source_subfolder)
-        shutil.move(f"CMakeLists-{self.name}.txt", os.path.join(self.source_subfolder, "CMakeLists.txt"))
+        tools.get(f"https://www.libsdl.org/projects/SDL_mixer/release/{self.zip_name}",
+            destination=self._source_subfolder,
+            strip_root=True)
+        shutil.move(f"CMakeLists-{self.name}.txt", os.path.join(self._source_subfolder, "CMakeLists.txt"))
 
-    def _configure_cmake(self):
-        if self._cmake:
-            return self._cmake
-        self._cmake = CMake(self)
-        if self.settings.os != "Windows":
-            self._cmake.generator = "Ninja Multi-Config"
-        if self.settings.os == "Android":
-            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
-        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
-            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
-        elif self.settings.os == "Windows" and self.settings.arch == "x86":
-            self._cmake.generator_platform = "Win32"
-        self._cmake.configure(build_dir=self.build_subfolder)
-        return self._cmake
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.generator = "Ninja Multi-Config"
+        tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
+        if self.settings.os == "iOS":
+            tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
+            if self.settings.arch != "x86_64":
+                tc.blocks["apple_system"].values["cmake_osx_architectures"] = "armv7;arm64"
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
 
     def build(self):
-        cmake = self._configure_cmake()
-        cmake.build(args=["--verbose"])
-        with tools.chdir(self.build_subfolder):
-            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+        self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake.install()
 
     def package(self):
-        self.copy("SDL_mixer.h", dst="include", src=self.source_subfolder)
-        self.copy("*.lib", dst="lib", src=self.build_subfolder, keep_path=False)
-        self.copy("build/lib/*.a", dst="lib", keep_path=False)
+        self.copy("SDL_mixer.h", dst="include", src=self._source_subfolder)
+        self.copy("*.lib", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
         if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False)
 
