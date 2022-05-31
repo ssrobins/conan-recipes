@@ -21,8 +21,8 @@ class Conan(ConanFile):
         self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
     
     def requirements(self):
-        self.requires("sdl2/2.0.22#033c463681632cc4f061211ee3559820d53ec1a4")
-        self.requires("vorbis/1.3.7#05ed92dcc392a62a0f69aa6c390c3e85822b824c")
+        self.requires("sdl2/2.0.22#c24bc3911c2f1ce3c1b2a07834e78f8d4cdcd735")
+        self.requires("vorbis/1.3.7#ce3eb7e2dfefc491a54744ae68a06efdd04458c3")
 
     @property
     def _source_subfolder(self):
