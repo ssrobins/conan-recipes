@@ -1,5 +1,5 @@
-from conans import ConanFile, CMake, tools
-import os
+from conans import ConanFile, tools
+from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 
 class Conan(ConanFile):
     name = "ssrobins_engine"
@@ -9,8 +9,7 @@ class Conan(ConanFile):
     license = "MIT"
     url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "cmake"
-    _cmake = None
+    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = [
         "CMakeLists.txt",
@@ -19,43 +18,43 @@ class Conan(ConanFile):
         "ErrorHandler/*",
         "Game/*"
     ]
-    build_subfolder = "build"
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
-        self.build_requires("gtest/1.11.0#b6d68d3070e0f968f2a456728c7f7af1621d51f2")
+        self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
+        self.build_requires("gtest/1.11.0#3cbdcc8e49dce95918af7db115176df6080237d6")
 
     def requirements(self):
-        self.requires("sdl2/2.0.22#9eef18bc748aef7bfc89e085ee925b18e60741c6")
-        self.requires("sdl2_image/2.0.5#adea406ed8786514cb55f535a780794c6cd00856")
-        self.requires("sdl2_mixer/2.0.4#08f602c34c374893ef75d96a088135f05fd255fa")
-        self.requires("sdl2_ttf/2.0.18#2683bd3d57796202e132ef82773d70633885092e")
+        self.requires("sdl2/2.0.22#033c463681632cc4f061211ee3559820d53ec1a4")
+        self.requires("sdl2_image/2.0.5#9864b7622d253fa070963890597d07ac86cfb881")
+        self.requires("sdl2_mixer/2.0.4#c74ee0c8bfb8841af5b3397933e9df5103c47d6c")
+        self.requires("sdl2_ttf/2.0.18#dd7912922a00108f159c4e131afaeb5b09986aa1")
 
-    def _configure_cmake(self):
-        if self._cmake:
-            return self._cmake
-        self._cmake = CMake(self)
-        if self.settings.os != "Windows":
-            self._cmake.generator = "Ninja Multi-Config"
-        if self.settings.os == "Android":
-            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
-        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
-            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
-        elif self.settings.os == "Windows" and self.settings.arch == "x86":
-            self._cmake.generator_platform = "Win32"
-        self._cmake.configure(build_dir=self.build_subfolder)
-        return self._cmake
+    def layout(self):
+        self.folders.build = "build"
+        self.folders.generators = self.folders.build
+
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.generator = "Ninja Multi-Config"
+        tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
+        if self.settings.os == "iOS":
+            tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
+            if self.settings.arch != "x86_64":
+                tc.blocks["apple_system"].values["cmake_osx_architectures"] = "armv7;arm64"
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
 
     def build(self):
-        cmake = self._configure_cmake()
-        cmake.build(args=["--verbose"])
-        with tools.chdir(self.build_subfolder):
-            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+        self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
 
     def package(self):
         self.copy("*.h", dst="include", keep_path=False)
-        self.copy("*.lib", dst="lib", src=self.build_subfolder, keep_path=False)
-        self.copy("build/lib/*.a", dst="lib", keep_path=False)
+        self.copy("*.lib", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
         if self.settings.compiler == "msvc":
             self.copy("*.pdb", dst="lib", keep_path=False, excludes="*Test*")
 

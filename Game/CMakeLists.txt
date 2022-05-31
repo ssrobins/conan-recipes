@@ -15,8 +15,8 @@ target_include_directories(Game
 target_link_libraries(Game
     Display
     ErrorHandler
-    CONAN_PKG::sdl2
-    CONAN_PKG::sdl2_image
-    CONAN_PKG::sdl2_mixer
-    CONAN_PKG::sdl2_ttf
+    sdl2::sdl2
+    sdl2_image::sdl2_image
+    sdl2_mixer::sdl2_mixer
+    sdl2_ttf::sdl2_ttf
 )

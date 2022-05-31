@@ -14,5 +14,5 @@ target_include_directories(ErrorHandler
 )
 
 target_link_libraries(ErrorHandler
-    CONAN_PKG::sdl2
+    sdl2::sdl2
 )
