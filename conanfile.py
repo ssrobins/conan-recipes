@@ -1,5 +1,5 @@
-from conans import ConanFile, CMake, tools
-import os
+from conans import ConanFile, tools
+from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 
 class Conan(ConanFile):
     name = "glew"
@@ -9,14 +9,11 @@ class Conan(ConanFile):
     license = "https://github.com/nigels-com/glew/blob/master/LICENSE.txt"
     url = f"https://github.com/ssrobins/conan-{name}"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "cmake"
-    _cmake = None
+    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = f"{name}-{version}"
     zip_name = f"{zip_folder_name}.tgz"
-    build_subfolder = "build"
-    source_subfolder = "source"
 
     def system_requirements(self):
         if self.settings.os == "Linux":
@@ -24,37 +21,43 @@ class Conan(ConanFile):
             installer.install("freeglut3-dev")
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/7.0.0#9bf47716aeee70a8dcfc8592831a0318eb327a09")
+        self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
+
+    @property
+    def _source_subfolder(self):
+        return "source"
+
+    def layout(self):
+        self.folders.build = "build"
+        self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://github.com/nigels-com/glew/releases/download/{self.zip_folder_name}/{self.zip_name}")
-        os.rename(self.zip_folder_name, self.source_subfolder)
+        tools.get(f"https://github.com/nigels-com/glew/releases/download/{self.zip_folder_name}/{self.zip_name}",
+            destination=self._source_subfolder,
+            strip_root=True)
 
         # Apply a patch to fix error LNK2001: unresolved external symbol _memset
         # when building the shared library on MSVC
         # https://github.com/nigels-com/glew/issues/180:
-        tools.patch(base_path=self.source_subfolder, patch_file="CMakeLists.diff")
+        tools.patch(base_path=self._source_subfolder, patch_file="CMakeLists.diff")
 
-    def _configure_cmake(self):
-        if self._cmake:
-            return self._cmake
-        self._cmake = CMake(self)
-        if self.settings.os != "Windows":
-            self._cmake.generator = "Ninja Multi-Config"
-        if self.settings.os == "Android":
-            self._cmake.definitions["CMAKE_TOOLCHAIN_FILE"] = os.getenv("ANDROID_NDK_ROOT") + "/build/cmake/android.toolchain.cmake"
-        elif self.settings.os == "iOS" and self.settings.arch != "x86_64":
-            self._cmake.definitions["CMAKE_OSX_ARCHITECTURES"] = "armv7;arm64"
-        elif self.settings.os == "Windows" and self.settings.arch == "x86":
-            self._cmake.generator_platform = "Win32"
-        self._cmake.configure(build_dir=self.build_subfolder)
-        return self._cmake
+    def generate(self):
+        tc = CMakeToolchain(self)
+        tc.generator = "Ninja Multi-Config"
+        tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
+        if self.settings.os == "iOS":
+            tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
+            if self.settings.arch != "x86_64":
+                tc.blocks["apple_system"].values["cmake_osx_architectures"] = "armv7;arm64"
+        tc.generate()
+        deps = CMakeDeps(self)
+        deps.generate()
 
     def build(self):
-        cmake = self._configure_cmake()
-        cmake.build(args=["--verbose"])
-        with tools.chdir(self.build_subfolder):
-            self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+        self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
         cmake.install()
 
     def package(self):
