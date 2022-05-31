@@ -20,9 +20,9 @@ class Conan(ConanFile):
         self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
 
     def requirements(self):
-        self.requires("bzip2/1.0.8#fc0e46b2840777637662a9eeae897f293ccc60da")
-        self.requires("libpng/1.6.37#8ac680c34b654eb42bb10f2be7b16deaff0863a1")
-        self.requires("zlib/1.2.12#4b5878245233a18058eeb97baf680fb2656dc5c0")
+        self.requires("bzip2/1.0.8#0f698387603ceafe70bdaff90cca390b30921683")
+        self.requires("libpng/1.6.37#7b9c47fa6d29baaef78466f4bd060419405c9629")
+        self.requires("zlib/1.2.12#650366776514477610688847aff81986cdcef408")
 
     @property
     def _source_subfolder(self):
