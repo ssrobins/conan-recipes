@@ -92,4 +92,4 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           conan user --password ${{ secrets.ARTIFACTORY_API_KEY }} --remote artifactory-ssrobins ${{ secrets.ARTIFACTORY_USER }}
-          conan upload $(conan inspect --raw name .) --all --remote artifactory-ssrobins --confirm --parallel
+          conan upload "*" --all --remote artifactory-ssrobins --confirm --parallel
