@@ -1,0 +1,15 @@
+add_library(bzip2 STATIC
+    blocksort.c
+    bzlib.c
+    bzlib.h
+    bzlib_private.h
+    compress.c
+    crctable.c
+    decompress.c
+    huffman.c
+    randtable.c
+)
+
+set_target_properties(bzip2 PROPERTIES OUTPUT_NAME bz2)
+
+set_target_properties(bzip2 PROPERTIES DEBUG_POSTFIX d)
