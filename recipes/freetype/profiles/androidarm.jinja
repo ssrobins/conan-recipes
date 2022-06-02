@@ -1,0 +1,11 @@
+[settings]
+os=Android
+os.api_level=16
+arch=armv7
+compiler=clang
+compiler.version=12
+compiler.libcxx=c++_static
+compiler.cppstd=17
+
+[conf]
+tools.android:ndk_path={{ os.getenv("ANDROID_NDK_ROOT") }}
