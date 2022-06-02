@@ -28,10 +28,10 @@ class Conan(ConanFile):
             installer.install("libxrandr-dev")
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
+        self.build_requires("cmake_utils/9.0.1")
 
     def requirements(self):
-        self.requires("freetype/2.12.1#897f3b5d7d9de4d820a2b3112450d524bf4b35e6")
+        self.requires("freetype/2.12.1")
 
     @property
     def _source_subfolder(self):

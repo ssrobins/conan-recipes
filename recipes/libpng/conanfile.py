@@ -17,10 +17,10 @@ class Conan(ConanFile):
     maj_min_ver = str().join(version.split(".")[0:2])
 
     def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1#7f745054c87ea0007a89813a4d2c30c4c95e24b2")
+        self.build_requires("cmake_utils/9.0.1")
 
     def requirements(self):
-        self.requires("zlib/1.2.12#650366776514477610688847aff81986cdcef408")
+        self.requires("zlib/1.2.12")
 
     @property
     def _source_subfolder(self):
