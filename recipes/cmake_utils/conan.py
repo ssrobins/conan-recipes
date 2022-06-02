@@ -1,18 +1,7 @@
 #!/usr/bin/env python3
 
 import os.path
-import subprocess
-
-def main():
-    script_path = os.path.dirname(os.path.realpath(__file__))
-
-    remote_url = "https://ssrobins.jfrog.io/artifactory/api/conan/conan"
-    subprocess.run(f"conan remote add artifactory-ssrobins {remote_url} --insert --force",
-        cwd=script_path, shell=True, check=True)
-
-    subprocess.run(f"conan create --update .",
-        cwd=script_path, shell=True, check=True)
-
-
-if __name__ == "__main__":
-    main()
+import sys
+sys.path.append(f"{os.path.dirname(os.path.realpath(__file__))}/../../scripts")
+from conan_create import *
+conan_create_single_platform(os.path.dirname(os.path.realpath(__file__)))
