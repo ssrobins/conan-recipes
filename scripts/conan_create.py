@@ -5,7 +5,7 @@ import os.path
 import subprocess
 
 
-def conan_create(recipe_path):
+def conan_create(recipe_path, desktop_only=False):
     os.environ["CONAN_REVISIONS_ENABLED"] = "1"
 
     script_path = os.path.dirname(os.path.realpath(__file__))
@@ -24,15 +24,13 @@ def conan_create(recipe_path):
     parser.add_argument("--config", help="Build config")
     command_args = parser.parse_args()
 
+    if desktop_only and ("android" in command_args.platform or "ios" in command_args.platform):
+        return
+
     if command_args.config:
         config = f"-s build_type={command_args.config}"
     else:
         config = "-s build_type=Debug"
-
-    remote_url = "https://ssrobins.jfrog.io/artifactory/api/conan/conan"
-    conan_remote = f"conan remote add artifactory-ssrobins {remote_url} --insert --force"
-    print(conan_remote, flush=True)
-    subprocess.run(conan_remote, shell=True, check=True)
 
     conan_create = f"conan create --update . {platform[command_args.platform]} {config}"
     print(conan_create, flush=True)
@@ -40,9 +38,6 @@ def conan_create(recipe_path):
 
 
 def conan_create_single_platform(recipe_path):
-    remote_url = "https://ssrobins.jfrog.io/artifactory/api/conan/conan"
-    subprocess.run(f"conan remote add artifactory-ssrobins {remote_url} --insert --force",
-        shell=True, check=True)
-
-    subprocess.run(f"conan create --update .",
-        cwd=recipe_path, shell=True, check=True)
+    conan_create = "conan create --update ."
+    print(conan_create, flush=True)
+    subprocess.run(conan_create, cwd=recipe_path, shell=True, check=True)
