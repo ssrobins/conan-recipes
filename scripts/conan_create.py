@@ -5,7 +5,7 @@ import os.path
 import subprocess
 
 
-def conan_create(recipe_path):
+def conan_create(recipe_path, desktop_only=False):
     os.environ["CONAN_REVISIONS_ENABLED"] = "1"
 
     script_path = os.path.dirname(os.path.realpath(__file__))
@@ -23,6 +23,9 @@ def conan_create(recipe_path):
     parser.add_argument("platform", choices=list(platform.keys()), help="Build platform")
     parser.add_argument("--config", help="Build config")
     command_args = parser.parse_args()
+
+    if desktop_only and ("android" in command_args.platform or "ios" in command_args.platform):
+        return
 
     if command_args.config:
         config = f"-s build_type={command_args.config}"

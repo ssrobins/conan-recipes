@@ -22,22 +22,22 @@ jobs:
         include:
           - name: androidarm
             os: ubuntu-20.04
-            script: ./conan.py androidarm
+            script: ./scripts/conan_create_all.py androidarm
           - name: androidarm64
             os: ubuntu-20.04
-            script: ./conan.py androidarm64
+            script: ./scripts/conan_create_all.py androidarm64
           - name: ios
             os: macos-12
-            script: ./conan.py ios
+            script: ./scripts/conan_create_all.py ios
           - name: linux
             os: ubuntu-18.04
-            script: ./conan.py linux
+            script: ./scripts/conan_create_all.py linux
           - name: macos
             os: macos-12
-            script: ./conan.py macos
+            script: ./scripts/conan_create_all.py macos
           - name: windows
             os: windows-2022
-            script: py conan.py windows
+            script: py scripts/conan_create_all.py windows
     steps:
       - name: Checkout
         uses: actions/checkout@v2
