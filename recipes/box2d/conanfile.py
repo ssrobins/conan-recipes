@@ -1,5 +1,6 @@
-from conans import ConanFile, tools
+from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy, get
 
 class Conan(ConanFile):
     name = "box2d"
@@ -27,7 +28,8 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://github.com/erincatto/Box2D/archive/{self.zip_name}",
+        get(self,
+            f"https://github.com/erincatto/Box2D/archive/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
 
@@ -52,7 +54,7 @@ class Conan(ConanFile):
 
     def package(self):
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            copy(self, "*.pdb", self.build_folder, os.path.join(self.package_folder, "lib"), keep_path=False)
 
     def package_info(self):
         if self.settings.build_type == "Debug":

@@ -1,5 +1,7 @@
-from conans import ConanFile, tools
+from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy, get
+import os
 
 class Conan(ConanFile):
     name = "zlib"
@@ -10,8 +12,8 @@ class Conan(ConanFile):
     license = "Zlib"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    options = {"shared": [True, False]}
-    default_options = "shared=False"
+    #options = {"shared": [True, False]}
+    #default_options = "shared=False"
     generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
@@ -30,7 +32,8 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://zlib.net/{self.zip_name}",
+        get(self,
+            f"https://zlib.net/{self.zip_name}",
             sha256="91844808532e5ce316b3c010929493c0244f3d37593afd6de04f71821d5136d9",
             destination=self._source_subfolder,
             strip_root=True)
@@ -54,12 +57,12 @@ class Conan(ConanFile):
         self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
 
     def package(self):
-        self.copy("*.h", dst="include", src=self._source_subfolder)
-        self.copy("*.h", dst="include", keep_path=False)
-        self.copy("*zlibstatic*.lib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        copy(self, "*.h", self.source_folder, os.path.join(self.package_folder, "include"))
+        copy(self, "*.h", self.build_folder, os.path.join(self.package_folder, "include"), keep_path=False)
+        copy(self, "*zlibstatic*.lib", self.build_folder, os.path.join(self.package_folder, "lib"), keep_path=False)
+        copy(self, "*.a", self.build_folder, os.path.join(self.package_folder, "lib"), keep_path=False)
         if self.settings.compiler == "msvc":
-            self.copy("*zlibstatic*.pdb", dst="lib", keep_path=False)
+            copy(self, "*zlibstatic*.pdb", self.build_folder, os.path.join(self.package_folder, "lib"), keep_path=False)
 
     def package_info(self):
         if self.settings.os == "Windows" and not tools.os_info.is_linux:
