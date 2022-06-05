@@ -1,5 +1,6 @@
-from conans import ConanFile, tools
+from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy, get
 import os
 import shutil
 
@@ -29,7 +30,8 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://sourceware.org/pub/bzip2/{self.zip_name}",
+        get(self,
+            f"https://sourceware.org/pub/bzip2/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
         shutil.move(f"CMakeLists-{self.name}.txt", os.path.join(self._source_subfolder, "CMakeLists.txt"))

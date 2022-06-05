@@ -1,4 +1,5 @@
-from conans import ConanFile
+from conan import ConanFile
+from conan.tools.files import copy
 
 class Conan(ConanFile):
     name = "android_sdl2"
@@ -7,8 +8,7 @@ class Conan(ConanFile):
     license = "MIT"
     url = "https://github.com/ssrobins/conan-recipes"
     revision_mode = "scm"
-    exports = "*"
-    build_policy = "missing"
+    exports_sources = "*"
 
     def package(self):
-        self.copy("Android/*")
+        copy(self, "Android/*", self.source_folder, self.package_folder)
