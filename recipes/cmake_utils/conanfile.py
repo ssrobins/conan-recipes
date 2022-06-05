@@ -7,8 +7,7 @@ class Conan(ConanFile):
     license = "MIT"
     url = "https://github.com/ssrobins/conan-recipes"
     revision_mode = "scm"
-    exports = "*"
-    build_policy = "missing"
+    exports_sources = "*"
 
     def package(self):
         self.copy("*.cmake")
