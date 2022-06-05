@@ -1,4 +1,5 @@
-from conans import ConanFile
+from conan import ConanFile
+from conan.tools.files import copy
 
 class Conan(ConanFile):
     name = "cmake_utils"
@@ -10,7 +11,7 @@ class Conan(ConanFile):
     exports_sources = "*"
 
     def package(self):
-        self.copy("*.cmake")
-        self.copy("*.in")
-        self.copy("*.plist")
-        self.copy("*.xcsettings")
+        copy(self, "*.cmake", self.source_folder, self.package_folder)
+        copy(self, "*.in", self.source_folder, self.package_folder)
+        copy(self, "*.plist", self.source_folder, self.package_folder)
+        copy(self, "*.xcsettings", self.source_folder, self.package_folder)
