@@ -9,7 +9,7 @@ class Conan(ConanFile):
     description = "A compression library based on Burrows–Wheeler algorithm"
     homepage = "http://www.bzip.org/"
     license = "BSD-like license"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

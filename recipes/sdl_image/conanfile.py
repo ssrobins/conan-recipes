@@ -9,7 +9,7 @@ class Conan(ConanFile):
     description = "A library that loads image files as SDL surfaces and textures"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
     license = "Zlib"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

@@ -8,7 +8,7 @@ class Conan(ConanFile):
     description = "Freely available software library to render fonts"
     homepage = "https://www.freetype.org/"
     license = "FTL https://www.freetype.org/license.html"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

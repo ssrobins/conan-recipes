@@ -5,7 +5,7 @@ class Conan(ConanFile):
     version = "9.0.1"
     description = "Shared CMake utilities"
     license = "MIT"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     revision_mode = "scm"
     exports = "*"
     build_policy = "missing"

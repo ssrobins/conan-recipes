@@ -7,7 +7,7 @@ class Conan(ConanFile):
     description = "Official PNG image format reference library"
     homepage = "http://www.libpng.org"
     license = "Libpng http://www.libpng.org/pub/png/src/libpng-LICENSE.txt"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

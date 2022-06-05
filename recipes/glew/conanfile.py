@@ -7,7 +7,7 @@ class Conan(ConanFile):
     description = "OpenGL extension wrangler library"
     homepage = "https://github.com/nigels-com/glew"
     license = "https://github.com/nigels-com/glew/blob/master/LICENSE.txt"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

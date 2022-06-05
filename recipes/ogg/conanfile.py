@@ -7,7 +7,7 @@ class Conan(ConanFile):
     description = "Multimedia container format for Xiph.org multimedia codecs"
     homepage = "https://xiph.org/ogg/"
     license = "BSD license"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

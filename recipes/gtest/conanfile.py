@@ -8,7 +8,7 @@ class Conan(ConanFile):
     description = "Google's C++ test framework"
     homepage = "https://github.com/google/googletest"
     license = "BSD-3-Clause"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

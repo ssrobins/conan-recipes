@@ -9,7 +9,7 @@ class Conan(ConanFile):
     description = "A sample multi-channel audio mixer library"
     homepage = "https://www.libsdl.org/projects/SDL_mixer/"
     license = "Zlib"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

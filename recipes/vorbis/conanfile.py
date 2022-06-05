@@ -7,7 +7,7 @@ class Conan(ConanFile):
     description = "General-purpose compressed audio format for mid to high quality audio and music"
     homepage = "https://xiph.org/vorbis/"
     license = "BSD license"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

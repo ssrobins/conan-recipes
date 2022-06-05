@@ -8,7 +8,7 @@ class Conan(ConanFile):
                   "(Also Free, Not to Mention Unencumbered by Patents)"
     homepage = "https://zlib.net/"
     license = "Zlib"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     options = {"shared": [True, False]}
     default_options = "shared=False"

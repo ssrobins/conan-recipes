@@ -9,7 +9,7 @@ class Conan(ConanFile):
     description = "A sample library which allows you to use TrueType fonts in your SDL applications"
     homepage = "https://www.libsdl.org/projects/SDL_ttf/"
     license = "Zlib"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"

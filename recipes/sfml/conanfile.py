@@ -8,7 +8,7 @@ class Conan(ConanFile):
     description = "Simple and fast multimedia library"
     homepage = "https://www.sfml-dev.org/"
     license = "Zlib"
-    url = f"https://github.com/ssrobins/conan-{name}"
+    url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"
