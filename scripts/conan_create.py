@@ -32,12 +32,13 @@ def conan_create(recipe_path, desktop_only=False):
     else:
         config = "-s build_type=Debug"
 
-    conan_create = f"conan create --update . {platform[command_args.platform]} {config}"
+    conan_create = f"conan create --update . {platform[command_args.platform]} -pr:b={script_path}/../profiles/default {config}"
     print(conan_create, flush=True)
     subprocess.run(conan_create, cwd=recipe_path, shell=True, check=True)
 
 
 def conan_create_single_platform(recipe_path):
-    conan_create = "conan create --update ."
+    script_path = os.path.dirname(os.path.realpath(__file__))
+    conan_create = f"conan create --update . -pr:b={script_path}/../profiles/default -pr:h={script_path}/../profiles/default"
     print(conan_create, flush=True)
     subprocess.run(conan_create, cwd=recipe_path, shell=True, check=True)
