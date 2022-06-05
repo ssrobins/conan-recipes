@@ -15,6 +15,3 @@ class Conan(ConanFile):
         self.copy("*.in")
         self.copy("*.plist")
         self.copy("*.xcsettings")
-
-    def package_info(self):
-        self.env_info.PYTHONPATH.append(self.package_folder)
