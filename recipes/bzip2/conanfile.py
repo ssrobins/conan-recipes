@@ -18,8 +18,12 @@ class Conan(ConanFile):
     zip_folder_name = f"{name}-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
+    def requirements(self):
+        self.requires("cmake_utils/9.0.1")
+
+    @property
+    def _source_subfolder(self):
+        return "source"
 
     @property
     def _source_subfolder(self):
@@ -55,11 +59,22 @@ class Conan(ConanFile):
         self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
 
     def package(self):
-        self.copy("bzlib.h", dst="include", src=self._source_subfolder)
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        copy(self, "bzlib.h",
+            os.path.join(self.source_folder, self._source_subfolder),
+            os.path.join(self.package_folder, "include"))
+        copy(self, "*.lib",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
+        copy(self, "*.a",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
 
     def package_info(self):
         if self.settings.build_type == "Debug":

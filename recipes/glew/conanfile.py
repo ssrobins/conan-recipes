@@ -1,5 +1,6 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import get, patch
 
 class Conan(ConanFile):
     name = "glew"
@@ -20,8 +21,8 @@ class Conan(ConanFile):
             installer = tools.SystemPackageTool()
             installer.install("freeglut3-dev")
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
+    def requirements(self):
+        self.requires("cmake_utils/9.0.1")
 
     @property
     def _source_subfolder(self):
@@ -32,14 +33,15 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://github.com/nigels-com/glew/releases/download/{self.zip_folder_name}/{self.zip_name}",
+        get(self,
+            f"https://github.com/nigels-com/glew/releases/download/{self.zip_folder_name}/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
 
         # Apply a patch to fix error LNK2001: unresolved external symbol _memset
         # when building the shared library on MSVC
         # https://github.com/nigels-com/glew/issues/180:
-        tools.patch(base_path=self._source_subfolder, patch_file="CMakeLists.diff")
+        patch(self, base_path=self._source_subfolder, patch_file="CMakeLists.diff")
 
     def generate(self):
         tc = CMakeToolchain(self)
@@ -62,7 +64,10 @@ class Conan(ConanFile):
 
     def package(self):
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
 
     def package_info(self):
         if self.settings.os == "Windows":

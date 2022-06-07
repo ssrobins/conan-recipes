@@ -1,5 +1,7 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy, get
+import os
 
 class Conan(ConanFile):
     name = "vorbis"
@@ -15,10 +17,8 @@ class Conan(ConanFile):
     zip_folder_name = f"lib{name}-{version}"
     zip_name = f"{zip_folder_name}.tar.xz"
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
-
     def requirements(self):
+        self.requires("cmake_utils/9.0.1")
         self.requires("ogg/1.3.5")
 
     @property
@@ -30,7 +30,8 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://downloads.xiph.org/releases/{self.name}/{self.zip_name}",
+        get(self,
+            f"https://downloads.xiph.org/releases/{self.name}/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
 
@@ -54,11 +55,22 @@ class Conan(ConanFile):
         cmake.install()
 
     def package(self):
-        self.copy("include/*.h", dst=".", src=self._source_subfolder)
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        copy(self, "include/*.h",
+            os.path.join(self.source_folder, self._source_subfolder),
+            os.path.join(self.package_folder, "include"))
+        copy(self, "*.lib",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
+        copy(self, "*.a",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
 
     def package_info(self):
         self.cpp_info.includedirs = ["include"]

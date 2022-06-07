@@ -12,16 +12,14 @@ class Conan(ConanFile):
     license = "Zlib"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    #options = {"shared": [True, False]}
-    #default_options = "shared=False"
     generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = f"{name}-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
+    def requirements(self):
+        self.requires("cmake_utils/9.0.1")
 
     @property
     def _source_subfolder(self):
@@ -57,12 +55,26 @@ class Conan(ConanFile):
         self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
 
     def package(self):
-        copy(self, "*.h", self.source_folder, os.path.join(self.package_folder, "include"))
-        copy(self, "*.h", self.build_folder, os.path.join(self.package_folder, "include"), keep_path=False)
-        copy(self, "*zlibstatic*.lib", self.build_folder, os.path.join(self.package_folder, "lib"), keep_path=False)
-        copy(self, "*.a", self.build_folder, os.path.join(self.package_folder, "lib"), keep_path=False)
+        copy(self, "*.h",
+            self.source_folder,
+            os.path.join(self.package_folder, "include"))
+        copy(self, "*.h",
+            self.build_folder,
+            os.path.join(self.package_folder, "include"),
+            keep_path=False)
+        copy(self, "*zlibstatic*.lib",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
+        copy(self, "*.a",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
         if self.settings.compiler == "msvc":
-            copy(self, "*zlibstatic*.pdb", self.build_folder, os.path.join(self.package_folder, "lib"), keep_path=False)
+            copy(self, "*zlibstatic*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
 
     def package_info(self):
         if self.settings.os == "Windows" and not tools.os_info.is_linux:

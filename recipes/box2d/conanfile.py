@@ -16,8 +16,8 @@ class Conan(ConanFile):
     zip_folder_name = f"{name}-{version}"
     zip_name = f"v{version}.tar.gz"
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
+    def requirements(self):
+        self.requires("cmake_utils/9.0.1")
 
     @property
     def _source_subfolder(self):
@@ -54,7 +54,10 @@ class Conan(ConanFile):
 
     def package(self):
         if self.settings.compiler == "msvc":
-            copy(self, "*.pdb", self.build_folder, os.path.join(self.package_folder, "lib"), keep_path=False)
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
 
     def package_info(self):
         if self.settings.build_type == "Debug":

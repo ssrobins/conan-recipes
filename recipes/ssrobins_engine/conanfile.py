@@ -5,7 +5,7 @@ class Conan(ConanFile):
     name = "ssrobins_engine"
     version = "1.2.0"
     description = "Thin game engine wrapper"
-    homepage = f"https://github.com/ssrobins/conan-{name}"
+    homepage = "https://github.com/ssrobins/conan-recipes"
     license = "MIT"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
@@ -19,11 +19,9 @@ class Conan(ConanFile):
         "Game/*"
     ]
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
-        self.build_requires("gtest/1.11.0")
-
     def requirements(self):
+        self.requires("cmake_utils/9.0.1")
+        self.requires("gtest/1.11.0")
         self.requires("sdl2/2.0.22")
         self.requires("sdl2_image/2.0.5")
         self.requires("sdl2_mixer/2.0.4")
@@ -52,11 +50,23 @@ class Conan(ConanFile):
         self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
 
     def package(self):
-        self.copy("*.h", dst="include", keep_path=False)
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        copy(self, "*.h",
+            os.path.join(self.source_folder, self._source_subfolder),
+            os.path.join(self.package_folder, "include"))
+        copy(self, "*.lib",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
+        copy(self, "*.a",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False, excludes="*Test*")
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False,
+                excludes="*Test*")
 
     def package_info(self):
         if self.settings.build_type == "Debug":

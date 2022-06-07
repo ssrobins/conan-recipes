@@ -1,5 +1,6 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy, get
 import os
 
 class Conan(ConanFile):
@@ -23,8 +24,8 @@ class Conan(ConanFile):
             installer = tools.SystemPackageTool()
             installer.install("libasound2-dev")
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
+    def requirements(self):
+        self.requires("cmake_utils/9.0.1")
 
     @property
     def _source_subfolder(self):
@@ -35,7 +36,8 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://www.libsdl.org/release/{self.zip_name}",
+        get(self,
+            f"https://www.libsdl.org/release/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
 
@@ -60,9 +62,14 @@ class Conan(ConanFile):
 
     def package(self):
         if self.settings.os == "Android":
-            self.copy("*.java", dst="android", src=os.path.join(self._source_subfolder, "android-project", "app", "src", "main", "java", "org", "libsdl", "app"))
+            copy(self, "*.java",
+                os.path.join(self.source_folder, self._source_subfolder, "android-project", "app", "src", "main", "java", "org", "libsdl", "app"),
+                os.path.join(self.package_folder, "android"))
         elif self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
 
     def package_info(self):
         self.cpp_info.includedirs = [os.path.join("include", "SDL2")]

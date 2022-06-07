@@ -11,7 +11,7 @@ find_package(sdl2_image REQUIRED)
 find_package(sdl2_mixer REQUIRED)
 find_package(sdl2_ttf REQUIRED)
 
-include(${cmake_utils_PACKAGE_FOLDER_DEBUG}${cmake_utils_PACKAGE_FOLDER_RELEASE}/global_settings.cmake)
+#include(${cmake_utils_PACKAGE_FOLDER_DEBUG}${cmake_utils_PACKAGE_FOLDER_RELEASE}/global_settings.cmake)
 
 # Helper functions
 include(${cmake_utils_PACKAGE_FOLDER_DEBUG}${cmake_utils_PACKAGE_FOLDER_RELEASE}/add_executable_custom.cmake)

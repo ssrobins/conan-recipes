@@ -1,5 +1,6 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy, get, patch
 
 class Conan(ConanFile):
     name = "libpng"
@@ -16,10 +17,8 @@ class Conan(ConanFile):
     zip_name = f"{zip_folder_name}.tar.gz"
     maj_min_ver = str().join(version.split(".")[0:2])
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
-
     def requirements(self):
+        self.requires("cmake_utils/9.0.1")
         self.requires("zlib/1.2.12")
 
     @property
@@ -31,7 +30,8 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://sourceforge.net/projects/libpng/files/libpng16/{self.version}/{self.zip_name}",
+        get(self,
+            f"https://sourceforge.net/projects/libpng/files/libpng16/{self.version}/{self.zip_name}",
             sha256="daeb2620d829575513e35fecc83f0d3791a620b9b93d800b763542ece9390fb4",
             destination=self._source_subfolder,
             strip_root=True)
@@ -40,7 +40,7 @@ class Conan(ConanFile):
         # https://sourceforge.net/p/libpng/code/merge-requests/4/
         # https://github.com/glennrp/libpng/pull/318
         # https://github.com/glennrp/libpng/pull/359
-        tools.patch(base_path=self._source_subfolder, patch_file="CMakeLists.diff")
+        patch(self, base_path=self._source_subfolder, patch_file="CMakeLists.diff")
 
     def generate(self):
         tc = CMakeToolchain(self)
@@ -63,7 +63,10 @@ class Conan(ConanFile):
 
     def package(self):
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
 
     def package_info(self):
         if self.settings.os == "Windows":
