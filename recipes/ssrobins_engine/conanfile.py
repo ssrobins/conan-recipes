@@ -1,5 +1,7 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy
+import os
 
 class Conan(ConanFile):
     name = "ssrobins_engine"
@@ -26,6 +28,10 @@ class Conan(ConanFile):
         self.requires("sdl2_image/2.0.5")
         self.requires("sdl2_mixer/2.0.4")
         self.requires("sdl2_ttf/2.0.18")
+
+    @property
+    def _source_subfolder(self):
+        return "source"
 
     def layout(self):
         self.folders.build = "build"

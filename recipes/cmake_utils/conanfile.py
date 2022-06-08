@@ -15,3 +15,6 @@ class Conan(ConanFile):
         copy(self, "*.in", self.source_folder, self.package_folder)
         copy(self, "*.plist", self.source_folder, self.package_folder)
         copy(self, "*.xcsettings", self.source_folder, self.package_folder)
+
+    def package_info(self):
+        self.cpp_info.includedirs = list()
