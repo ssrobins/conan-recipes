@@ -1,6 +1,7 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get, patch
+from conan.tools.system.package_manager import Apt
 import os
 
 class Conan(ConanFile):
@@ -20,13 +21,15 @@ class Conan(ConanFile):
 
     def system_requirements(self):
         if self.settings.os == "Linux":
-            installer = tools.SystemPackageTool()
-            installer.install("libflac-dev")
-            installer.install("libgl1-mesa-dev")
-            installer.install("libopenal-dev")
-            installer.install("libudev-dev")
-            installer.install("libvorbis-dev")
-            installer.install("libxrandr-dev")
+            Apt(self).install([
+                "libflac-dev",
+                "libgl1-mesa-dev",
+                "libopenal-dev",
+                "libudev-dev",
+                "libvorbis-dev",
+                "libxrandr-dev"
+            ],
+            update=True, check=True)
 
     def requirements(self):
         self.requires("cmake_utils/9.0.1")

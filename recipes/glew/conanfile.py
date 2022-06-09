@@ -1,6 +1,7 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get, patch
+from conan.tools.system.package_manager import Apt
 import os
 
 class Conan(ConanFile):
@@ -19,8 +20,8 @@ class Conan(ConanFile):
 
     def system_requirements(self):
         if self.settings.os == "Linux":
-            installer = tools.SystemPackageTool()
-            installer.install("freeglut3-dev")
+            Apt(self).install(["freeglut3-dev"],
+                update=True, check=True)
 
     def requirements(self):
         self.requires("cmake_utils/9.0.1")
