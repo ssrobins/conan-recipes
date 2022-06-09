@@ -56,7 +56,7 @@ class Conan(ConanFile):
 
     def package(self):
         copy(self, "*.h",
-            self.source_folder,
+            os.path.join(self.source_folder, self._source_subfolder),
             os.path.join(self.package_folder, "include"))
         copy(self, "*.h",
             self.build_folder,
@@ -77,7 +77,7 @@ class Conan(ConanFile):
                 keep_path=False)
 
     def package_info(self):
-        if self.settings.os == "Windows" and not tools.os_info.is_linux:
+        if self.settings.os == "Windows":
             if self.settings.build_type == "Debug":
                 self.cpp_info.libs = ["zlibstaticd"]
             else:

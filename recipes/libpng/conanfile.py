@@ -1,6 +1,7 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get, patch
+import os
 
 class Conan(ConanFile):
     name = "libpng"

@@ -16,7 +16,7 @@ def conan_create(recipe_path, desktop_only=False):
         "ios": f"-pr:h={script_path}/../profiles/ios",
         "linux": f"-pr:h={script_path}/../profiles/linux",
         "macos": f"-pr:h={script_path}/../profiles/macos",
-        "windows": f"-pr:h={script_path}/../profiles/windows"
+        "windows": f"-pr:h={script_path}/../profiles/windows_x86 -pr:b={script_path}/../profiles/windows_x64"
     }
 
     parser = argparse.ArgumentParser()
