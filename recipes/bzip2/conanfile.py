@@ -25,10 +25,6 @@ class Conan(ConanFile):
     def _source_subfolder(self):
         return "source"
 
-    @property
-    def _source_subfolder(self):
-        return "source"
-
     def layout(self):
         self.folders.build = "build"
         self.folders.generators = self.folders.build
