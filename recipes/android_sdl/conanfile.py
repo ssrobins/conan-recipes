@@ -12,3 +12,6 @@ class Conan(ConanFile):
 
     def package(self):
         copy(self, "Android/*", self.source_folder, self.package_folder)
+
+    def package_info(self):
+        self.cpp_info.includedirs = list()
