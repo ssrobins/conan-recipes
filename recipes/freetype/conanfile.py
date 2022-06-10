@@ -1,5 +1,6 @@
-from conans import ConanFile, tools
+from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy, get
 import os
 
 class Conan(ConanFile):
@@ -16,11 +17,9 @@ class Conan(ConanFile):
     zip_folder_name = f"{name}-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
-
     def requirements(self):
         self.requires("bzip2/1.0.8")
+        self.requires("cmake_utils/9.0.1")
         self.requires("libpng/1.6.37")
         self.requires("zlib/1.2.12")
 
@@ -33,7 +32,8 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}",
+        get(self,
+            f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}",
             sha256="efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938",
             destination=self._source_subfolder,
             strip_root=True)
@@ -59,7 +59,10 @@ class Conan(ConanFile):
 
     def package(self):
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
         
     def package_info(self):
         self.cpp_info.includedirs = [os.path.join("include", "freetype2")]

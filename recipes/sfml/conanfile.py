@@ -1,5 +1,7 @@
-from conans import ConanFile, tools
+from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy, get, patch
+from conan.tools.system.package_manager import Apt
 import os
 
 class Conan(ConanFile):
@@ -19,18 +21,18 @@ class Conan(ConanFile):
 
     def system_requirements(self):
         if self.settings.os == "Linux":
-            installer = tools.SystemPackageTool()
-            installer.install("libflac-dev")
-            installer.install("libgl1-mesa-dev")
-            installer.install("libopenal-dev")
-            installer.install("libudev-dev")
-            installer.install("libvorbis-dev")
-            installer.install("libxrandr-dev")
-
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
+            Apt(self).install([
+                "libflac-dev",
+                "libgl1-mesa-dev",
+                "libopenal-dev",
+                "libudev-dev",
+                "libvorbis-dev",
+                "libxrandr-dev"
+            ],
+            update=True, check=True)
 
     def requirements(self):
+        self.requires("cmake_utils/9.0.1")
         self.requires("freetype/2.12.1")
 
     @property
@@ -42,12 +44,13 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://www.sfml-dev.org/files/{self.zip_name}",
+        get(self,
+            f"https://www.sfml-dev.org/files/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
 
         # Replace auto_ptr with unique_ptr to fix build errors when using the C++17 standard
-        tools.patch(base_path=os.path.join(self._source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
+        patch(self, base_path=os.path.join(self._source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
 
     def generate(self):
         tc = CMakeToolchain(self)
@@ -70,7 +73,10 @@ class Conan(ConanFile):
 
     def package(self):
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
 
     def package_info(self):
         if self.settings.build_type == "Debug":

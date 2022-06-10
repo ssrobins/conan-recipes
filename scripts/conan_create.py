@@ -7,6 +7,7 @@ import subprocess
 
 def conan_create(recipe_path, desktop_only=False):
     os.environ["CONAN_REVISIONS_ENABLED"] = "1"
+    os.environ["CONAN_SKIP_BROKEN_SYMLINKS_CHECK"] = "1"
 
     script_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -16,7 +17,7 @@ def conan_create(recipe_path, desktop_only=False):
         "ios": f"-pr:h={script_path}/../profiles/ios",
         "linux": f"-pr:h={script_path}/../profiles/linux",
         "macos": f"-pr:h={script_path}/../profiles/macos",
-        "windows": f"-pr:h={script_path}/../profiles/windows"
+        "windows": f"-pr:h={script_path}/../profiles/windows_x86 -pr:b={script_path}/../profiles/windows_x64"
     }
 
     parser = argparse.ArgumentParser()
@@ -32,12 +33,13 @@ def conan_create(recipe_path, desktop_only=False):
     else:
         config = "-s build_type=Debug"
 
-    conan_create = f"conan create --update . {platform[command_args.platform]} {config}"
+    conan_create = f"conan create --update . {platform[command_args.platform]} -pr:b={script_path}/../profiles/default {config}"
     print(conan_create, flush=True)
     subprocess.run(conan_create, cwd=recipe_path, shell=True, check=True)
 
 
 def conan_create_single_platform(recipe_path):
-    conan_create = "conan create --update ."
+    script_path = os.path.dirname(os.path.realpath(__file__))
+    conan_create = f"conan create --update . -pr:b={script_path}/../profiles/default -pr:h={script_path}/../profiles/default"
     print(conan_create, flush=True)
     subprocess.run(conan_create, cwd=recipe_path, shell=True, check=True)

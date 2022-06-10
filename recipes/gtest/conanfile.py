@@ -1,5 +1,6 @@
-from conans import ConanFile, tools
+from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.files import copy, get
 import os
 
 class Conan(ConanFile):
@@ -16,8 +17,8 @@ class Conan(ConanFile):
     zip_folder_name = f"googletest-release-{version}"
     zip_name = f"release-{version}.tar.gz"
 
-    def build_requirements(self):
-        self.build_requires("cmake_utils/9.0.1")
+    def requirements(self):
+        self.requires("cmake_utils/9.0.1")
 
     @property
     def _source_subfolder(self):
@@ -28,7 +29,8 @@ class Conan(ConanFile):
         self.folders.generators = self.folders.build
 
     def source(self):
-        tools.get(f"https://github.com/google/googletest/archive/{self.zip_name}",
+        get(self,
+            f"https://github.com/google/googletest/archive/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
 
@@ -51,12 +53,25 @@ class Conan(ConanFile):
         self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
 
     def package(self):
-        self.copy("*.h", dst="include/gtest", src=os.path.join(self._source_subfolder, "googletest", "include", "gtest"))
-        self.copy("*.h", dst="include/gmock", src=os.path.join(self._source_subfolder, "googlemock", "include", "gmock"))
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.a", dst="lib", keep_path=False)
+        copy(self, "*.h",
+            os.path.join(self.source_folder, self._source_subfolder, "googletest", "include", "gtest"),
+            os.path.join(self.package_folder, "include", "gtest"))
+        copy(self, "*.h",
+            os.path.join(self.source_folder, self._source_subfolder, "googlemock", "include", "gmock"),
+            os.path.join(self.package_folder, "include", "gmock"))
+        copy(self, "*.lib",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
+        copy(self, "*.a",
+            self.build_folder,
+            os.path.join(self.package_folder, "lib"),
+            keep_path=False)
         if self.settings.compiler == "msvc":
-            self.copy("*.pdb", dst="lib", keep_path=False)
+            copy(self, "*.pdb",
+                self.build_folder,
+                os.path.join(self.package_folder, "lib"),
+                keep_path=False)
 
     def package_info(self):
         if self.settings.build_type == "Debug":

@@ -1,4 +1,5 @@
-from conans import ConanFile
+from conan import ConanFile
+from conan.tools.files import copy
 
 class Conan(ConanFile):
     name = "cmake_utils"
@@ -7,11 +8,13 @@ class Conan(ConanFile):
     license = "MIT"
     url = "https://github.com/ssrobins/conan-recipes"
     revision_mode = "scm"
-    exports = "*"
-    build_policy = "missing"
+    exports_sources = "*"
 
     def package(self):
-        self.copy("*.cmake")
-        self.copy("*.in")
-        self.copy("*.plist")
-        self.copy("*.xcsettings")
+        copy(self, "*.cmake", self.source_folder, self.package_folder)
+        copy(self, "*.in", self.source_folder, self.package_folder)
+        copy(self, "*.plist", self.source_folder, self.package_folder)
+        copy(self, "*.xcsettings", self.source_folder, self.package_folder)
+
+    def package_info(self):
+        self.cpp_info.includedirs = list()
