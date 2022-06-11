@@ -57,7 +57,7 @@ class Conan(ConanFile):
 
     def package(self):
         copy(self, "*.h",
-            os.path.join(self.source_folder, self._source_subfolder),
+            os.path.join(self.source_folder),
             os.path.join(self.package_folder, "include"))
         copy(self, "*.lib",
             self.build_folder,
