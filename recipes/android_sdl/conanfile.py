@@ -1,9 +1,7 @@
 from conan import ConanFile
 from conan.tools.files import copy
-import os.path
-import sys
-sys.path.append(f"{os.path.dirname(os.path.realpath(__file__))}/../../scripts")
-from conan_common import *
+
+required_conan_version = ">=1.47.0"
 
 class Conan(ConanFile):
     name = "android_sdl2"

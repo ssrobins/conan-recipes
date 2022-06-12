@@ -1,10 +1,9 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get
-import os.path
-import sys
-sys.path.append(f"{os.path.dirname(os.path.realpath(__file__))}/../../scripts")
-from conan_common import *
+import os
+
+required_conan_version = ">=1.47.0"
 
 class Conan(ConanFile):
     name = "zlib"
