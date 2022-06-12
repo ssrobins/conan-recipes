@@ -7,7 +7,7 @@ import shutil
 required_conan_version = ">=1.47.0"
 
 class Conan(ConanFile):
-    name = "sdl2_image"
+    name = "sdl_image"
     version = "2.0.5"
     description = "A library that loads image files as SDL surfaces and textures"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
@@ -23,7 +23,7 @@ class Conan(ConanFile):
     def requirements(self):
         self.requires("cmake_utils/9.0.1")
         self.requires("libpng/1.6.37")
-        self.requires("sdl2/2.0.22")
+        self.requires("sdl/2.0.22")
 
     @property
     def _source_subfolder(self):

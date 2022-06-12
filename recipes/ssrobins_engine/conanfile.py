@@ -26,10 +26,10 @@ class Conan(ConanFile):
     def requirements(self):
         self.requires("cmake_utils/9.0.1")
         self.requires("gtest/1.11.0")
-        self.requires("sdl2/2.0.22")
-        self.requires("sdl2_image/2.0.5")
-        self.requires("sdl2_mixer/2.0.4")
-        self.requires("sdl2_ttf/2.0.18")
+        self.requires("sdl/2.0.22")
+        self.requires("sdl_image/2.0.5")
+        self.requires("sdl_mixer/2.0.4")
+        self.requires("sdl_ttf/2.0.18")
 
     @property
     def _source_subfolder(self):

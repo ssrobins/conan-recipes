@@ -46,6 +46,6 @@ target_compile_definitions(SDL2_mixer PRIVATE
 )
 
 target_link_libraries(SDL2_mixer
-    sdl2::sdl2
+    sdl::sdl
     vorbis::vorbis
 )

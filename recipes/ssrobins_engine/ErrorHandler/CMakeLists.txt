@@ -14,5 +14,5 @@ target_include_directories(ErrorHandler
 )
 
 target_link_libraries(ErrorHandler
-    sdl2::sdl2
+    sdl::sdl
 )

@@ -4,7 +4,7 @@ from conan.tools.files import copy
 required_conan_version = ">=1.47.0"
 
 class Conan(ConanFile):
-    name = "android_sdl2"
+    name = "android_sdl"
     version = "2.6.2"
     description = "Android Gradle project for SDL2"
     license = "MIT"

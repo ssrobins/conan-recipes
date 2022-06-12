@@ -7,7 +7,7 @@ import shutil
 required_conan_version = ">=1.47.0"
 
 class Conan(ConanFile):
-    name = "sdl2_ttf"
+    name = "sdl_ttf"
     version = "2.0.18"
     description = "A sample library which allows you to use TrueType fonts in your SDL applications"
     homepage = "https://www.libsdl.org/projects/SDL_ttf/"
@@ -23,7 +23,7 @@ class Conan(ConanFile):
     def requirements(self):
         self.requires("cmake_utils/9.0.1")
         self.requires("freetype/2.12.1")
-        self.requires("sdl2/2.0.22")
+        self.requires("sdl/2.0.22")
 
     @property
     def _source_subfolder(self):

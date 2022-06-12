@@ -7,7 +7,7 @@ import shutil
 required_conan_version = ">=1.47.0"
 
 class Conan(ConanFile):
-    name = "sdl2_mixer"
+    name = "sdl_mixer"
     version = "2.0.4"
     description = "A sample multi-channel audio mixer library"
     homepage = "https://www.libsdl.org/projects/SDL_mixer/"
@@ -22,7 +22,7 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("cmake_utils/9.0.1")
-        self.requires("sdl2/2.0.22")
+        self.requires("sdl/2.0.22")
         self.requires("vorbis/1.3.7")
 
     @property
