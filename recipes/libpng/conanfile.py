@@ -3,6 +3,8 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get, patch
 import os
 
+required_conan_version = ">=1.47.0"
+
 class Conan(ConanFile):
     name = "libpng"
     version = "1.6.37"

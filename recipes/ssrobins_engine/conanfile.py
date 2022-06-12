@@ -3,6 +3,8 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy
 import os
 
+required_conan_version = ">=1.47.0"
+
 class Conan(ConanFile):
     name = "ssrobins_engine"
     version = "1.2.0"

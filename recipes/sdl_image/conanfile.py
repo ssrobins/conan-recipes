@@ -4,6 +4,8 @@ from conan.tools.files import copy, get
 import os
 import shutil
 
+required_conan_version = ">=1.47.0"
+
 class Conan(ConanFile):
     name = "sdl2_image"
     version = "2.0.5"

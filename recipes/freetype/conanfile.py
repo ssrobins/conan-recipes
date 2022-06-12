@@ -3,6 +3,8 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get
 import os
 
+required_conan_version = ">=1.47.0"
+
 class Conan(ConanFile):
     name = "freetype"
     version = "2.12.1"

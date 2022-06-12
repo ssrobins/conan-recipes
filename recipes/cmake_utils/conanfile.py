@@ -1,6 +1,8 @@
 from conan import ConanFile
 from conan.tools.files import copy
 
+required_conan_version = ">=1.47.0"
+
 class Conan(ConanFile):
     name = "cmake_utils"
     version = "9.0.1"

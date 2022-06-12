@@ -4,6 +4,8 @@ from conan.tools.files import copy, get, patch
 from conan.tools.system.package_manager import Apt
 import os
 
+required_conan_version = ">=1.47.0"
+
 class Conan(ConanFile):
     name = "sfml"
     version = "2.5.1"
