@@ -95,7 +95,7 @@ jobs:
       - name: Remove duplicate Conan packages
         if: matrix.name != 'linux'
         run: |
-          conan remove "android_sdl2/*" --force
+          conan remove "android_sdl/*" --force
           conan remove "cmake_utils/*" --force
 
       - name: Conan package upload

@@ -15,8 +15,8 @@ target_include_directories(Game
 target_link_libraries(Game
     Display
     ErrorHandler
-    sdl2::sdl2
-    sdl2_image::sdl2_image
-    sdl2_mixer::sdl2_mixer
-    sdl2_ttf::sdl2_ttf
+    sdl::sdl
+    sdl_image::sdl_image
+    sdl_mixer::sdl_mixer
+    sdl_ttf::sdl_ttf
 )
