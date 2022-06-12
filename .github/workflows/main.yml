@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      upload:
+        type: boolean
+        description: 'Upload Conan packages'
 
 env:
   CONAN_REVISIONS_ENABLED: 1
@@ -95,7 +99,7 @@ jobs:
           conan remove "cmake_utils/*" --force
 
       - name: Conan package upload
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.event.inputs.upload == 'true'
         run: |
           conan remote add artifactory-ssrobins https://ssrobins.jfrog.io/artifactory/api/conan/conan --insert --force
           conan user --password ${{ secrets.ARTIFACTORY_API_KEY }} --remote artifactory-ssrobins ${{ secrets.ARTIFACTORY_USER }}
