@@ -26,7 +26,7 @@ class Conan(ConanFile):
                 update=True, check=True)
 
     def requirements(self):
-        self.requires("cmake_utils/10.0.0")
+        self.requires("cmake_utils/10.0.1")
 
     @property
     def _source_subfolder(self):
