@@ -21,7 +21,7 @@ class Conan(ConanFile):
     zip_name = f"{zip_folder_name}.tar.gz"
 
     def requirements(self):
-        self.requires("cmake_utils/9.0.1")
+        self.requires("cmake_utils/10.0.0")
         self.requires("freetype/2.12.1")
         self.requires("sdl/2.0.22")
 
