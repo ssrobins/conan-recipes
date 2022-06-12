@@ -88,6 +88,12 @@ jobs:
       - name: Build Release
         run: ${{ matrix.script }} --config Release
 
+      - name: Remove duplicate Conan packages
+        if: matrix.name != 'linux'
+        run: |
+          conan remove "android_sdl2/*" --force
+          conan remove "cmake_utils/*" --force
+
       - name: Conan package upload
         if: github.ref == 'refs/heads/main'
         run: |
