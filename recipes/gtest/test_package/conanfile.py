@@ -1,5 +1,6 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+import os
 
 class TestPackageConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
@@ -23,4 +24,5 @@ class TestPackageConan(ConanFile):
         cmake.build()
 
     def test(self):
-        self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
+        if self.settings.os != "Android" and self.settings.os != "iOS":
+            self.run(os.path.join(self.build_folder, str(self.settings.build_type), "test_package"))
