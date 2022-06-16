@@ -3,7 +3,15 @@ project(test_package CXX)
 
 find_package(sdl REQUIRED)
 
-add_executable(${PROJECT_NAME} main.cpp)
+if(ANDROID)
+    add_library(${PROJECT_NAME} SHARED)
+else()
+    add_executable(${PROJECT_NAME})
+endif()
+
+target_sources(${PROJECT_NAME} PRIVATE
+    main.cpp
+)
 
 target_link_libraries(${PROJECT_NAME}
     sdl::sdl
