@@ -1,4 +1,4 @@
-#include "Box2d/Box2D.h"
+#include "Box2D/Box2D.h"
 
 int main(int argc, char *argv[])
 {
