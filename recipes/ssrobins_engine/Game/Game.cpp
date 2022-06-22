@@ -39,12 +39,11 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
 
     std::string iconPath = basePath + "assets/Icon1024x1024.png";
     SDL_Surface* icon = IMG_Load(iconPath.c_str());
-    if (icon == nullptr)
+    if (icon != nullptr)
     {
-        throw Exception(SDL_GetError());
+        SDL_SetWindowIcon(window, icon);
+        SDL_FreeSurface(icon);
     }
-    SDL_SetWindowIcon(window, icon);
-    SDL_FreeSurface(icon);
 
     renderer = SDL_CreateRenderer(window, -1, 0);
     if (renderer == nullptr)
