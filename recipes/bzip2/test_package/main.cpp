@@ -2,7 +2,7 @@
 
 int main(int argc, char *argv[])
 {
-    bz_stream bz;
-    BZ2_bzCompressEnd(&bz);
+    BZFILE* b = nullptr;
+    BZ2_bzclose(b);
     return 0;
 }
