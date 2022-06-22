@@ -6,6 +6,9 @@ class TestPackageConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
 
+    def requirements(self):
+        self.requires("glew/2.1.0")
+
     def generate(self):
         tc = CMakeToolchain(self)
         tc.generator = "Ninja Multi-Config"
