@@ -11,9 +11,15 @@ set(ZLIB_INCLUDE_DIR ${zlib_INCLUDE_DIRS_DEBUG}${zlib_INCLUDE_DIRS_RELEASE})
 
 include(${cmake_utils_PACKAGE_FOLDER_DEBUG}${cmake_utils_PACKAGE_FOLDER_RELEASE}/global_settings_thirdparty.cmake)
 
-option(FT_WITH_BZIP2 "Support bzip2 compressed fonts." ON)
-option(FT_WITH_PNG "Support PNG compressed OpenType embedded bitmaps." ON)
-option(FT_WITH_ZLIB "Use system zlib instead of internal library." ON)
-set(CMAKE_DISABLE_FIND_PACKAGE_BrotliDec true)
+option(FT_REQUIRE_BZIP2
+    "Require support of bzip2 compressed fonts." ON)
+option(FT_REQUIRE_PNG
+    "Require support of PNG compressed OpenType embedded bitmaps." ON)
+option(FT_REQUIRE_ZLIB
+    "Require system zlib instead of internal zlib library." ON)
+option(FT_DISABLE_BROTLI
+    "Disable support of compressed WOFF2 fonts." ON)
+option(FT_DISABLE_HARFBUZZ
+    "Disable HarfBuzz (used for improving auto-hinting of OpenType fonts)." ON)
 
 add_subdirectory(source)
