@@ -12,3 +12,5 @@ option(INSTALL_GMOCK OFF)
 option(INSTALL_GTEST OFF)
 
 add_subdirectory(source)
+
+set_target_properties(gmock_main gmock gtest_main gtest PROPERTIES DEBUG_POSTFIX d)

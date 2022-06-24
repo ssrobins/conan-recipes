@@ -7,7 +7,7 @@ required_conan_version = ">=1.47.0"
 
 class Conan(ConanFile):
     name = "gtest"
-    version = "1.11.0"
+    version = "1.12.0"
     description = "Google's C++ test framework"
     homepage = "https://github.com/google/googletest"
     license = "BSD-3-Clause"
