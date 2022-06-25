@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("vorbis/1.3.7")
+        self.requires("vorbis/1.3.7@ssrobins")
 
     def generate(self):
         tc = CMakeToolchain(self)

@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("ogg/1.3.5")
+        self.requires("ogg/1.3.5@ssrobins")
 
     def generate(self):
         tc = CMakeToolchain(self)

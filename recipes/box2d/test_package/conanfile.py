@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("box2d/2.3.1")
+        self.requires("box2d/2.3.1@ssrobins")
 
     def generate(self):
         tc = CMakeToolchain(self)

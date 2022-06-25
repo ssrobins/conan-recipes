@@ -21,9 +21,9 @@ class Conan(ConanFile):
     zip_name = f"{zip_folder_name}.tar.gz"
 
     def requirements(self):
-        self.requires("cmake_utils/10.0.1")
-        self.requires("sdl/2.0.22")
-        self.requires("vorbis/1.3.7")
+        self.requires("cmake_utils/10.0.1@ssrobins")
+        self.requires("sdl/2.0.22@ssrobins")
+        self.requires("vorbis/1.3.7@ssrobins")
 
     @property
     def _source_subfolder(self):

@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("bzip2/1.0.8")
+        self.requires("bzip2/1.0.8@ssrobins")
 
     def generate(self):
         tc = CMakeToolchain(self)
