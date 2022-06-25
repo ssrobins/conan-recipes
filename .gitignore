@@ -1,2 +1,3 @@
-build/
-
+__pycache__
+CMakeUserPresets.json
+test_output/
