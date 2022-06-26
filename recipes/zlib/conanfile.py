@@ -40,7 +40,8 @@ class Conan(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.generator = "Ninja Multi-Config"
+        if self.settings.os != "Windows":
+            tc.generator = "Ninja Multi-Config"
         tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
         if self.settings.os == "iOS":
             tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
