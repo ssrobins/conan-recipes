@@ -1,3 +1,6 @@
+This branch is used in this bug report:
+https://github.com/conan-io/conan/issues/11528
+
 ## A collection of Conan recipes!
 
 Here are all the [Conan Package Manager](https://conan.io/) recipes for the C/C++ libraries I use in my projects. I'm not using the official [ConanCenter](https://github.com/conan-io/conan-center-index) recipes because:
