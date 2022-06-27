@@ -55,9 +55,10 @@ class Conan(ConanFile):
         cmake.configure()
         cmake.build()
         self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
-        cmake.install()
 
     def package(self):
+        cmake = CMake(self)
+        cmake.install()
         copy(self, "include/*.h",
             os.path.join(self.source_folder, self._source_subfolder),
             os.path.join(self.package_folder, "include"))

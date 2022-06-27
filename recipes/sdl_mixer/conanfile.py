@@ -58,7 +58,6 @@ class Conan(ConanFile):
         cmake.configure()
         cmake.build()
         self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
-        cmake.install()
 
     def package(self):
         copy(self, "SDL_mixer.h",
