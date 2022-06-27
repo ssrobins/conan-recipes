@@ -3,7 +3,7 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get, patch
 import os
 
-required_conan_version = ">=1.47.0"
+required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "libpng"
@@ -21,8 +21,8 @@ class Conan(ConanFile):
     maj_min_ver = str().join(version.split(".")[0:2])
 
     def requirements(self):
-        self.requires("cmake_utils/10.0.1")
-        self.requires("zlib/1.2.12")
+        self.requires("cmake_utils/10.0.1@ssrobins")
+        self.requires("zlib/1.2.12@ssrobins")
 
     @property
     def _source_subfolder(self):
@@ -47,7 +47,8 @@ class Conan(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.generator = "Ninja Multi-Config"
+        if self.settings.os != "Windows":
+            tc.generator = "Ninja Multi-Config"
         tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
         if self.settings.os == "iOS":
             tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"

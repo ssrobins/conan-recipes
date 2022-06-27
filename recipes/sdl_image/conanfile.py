@@ -4,7 +4,7 @@ from conan.tools.files import copy, get
 import os
 import shutil
 
-required_conan_version = ">=1.47.0"
+required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "sdl_image"
@@ -21,9 +21,9 @@ class Conan(ConanFile):
     zip_name = f"{zip_folder_name}.tar.gz"
 
     def requirements(self):
-        self.requires("cmake_utils/10.0.1")
-        self.requires("libpng/1.6.37")
-        self.requires("sdl/2.0.22")
+        self.requires("cmake_utils/10.0.1@ssrobins")
+        self.requires("libpng/1.6.37@ssrobins")
+        self.requires("sdl/2.0.22@ssrobins")
 
     @property
     def _source_subfolder(self):
@@ -42,7 +42,8 @@ class Conan(ConanFile):
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.generator = "Ninja Multi-Config"
+        if self.settings.os != "Windows":
+            tc.generator = "Ninja Multi-Config"
         tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
         if self.settings.os == "iOS":
             tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"

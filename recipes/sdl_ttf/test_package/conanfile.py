@@ -7,11 +7,12 @@ class TestPackageConan(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("sdl_ttf/2.0.18")
+        self.requires("sdl_ttf/2.0.18@ssrobins")
 
     def generate(self):
         tc = CMakeToolchain(self)
-        tc.generator = "Ninja Multi-Config"
+        if self.settings.os != "Windows":
+            tc.generator = "Ninja Multi-Config"
         tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
         if self.settings.os == "iOS":
             tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
