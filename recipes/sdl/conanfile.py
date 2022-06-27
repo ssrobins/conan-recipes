@@ -62,9 +62,10 @@ class Conan(ConanFile):
         cmake.configure()
         cmake.build()
         self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
-        cmake.install()
 
     def package(self):
+        cmake = CMake(self)
+        cmake.install()
         if self.settings.os == "Android":
             copy(self, "*.java",
                 os.path.join(self.source_folder, self._source_subfolder, "android-project", "app", "src", "main", "java", "org", "libsdl", "app"),
