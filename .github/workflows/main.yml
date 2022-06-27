@@ -99,4 +99,4 @@ jobs:
         run: |
           conan remote add artifactory-ssrobins https://ssrobins.jfrog.io/artifactory/api/conan/conan
           conan remote login --password ${{ secrets.ARTIFACTORY_API_KEY }} artifactory-ssrobins ${{ secrets.ARTIFACTORY_USER }}
-          conan upload "*" --remote artifactory-ssrobins --confirm
+          conan upload "*" --remote artifactory-ssrobins --confirm --parallel
