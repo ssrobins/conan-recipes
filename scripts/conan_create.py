@@ -7,7 +7,6 @@ import subprocess
 
 def conan_create(recipe_path, desktop_only=False):
     os.environ["CONAN_REVISIONS_ENABLED"] = "1"
-    os.environ["CONAN_SKIP_BROKEN_SYMLINKS_CHECK"] = "1"
 
     script_path = os.path.dirname(os.path.realpath(__file__))
 
