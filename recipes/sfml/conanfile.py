@@ -17,7 +17,7 @@ class Conan(ConanFile):
     generators = "CMakeDeps"
     revision_mode = "scm"
     exports = "cmake_utils.py"
-    exports_sources = ["AudioDevice.diff", "CMakeLists.txt"]
+    exports_sources = ["AudioDevice.diff", "CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = f"SFML-{version}"
     zip_name = f"{zip_folder_name}-sources.zip"
 
@@ -53,6 +53,7 @@ class Conan(ConanFile):
 
         # Replace auto_ptr with unique_ptr to fix build errors when using the C++17 standard
         patch(self, base_path=os.path.join(self._source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
+        patch(self, base_path=self._source_subfolder, patch_file="CMakeLists.diff")
 
     def generate(self):
         tc = CMakeToolchain(self)
