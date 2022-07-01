@@ -25,7 +25,7 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("cmake_utils/10.0.1@ssrobins")
-        self.requires("gtest/1.12.0@ssrobins")
+        self.requires("gtest/1.12.1@ssrobins")
         self.requires("sdl/2.0.22@ssrobins")
         self.requires("sdl_image/2.0.5@ssrobins")
         self.requires("sdl_mixer/2.0.4@ssrobins")
