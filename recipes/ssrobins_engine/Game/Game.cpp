@@ -58,7 +58,6 @@ void Text::updateText(const char * newText)
 
 Text::~Text()
 {
-    SDL_FreeSurface(surf);
     SDL_DestroyTexture(labelTexture);
     TTF_CloseFont(font);
 }
