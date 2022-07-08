@@ -9,7 +9,7 @@
 class Text
 {
 public:
-    Text(const char * text, int heightPixels, std::string fontPath, SDL_Color fontColor, int gameWidth, SDL_Renderer* renderer, int x = 0, int y = 0, bool centered = false);
+    Text(const char * text, int heightPixels, std::string fontPath, SDL_Color fontColor, int gameWidth, SDL_Renderer* renderer, int x = 0, int y = 0, bool centered = false, bool createTextureNow = true);
     ~Text();
     void updateText(const char * newText);
     void createTexture();
@@ -37,8 +37,6 @@ public:
     ~Game();
     const float getScreenScale(bool fullscreen);
 
-    //float getPixelsToPointsScaleFactor();
-    void text(const char * text, int fontSizeHeightPercent, SDL_Color& fontColor, int x = 0, int y = 0, bool centered = false);
     void renderSetViewport();
     void setRenderDrawColor(const SDL_Color& color);
     void renderClear();
@@ -69,9 +67,7 @@ private:
     SDL_Renderer* renderer;
     SDL_Rect renderRect;
     Mix_Music* music;
-    TTF_Font* font;
     int fps = 0;
-
 
     std::string basePath = 
     #if __ANDROID__

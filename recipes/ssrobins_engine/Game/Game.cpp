@@ -3,7 +3,7 @@
 #include "SDL_image.h"
 #include <chrono>
 
-Text::Text(const char * text, int heightPixels, std::string fontPath, SDL_Color fontColor, int gameWidth, SDL_Renderer* renderer, int x, int y, bool centered)
+Text::Text(const char * text, int heightPixels, std::string fontPath, SDL_Color fontColor, int gameWidth, SDL_Renderer* renderer, int x, int y, bool centered, bool createTextureNow)
     : fontColor(fontColor)
     , centered(centered)
     , text(text)
@@ -12,6 +12,11 @@ Text::Text(const char * text, int heightPixels, std::string fontPath, SDL_Color 
     , renderer(renderer)
     , gameWidth(gameWidth)
 {
+    if (TTF_Init() != 0)
+    {
+        throw Exception(SDL_GetError());
+    }
+
     fontSize = 100;
     font = TTF_OpenFont(fontPath.c_str(), fontSize);
     if (font == nullptr)
@@ -22,7 +27,8 @@ Text::Text(const char * text, int heightPixels, std::string fontPath, SDL_Color 
     float scale = getPixelsToPointsScaleFactor();
     fontSize = static_cast<int>(heightPixels * scale);
 
-    createTexture();
+    if (createTextureNow)
+        createTexture();
 }
 
 void Text::createTexture()
@@ -119,25 +125,12 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
     renderRect.y = (display.getScreenHeight()-display.getGameHeight())/2;
     renderRect.w = display.getGameWidth();
     renderRect.h = display.getGameHeight();
-
-    if (TTF_Init() != 0)
-    {
-        throw Exception(SDL_GetError());
-    }
-
-    std::string fontPath = basePath + "assets/OpenSans-Regular.ttf";
-    font = TTF_OpenFont(fontPath.c_str(), 100);
-    if (font == nullptr)
-    {
-        throw Exception(SDL_GetError());
-    }
 }
 
 Game::~Game()
 {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    TTF_CloseFont(font);
     SDL_Quit();
 }
 
@@ -166,35 +159,6 @@ float Text::getPixelsToPointsScaleFactor()
     }
 
     return static_cast<float>(fontSize) / static_cast<float>(height);
-}
-
-void Game::text(const char * text, int fontSizeHeightPercent, SDL_Color& fontColor, int x, int y, bool centered)
-{
-    /*
-    float scale = getPixelsToPointsScaleFactor();
-    int heightPixels = display.heightPercentToPixels(fontSizeHeightPercent);
-    int fontSize = static_cast<int>(heightPixels * scale);
-
-    TTF_SetFontSize(font, fontSize);
-
-    SDL_Surface* surf = TTF_RenderText_Blended(font, text, fontColor);
-
-    SDL_Texture* labelTexture = SDL_CreateTextureFromSurface(renderer, surf);
-
-    int textureWidth = surf->w;
-    int textureHeight = surf->h;
-    SDL_FreeSurface(surf);
-
-    if (centered)
-    {
-        x = (display.getGameWidth() - textureWidth) / 2 - 3;
-    }
-
-    SDL_Rect renderQuad = { x, y, textureWidth, textureHeight };
-
-    SDL_RenderCopyEx(renderer, labelTexture, nullptr, &renderQuad, 0.0, nullptr, SDL_FLIP_NONE);
-    SDL_DestroyTexture(labelTexture);
-    */
 }
 
 void Game::renderSetViewport()
