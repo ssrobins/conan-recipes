@@ -22,6 +22,7 @@ option(SDL2IMAGE_TGA "Support loading TGA images" OFF)
 option(SDL2IMAGE_XCF "Support loading XCF images" OFF)
 option(SDL2IMAGE_XPM "Support loading XPM images" OFF)
 option(SDL2IMAGE_XV "Support loading XV images" OFF)
+option(SDL2IMAGE_SAMPLES "Build the SDL2_image sample program(s)" OFF)
 
 if(APPLE)
     option(SDL2IMAGE_BACKEND_IMAGEIO "Use native Mac OS X frameworks for loading images" OFF)
@@ -30,5 +31,6 @@ endif()
 add_subdirectory(source)
 
 set_target_properties(SDL2_image PROPERTIES
+    DEBUG_POSTFIX d
     OUTPUT_NAME "SDL2_image"
 )

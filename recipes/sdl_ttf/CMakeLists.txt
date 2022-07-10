@@ -9,6 +9,7 @@ find_package(cmake_utils REQUIRED)
 include(${cmake_utils_PACKAGE_FOLDER_DEBUG}${cmake_utils_PACKAGE_FOLDER_RELEASE}/global_settings_thirdparty.cmake)
 
 option(BUILD_SHARED_LIBS "Build the library as a shared library" OFF)
+option(SDL2TTF_SAMPLES "Build the SDL2_ttf sample program(s)" OFF)
 option(SDL2TTF_VENDORED "Use vendored third-party libraries" OFF})
 
 add_subdirectory(source)

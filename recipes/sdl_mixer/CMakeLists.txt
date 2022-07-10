@@ -13,9 +13,11 @@ option(SDL2MIXER_FLAC "Enable FLAC music" OFF)
 option(SDL2MIXER_MIDI "Enable MIDI music" OFF)
 option(SDL2MIXER_MOD "Support loading MOD music" OFF)
 option(SDL2MIXER_OPUS "Enable Opus music" OFF)
+option(SDL2MIXER_SAMPLES "Build the SDL2_mixer sample program(s)" OFF)
 
 add_subdirectory(source)
 
 set_target_properties(SDL2_mixer PROPERTIES
+    DEBUG_POSTFIX d
     OUTPUT_NAME "SDL2_mixer"
 )
