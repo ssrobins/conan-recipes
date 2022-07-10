@@ -20,7 +20,7 @@ class Conan(ConanFile):
     zip_name = f"{zip_folder_name}.tar.xz"
 
     def build_requirements(self):
-        self.tool_requires("cmake_utils/10.0.1@ssrobins")
+        self.test_requires("cmake_utils/10.0.1@ssrobins")
 
     @property
     def _source_subfolder(self):
