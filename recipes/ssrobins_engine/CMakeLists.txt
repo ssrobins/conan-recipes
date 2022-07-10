@@ -6,7 +6,7 @@ list(INSERT CMAKE_FIND_ROOT_PATH 0 ${CMAKE_BINARY_DIR})
 
 find_package(cmake_utils REQUIRED)
 find_package(gtest REQUIRED)
-find_package(sdl REQUIRED)
+find_package(SDL2 REQUIRED)
 find_package(sdl_image REQUIRED)
 find_package(sdl_mixer REQUIRED)
 find_package(sdl_ttf REQUIRED)
