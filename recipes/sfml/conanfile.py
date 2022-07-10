@@ -33,8 +33,10 @@ class Conan(ConanFile):
             ],
             update=True, check=True)
 
+    def build_requirements(self):
+        self.tool_requires("cmake_utils/10.0.1@ssrobins")
+
     def requirements(self):
-        self.requires("cmake_utils/10.0.1@ssrobins")
         self.requires("freetype/2.12.1@ssrobins")
 
     @property
@@ -53,6 +55,7 @@ class Conan(ConanFile):
 
         # Replace auto_ptr with unique_ptr to fix build errors when using the C++17 standard
         patch(self, base_path=os.path.join(self._source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
+        # Support macOS arm64 (can be removed once upgraded to sfml 2.6)
         patch(self, base_path=self._source_subfolder, patch_file="CMakeLists.diff")
 
     def generate(self):

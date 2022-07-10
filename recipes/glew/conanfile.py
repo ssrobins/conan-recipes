@@ -25,8 +25,8 @@ class Conan(ConanFile):
             Apt(self).install(["freeglut3-dev"],
                 update=True, check=True)
 
-    def requirements(self):
-        self.requires("cmake_utils/10.0.1@ssrobins")
+    def build_requirements(self):
+        self.tool_requires("cmake_utils/10.0.1@ssrobins")
 
     @property
     def _source_subfolder(self):
