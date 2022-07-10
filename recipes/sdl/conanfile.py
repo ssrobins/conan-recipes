@@ -77,6 +77,8 @@ class Conan(ConanFile):
                 keep_path=False)
 
     def package_info(self):
+        self.cpp_info.set_property("cmake_file_name", "SDL2")
+        self.cpp_info.set_property("cmake_target_name", "SDL2::SDL2-static")
         self.cpp_info.includedirs = [os.path.join("include", "SDL2")]
         if self.settings.build_type == "Debug":
             self.cpp_info.libs = ["SDL2d", "SDL2maind"]

@@ -69,6 +69,7 @@ class Conan(ConanFile):
                 keep_path=False)
         
     def package_info(self):
+        self.cpp_info.set_property("cmake_target_name", "Freetype::Freetype")
         self.cpp_info.includedirs = [os.path.join("include", "freetype2")]
         if self.settings.build_type == "Debug":
             self.cpp_info.libs = ["freetyped"]
