@@ -15,3 +15,7 @@ option(SDL2MIXER_MOD "Support loading MOD music" OFF)
 option(SDL2MIXER_OPUS "Enable Opus music" OFF)
 
 add_subdirectory(source)
+
+set_target_properties(SDL2_mixer PROPERTIES
+    OUTPUT_NAME "SDL2_mixer"
+)

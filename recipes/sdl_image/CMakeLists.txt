@@ -28,3 +28,7 @@ if(APPLE)
 endif()
 
 add_subdirectory(source)
+
+set_target_properties(SDL2_image PROPERTIES
+    OUTPUT_NAME "SDL2_image"
+)
