@@ -8,7 +8,7 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "sdl_ttf"
-    version = "2.0.18"
+    version = "2.20.0"
     description = "A sample library which allows you to use TrueType fonts in your SDL applications"
     homepage = "https://www.libsdl.org/projects/SDL_ttf/"
     license = "Zlib"
@@ -17,8 +17,7 @@ class Conan(ConanFile):
     generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt", f"CMakeLists-{name}.txt"]
-    zip_folder_name = f"SDL2_ttf-{version}"
-    zip_name = f"{zip_folder_name}.tar.gz"
+    zip_name = f"release-{version}.tar.gz"
 
     def requirements(self):
         self.requires("cmake_utils/10.0.1@ssrobins")
@@ -35,10 +34,9 @@ class Conan(ConanFile):
 
     def source(self):
         get(self,
-            f"https://www.libsdl.org/projects/SDL_ttf/release/{self.zip_name}",
+            f"https://github.com/libsdl-org/SDL_ttf/archive/refs/tags/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
-        shutil.move(f"CMakeLists-{self.name}.txt", os.path.join(self._source_subfolder, "CMakeLists.txt"))
 
     def generate(self):
         tc = CMakeToolchain(self)
@@ -60,17 +58,8 @@ class Conan(ConanFile):
         self.run(f"ctest -C {self.settings.build_type} --output-on-failure")
 
     def package(self):
-        copy(self, "SDL_ttf.h",
-            os.path.join(self.source_folder, self._source_subfolder),
-            os.path.join(self.package_folder, "include"))
-        copy(self, "*.lib",
-            self.build_folder,
-            os.path.join(self.package_folder, "lib"),
-            keep_path=False)
-        copy(self, "*.a",
-            self.build_folder,
-            os.path.join(self.package_folder, "lib"),
-            keep_path=False)
+        cmake = CMake(self)
+        cmake.install()
         if self.settings.compiler == "msvc":
             copy(self, "*.pdb",
                 self.build_folder,
@@ -78,6 +67,7 @@ class Conan(ConanFile):
                 keep_path=False)
 
     def package_info(self):
+        self.cpp_info.includedirs = [os.path.join("include", "SDL2")]
         if self.settings.build_type == "Debug":
             self.cpp_info.libs = ["SDL2_ttfd"]
         else:
