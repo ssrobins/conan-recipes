@@ -19,10 +19,8 @@ class Conan(ConanFile):
     zip_folder_name = f"lib{name}-{version}"
     zip_name = f"{zip_folder_name}.tar.xz"
 
-    def build_requirements(self):
-        self.test_requires("cmake_utils/10.0.1@ssrobins")
-
     def requirements(self):
+        self.requires("cmake_utils/10.0.1@ssrobins")
         self.requires("ogg/1.3.5@ssrobins")
 
     @property

@@ -33,10 +33,8 @@ class Conan(ConanFile):
             ],
             update=True, check=True)
 
-    def build_requirements(self):
-        self.test_requires("cmake_utils/10.0.1@ssrobins")
-
     def requirements(self):
+        self.requires("cmake_utils/10.0.1@ssrobins")
         self.requires("freetype/2.12.1@ssrobins")
 
     @property

@@ -19,10 +19,8 @@ class Conan(ConanFile):
     exports_sources = ["CMakeLists.txt", f"CMakeLists-{name}.txt"]
     zip_name = f"release-{version}.tar.gz"
 
-    def build_requirements(self):
-        self.test_requires("cmake_utils/10.0.1@ssrobins")
-
     def requirements(self):
+        self.requires("cmake_utils/10.0.1@ssrobins")
         self.requires("freetype/2.12.1@ssrobins")
         self.requires("sdl/2.0.22@ssrobins")
 
