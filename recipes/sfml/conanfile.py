@@ -53,6 +53,7 @@ class Conan(ConanFile):
 
         # Replace auto_ptr with unique_ptr to fix build errors when using the C++17 standard
         patch(self, base_path=os.path.join(self._source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
+        # Support macOS arm64 (can be removed once upgraded to sfml 2.6)
         patch(self, base_path=self._source_subfolder, patch_file="CMakeLists.diff")
 
     def generate(self):
