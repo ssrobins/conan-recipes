@@ -50,7 +50,7 @@ public:
     int getGameHeight() const { return display.getGameHeight(); }
     int getTileSize() const { return display.getTileSize(); }
     int getFPS() const { return fps; }
-    std::string getBasePath() const { return basePath; }
+    static std::string getBasePath();
     SDL_Renderer* getRenderer() const { return renderer; }
     void calculateFPS();
     int getOutlineOffsetWidth() { return display.getOutlineOffsetWidth(); };
@@ -68,11 +68,4 @@ private:
     SDL_Rect renderRect;
     Mix_Music* music;
     int fps = 0;
-
-    std::string basePath = 
-    #if __ANDROID__
-        "";
-    #else
-        SDL_GetBasePath();
-    #endif
 };

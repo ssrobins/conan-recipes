@@ -102,7 +102,7 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
         throw Exception(SDL_GetError());
     }
 
-    std::string iconPath = basePath + "assets/Icon1024x1024.png";
+    std::string iconPath = getBasePath() + "assets/Icon1024x1024.png";
     SDL_Surface* icon = IMG_Load(iconPath.c_str());
     if (icon == nullptr)
     {
@@ -185,6 +185,18 @@ void Game::renderPresent()
     calculateFPS();
 }
 
+std::string Game::getBasePath()
+{
+    std::string basePath =
+    #if __ANDROID__
+        "";
+    #else
+        SDL_GetBasePath();
+    #endif
+
+    return basePath;
+}
+
 void Game::calculateFPS() {
     static std::chrono::time_point<std::chrono::high_resolution_clock> oldTime = std::chrono::high_resolution_clock::now();
     static int numFrames; numFrames++;
@@ -204,7 +216,7 @@ void Game::renderFillRect(const SDL_Rect& rect, const SDL_Color& color)
 
 void Game::playMusic(const std::string& musicPath)
 {
-    std::string fullMusicPath = basePath + musicPath;
+    std::string fullMusicPath = getBasePath() + musicPath;
 
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
     {
