@@ -8,7 +8,7 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "glew"
-    version = "2.1.0"
+    version = "2.2.0"
     description = "OpenGL extension wrangler library"
     homepage = "https://github.com/nigels-com/glew"
     license = "https://github.com/nigels-com/glew/blob/master/LICENSE.txt"
@@ -16,7 +16,7 @@ class Conan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"
-    exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
+    exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"{name}-{version}"
     zip_name = f"{zip_folder_name}.tgz"
 
@@ -41,11 +41,6 @@ class Conan(ConanFile):
             f"https://github.com/nigels-com/glew/releases/download/{self.zip_folder_name}/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
-
-        # Apply a patch to fix error LNK2001: unresolved external symbol _memset
-        # when building the shared library on MSVC
-        # https://github.com/nigels-com/glew/issues/180:
-        patch(self, base_path=self._source_subfolder, patch_file="CMakeLists.diff")
 
     def generate(self):
         tc = CMakeToolchain(self)
