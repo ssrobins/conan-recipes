@@ -84,7 +84,7 @@ jobs:
 
       - name: Set Android NDK
         if: contains(matrix.name, 'android')
-        run: echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/21.4.7075529" >> $GITHUB_ENV
+        run: echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/23.2.8568313" >> $GITHUB_ENV
 
       - name: Build Debug
         run: ${{ matrix.script }} --config Debug
