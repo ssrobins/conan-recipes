@@ -8,7 +8,7 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "sdl_image"
-    version = "2.6.0"
+    version = "2.6.1"
     description = "A library that loads image files as SDL surfaces and textures"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
     license = "Zlib"
