@@ -212,6 +212,7 @@ void Game::renderFillRect(const SDL_Rect& rect, const SDL_Color& color)
 {
     setRenderDrawColor(color);
     SDL_RenderFillRect(renderer, &rect);
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 }
 
 void Game::playMusic(const std::string& musicPath)
