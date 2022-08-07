@@ -60,12 +60,12 @@ void Display::setDisplaySize(const int width, const int height, const float scre
     }
 }
 
-int Display::heightPercentToPixels(const int percent)
+int Display::heightPercentToPixels(const int percent) const
 {
     return gameHeight * percent / 100;
 }
 
-int Display::widthPercentToPixels(const int percent)
+int Display::widthPercentToPixels(const int percent) const
 {
     return gameWidth * percent / 100;
 }
