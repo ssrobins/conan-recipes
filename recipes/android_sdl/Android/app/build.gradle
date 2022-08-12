@@ -9,14 +9,17 @@ android {
         versionCode ${version_code}
         versionName "${PROJECT_VERSION}"
 
-        // Set the apk base name.
-        setProperty("archivesBaseName", "${target_name}")
-
         ndk {
             //abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
 
             // Limiting to a smaller set of ABIs to save time while testing:
             abiFilters "${ANDROID_ABI}"
+        }
+
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "${target_name}_${PROJECT_VERSION}_Android_${ANDROID_ABI}.apk"
+            }
         }
     }
 

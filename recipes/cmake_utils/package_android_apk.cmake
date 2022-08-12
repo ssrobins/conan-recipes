@@ -32,15 +32,9 @@ function(gradle_build component)
         message(FATAL_ERROR "Gradle error")
     endif()
 
-    file(GLOB_RECURSE apk_path_original "${CPACK_TEMPORARY_DIRECTORY}/${component}/*.apk")
-    set(apk_path_new "${CPACK_TEMPORARY_DIRECTORY}/${component}/${package_name}_${CPACK_ANDROID_ABI}.apk")
-    file(RENAME ${apk_path_original} ${apk_path_new})
-    file(COPY ${apk_path_new} DESTINATION ${CPACK_PACKAGE_DIRECTORY})
-
-    file(GLOB_RECURSE apk_files
-        "${CPACK_TEMPORARY_DIRECTORY}/${component}/app/build/outputs/apk/*.apk"
-    )
-    file(COPY ${apk_files} DESTINATION ${CPACK_PACKAGE_DIRECTORY})
+    string(TOLOWER ${CPACK_BUILD_CONFIG} build_config_lower)
+    set(apk_path "${CPACK_TEMPORARY_DIRECTORY}/${component}/app/build/outputs/apk/${build_config_lower}/${package_name}_${CPACK_ANDROID_ABI}.apk")
+    file(COPY ${apk_path} DESTINATION ${CPACK_PACKAGE_DIRECTORY})
 endfunction(gradle_build)
 
 

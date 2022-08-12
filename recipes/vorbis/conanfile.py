@@ -20,7 +20,7 @@ class Conan(ConanFile):
     zip_name = f"{zip_folder_name}.tar.xz"
 
     def requirements(self):
-        self.requires("cmake_utils/10.0.1@ssrobins")
+        self.requires("cmake_utils/10.0.2@ssrobins")
         self.requires("ogg/1.3.5@ssrobins")
 
     @property
