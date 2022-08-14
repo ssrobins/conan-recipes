@@ -2,9 +2,6 @@ if(MSVC)
     add_compile_options(
         $<$<CONFIG:Release>:/Gy> # Enable function-level linking
         /MP # Multi-processor compilation
-        $<$<CONFIG:>:/MT> #---------|
-        $<$<CONFIG:Debug>:/MTd> #---|-- Statically link the runtime libraries
-        $<$<CONFIG:Release>:/MT> #--|
         $<$<CONFIG:Release>:/Oi> # Generate intrinsic functions
         /permissive- # Standard C++ conformance
         $<$<CONFIG:Debug>:/ZI> # Produces a program database (PDB) that supports edit and continue

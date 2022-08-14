@@ -27,6 +27,8 @@ if(MSVC)
         /SAFESEH:NO # Don't produce an image with a table of safe exceptions handlers
         /WX # Warning as error
     )
+
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 else()
     add_compile_options(
         -Werror # Warning as error
