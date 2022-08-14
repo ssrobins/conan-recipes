@@ -20,14 +20,15 @@ if(MSVC)
     )
 
     add_link_options(
+        $<$<CONFIG:Release>:/DEBUG> # Generate debug information
+        $<$<CONFIG:Release>:/LTCG:incremental> # Link-time code generation
+        $<$<CONFIG:Release>:/OPT:ICF> # Perform identical COMDAT folding
+        $<$<CONFIG:Release>:/OPT:REF> # Eliminates functions and/or data that are never referenced
+        /SAFESEH:NO # Don't produce an image with a table of safe exceptions handlers
         /WX # Warning as error
     )
 else()
     add_compile_options(
-        # CMAKE_POSITION_INDEPENDENT_CODE isn't setting -fPIC on gcc, find out why.
-        # Until it's fixed, set it manually.
-        -fPIC
-
         -Werror # Warning as error
     )
     add_link_options(

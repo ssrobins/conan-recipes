@@ -20,7 +20,7 @@ class Conan(ConanFile):
     zip_name = f"release-{version}.tar.gz"
 
     def requirements(self):
-        self.requires("cmake_utils/10.0.2@ssrobins")
+        self.requires("cmake_utils/11.0.0@ssrobins")
         self.requires("sdl/2.0.22@ssrobins")
         self.requires("vorbis/1.3.7@ssrobins")
 
