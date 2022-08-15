@@ -51,6 +51,8 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     )
 endif()
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 # Allow organizing source files into subdirectories
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 define_property(
@@ -74,6 +76,13 @@ if(ANDROID)
     set(CPACK_BUILD_CONFIG ${CMAKE_BUILD_TYPE})
     set(platform Android)
     set(CPACK_ANDROID_ABI ${ANDROID_ABI})
+
+    add_compile_options(
+        $<$<CONFIG:Release>:-g0> # Don’t generate any debug info
+    )
+    add_link_options(
+        $<$<CONFIG:Release>:-g0> # Don’t generate any debug info
+    )
 elseif(IOS)
     set(CPACK_GENERATOR External)
     set(CPACK_EXTERNAL_PACKAGE_SCRIPT ${CMAKE_CURRENT_LIST_DIR}/package_ios_ipa.cmake)
