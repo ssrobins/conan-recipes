@@ -4,6 +4,8 @@ set(ANDROID_USE_LEGACY_TOOLCHAIN_FILE false)
 
 project(Project)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 add_subdirectory(source)
 
 set_target_properties(ogg PROPERTIES DEBUG_POSTFIX d)

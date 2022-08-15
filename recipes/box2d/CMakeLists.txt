@@ -4,6 +4,8 @@ set(ANDROID_USE_LEGACY_TOOLCHAIN_FILE false)
 
 project(Project)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 option(BOX2D_BUILD_EXAMPLES "Build Box2D examples" OFF)
 option(BOX2D_INSTALL "Install Box2D libs, includes, and CMake scripts" ON)
 
