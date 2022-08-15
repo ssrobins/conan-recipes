@@ -15,8 +15,14 @@ endif()
 if(MSVC)
     add_compile_options(
         $<$<CONFIG:Release>:/GL> # Whole program optimization
+        $<$<CONFIG:Release>:/Gy> # Enable function-level linking
+        /MP # Multi-processor compilation
+        $<$<CONFIG:Release>:/Oi> # Generate intrinsic functions
+        /permissive- # Standard C++ conformance
         /sdl # Enable additional security checks
         /WX # Warning as error
+        $<$<CONFIG:Debug>:/ZI> # Produces a program database (PDB) that supports edit and continue
+        $<$<CONFIG:Release>:/Zi> # Produces a program database (PDB)
     )
 
     add_link_options(
@@ -35,6 +41,13 @@ else()
     )
     add_link_options(
         -Werror # Warning as error
+    )
+endif()
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    add_link_options(
+        -static-libgcc
+        -static-libstdc++
     )
 endif()
 
