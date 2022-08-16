@@ -1,18 +1,13 @@
 cmake_minimum_required(VERSION 3.17)
 
+set(ANDROID_USE_LEGACY_TOOLCHAIN_FILE false)
+
 project(Project)
 
-list(INSERT CMAKE_FIND_ROOT_PATH 0 ${CMAKE_BINARY_DIR})
-
-find_package(cmake_utils REQUIRED)
-
-include(${cmake_utils_PACKAGE_FOLDER_DEBUG}${cmake_utils_PACKAGE_FOLDER_RELEASE}/global_settings_thirdparty.cmake)
-
 option(SDL_SHARED "Build a shared version of the library" OFF)
+option(SDL_STATIC_PIC "Static version of the library should be built with Position Independent Code" ON)
 
-if(ANDROID)
-    option(SDL_STATIC_PIC "Static version of the library should be built with Position Independent Code" ON)
-elseif(IOS)
+if(IOS)
     set(CMAKE_XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES)
 endif()
 

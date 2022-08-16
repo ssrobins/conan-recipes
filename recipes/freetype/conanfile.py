@@ -21,7 +21,6 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("bzip2/1.0.8@ssrobins")
-        self.requires("cmake_utils/10.0.2@ssrobins")
         self.requires("libpng/1.6.37@ssrobins")
         self.requires("zlib/1.2.12@ssrobins")
 

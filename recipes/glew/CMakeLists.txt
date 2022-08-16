@@ -1,12 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
 
+set(ANDROID_USE_LEGACY_TOOLCHAIN_FILE false)
+
 project(Project)
-
-list(INSERT CMAKE_FIND_ROOT_PATH 0 ${CMAKE_BINARY_DIR})
-
-find_package(cmake_utils REQUIRED)
-
-include(${cmake_utils_PACKAGE_FOLDER_DEBUG}${cmake_utils_PACKAGE_FOLDER_RELEASE}/global_settings_thirdparty.cmake)
 
 option(BUILD_SHARED_LIBS "install/link shared instead of static libs" OFF)
 option(BUILD_UTILS "utilities" OFF)
