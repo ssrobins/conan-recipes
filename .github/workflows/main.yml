@@ -53,7 +53,7 @@ jobs:
         if: contains(matrix.name, 'android')
         run: |
           clang-format --version
-          clang-format --dry-run --Werror **/*.cpp **/*.h
+          find . -iname "*.cpp" -or -iname "*.h" | xargs clang-format --dry-run --Werror
 
       - name: Install required Linux packages
         if: contains(matrix.name, 'android') || matrix.name == 'linux'
