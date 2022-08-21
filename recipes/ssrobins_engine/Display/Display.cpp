@@ -11,13 +11,9 @@ void Display::setDisplaySize(const int width, const int height, const float scre
     screenWidth = width;
     screenHeight = height;
 
-    if (static_cast<float>(screenWidth) / static_cast<float>(screenHeight) >
-        static_cast<float>(numTilesWidth) / static_cast<float>(numTilesHeight))
-    {
+    if (static_cast<float>(screenWidth) / static_cast<float>(screenHeight) > static_cast<float>(numTilesWidth) / static_cast<float>(numTilesHeight)) {
         tileSize = static_cast<int>((screenHeight * screenScale) / numTilesHeight);
-    }
-    else
-    {
+    } else {
         tileSize = static_cast<int>((screenWidth * screenScale) / numTilesWidth);
     }
 
@@ -26,34 +22,27 @@ void Display::setDisplaySize(const int width, const int height, const float scre
     outlineOffsetWidth = 0;
     outlineOffsetHeight = 0;
 
-    if (outline)
-    {
+    if (outline) {
         int gameMinDim = 0;
-        if (gameWidth < gameHeight)
-        {
+        if (gameWidth < gameHeight) {
             gameMinDim = gameWidth;
-        }
-        else
-        {
+        } else {
             gameMinDim = gameHeight;
         }
-        
+
         int outlineLimit = gameMinDim / 150;
-        if (outlineLimit == 0)
-        {
+        if (outlineLimit == 0) {
             outlineLimit = 1;
         }
 
         int extraSpaceWidth = screenWidth - gameWidth;
-        if (extraSpaceWidth >= outlineLimit * 2)
-        {
+        if (extraSpaceWidth >= outlineLimit * 2) {
             outlineOffsetWidth = outlineLimit;
             gameWidth = gameWidth + outlineOffsetWidth * 2;
         }
 
         int extraSpaceHeight = screenHeight - gameHeight;
-        if (extraSpaceHeight >= outlineLimit * 2)
-        {
+        if (extraSpaceHeight >= outlineLimit * 2) {
             outlineOffsetHeight = outlineLimit;
             gameHeight = gameHeight + outlineOffsetHeight * 2;
         }

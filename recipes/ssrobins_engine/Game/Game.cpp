@@ -1,9 +1,9 @@
-#include "ErrorHandler.h"
 #include "Game.h"
+#include "ErrorHandler.h"
 #include "SDL_image.h"
 #include <chrono>
 
-Text::Text(const char * text, int heightPixels, std::string fontPath, SDL_Color fontColor, int gameWidth, SDL_Renderer* renderer, int x, int y, bool centered, bool createTextureNow)
+Text::Text(const char* text, int heightPixels, std::string fontPath, SDL_Color fontColor, int gameWidth, SDL_Renderer* renderer, int x, int y, bool centered, bool createTextureNow)
     : fontColor(fontColor)
     , centered(centered)
     , text(text)
@@ -12,15 +12,13 @@ Text::Text(const char * text, int heightPixels, std::string fontPath, SDL_Color 
     , renderer(renderer)
     , gameWidth(gameWidth)
 {
-    if (TTF_Init() != 0)
-    {
+    if (TTF_Init() != 0) {
         throw Exception(SDL_GetError());
     }
 
     fontSize = 100;
     font = TTF_OpenFont(fontPath.c_str(), fontSize);
-    if (font == nullptr)
-    {
+    if (font == nullptr) {
         throw Exception(SDL_GetError());
     }
 
@@ -43,8 +41,7 @@ void Text::createTexture()
     labelTexture = SDL_CreateTextureFromSurface(renderer, surf);
     SDL_FreeSurface(surf);
 
-    if (centered)
-    {
+    if (centered) {
         x = (gameWidth - textureWidth) / 2 - 3;
     }
 
@@ -56,7 +53,7 @@ void Text::render()
     SDL_RenderCopyEx(renderer, labelTexture, nullptr, &renderQuad, 0.0, nullptr, SDL_FLIP_NONE);
 }
 
-void Text::updateText(const char * newText)
+void Text::updateText(const char* newText)
 {
     text = newText;
     createTexture();
@@ -74,19 +71,16 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
 {
     int flags = SDL_WINDOW_ALLOW_HIGHDPI;
 
-    if (fullscreen)
-    {
-        flags = flags|SDL_WINDOW_FULLSCREEN;
+    if (fullscreen) {
+        flags = flags | SDL_WINDOW_FULLSCREEN;
     }
 
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         throw Exception(SDL_GetError());
     }
 
     SDL_DisplayMode displayMode;
-    if (SDL_GetCurrentDisplayMode(0, &displayMode) != 0)
-    {
+    if (SDL_GetCurrentDisplayMode(0, &displayMode) != 0) {
         throw Exception(SDL_GetError());
     }
     display.setDisplaySize(displayMode.w, displayMode.h, screenScale, false);
@@ -97,23 +91,20 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
         display.getGameWidth(),
         display.getGameHeight(),
         flags);
-    if (window == nullptr)
-    {
+    if (window == nullptr) {
         throw Exception(SDL_GetError());
     }
 
     std::string iconPath = getBasePath() + "assets/Icon1024x1024.png";
     SDL_Surface* icon = IMG_Load(iconPath.c_str());
-    if (icon == nullptr)
-    {
+    if (icon == nullptr) {
         throw Exception(SDL_GetError());
     }
     SDL_SetWindowIcon(window, icon);
     SDL_FreeSurface(icon);
 
     renderer = SDL_CreateRenderer(window, -1, 0);
-    if (renderer == nullptr)
-    {
+    if (renderer == nullptr) {
         throw Exception(SDL_GetError());
     }
 
@@ -121,8 +112,8 @@ Game::Game(const int numTilesWidth, const int numTilesHeight, const char* title,
     int pixelHeight;
     SDL_GetRendererOutputSize(renderer, &pixelWidth, &pixelHeight);
     display.setDisplaySize(pixelWidth, pixelHeight, 1.0f, true);
-    renderRect.x = (display.getScreenWidth()-display.getGameWidth())/2;
-    renderRect.y = (display.getScreenHeight()-display.getGameHeight())/2;
+    renderRect.x = (display.getScreenWidth() - display.getGameWidth()) / 2;
+    renderRect.y = (display.getScreenHeight() - display.getGameHeight()) / 2;
     renderRect.w = display.getGameWidth();
     renderRect.h = display.getGameHeight();
 }
@@ -136,25 +127,20 @@ Game::~Game()
 
 const float Game::getScreenScale(bool fullscreen)
 {
-    if (fullscreen)
-    {
+    if (fullscreen) {
         return 1.0f;
-    }
-    else
-    {
+    } else {
         return 0.8f;
     }
 }
 
 float Text::getPixelsToPointsScaleFactor()
 {
-    if (font == nullptr)
-    {
+    if (font == nullptr) {
         throw Exception(SDL_GetError());
     }
     int height = TTF_FontHeight(font);
-    if (height <= 0)
-    {
+    if (height <= 0) {
         throw Exception("Font height is " + std::to_string(height));
     }
 
@@ -163,8 +149,7 @@ float Text::getPixelsToPointsScaleFactor()
 
 void Game::renderSetViewport()
 {
-    if (SDL_RenderSetViewport(renderer, &renderRect) != 0)
-    {
+    if (SDL_RenderSetViewport(renderer, &renderRect) != 0) {
         throw Exception(SDL_GetError());
     }
 }
@@ -188,20 +173,22 @@ void Game::renderPresent()
 std::string Game::getBasePath()
 {
     std::string basePath =
-    #if __ANDROID__
+#if __ANDROID__
         "";
-    #else
+#else
         SDL_GetBasePath();
-    #endif
+#endif
 
     return basePath;
 }
 
-void Game::calculateFPS() {
+void Game::calculateFPS()
+{
     static std::chrono::time_point<std::chrono::high_resolution_clock> oldTime = std::chrono::high_resolution_clock::now();
-    static int numFrames; numFrames++;
+    static int numFrames;
+    numFrames++;
 
-    if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - oldTime) >= std::chrono::seconds{ 1 }) {
+    if (std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - oldTime) >= std::chrono::seconds { 1 }) {
         oldTime = std::chrono::high_resolution_clock::now();
         fps = numFrames;
         numFrames = 0;
@@ -219,13 +206,11 @@ void Game::playMusic(const std::string& musicPath)
 {
     std::string fullMusicPath = getBasePath() + musicPath;
 
-    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-    {
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
         throw Exception(Mix_GetError());
     }
     music = Mix_LoadMUS(fullMusicPath.c_str());
-    if(music == nullptr)
-    {
+    if (music == nullptr) {
         throw Exception(Mix_GetError());
     }
     Mix_PlayMusic(music, -1);
