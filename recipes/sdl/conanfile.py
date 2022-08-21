@@ -77,10 +77,13 @@ class Conan(ConanFile):
         self.cpp_info.set_property("cmake_file_name", "SDL2")
         self.cpp_info.set_property("cmake_target_name", "SDL2::SDL2-static")
         self.cpp_info.includedirs = [os.path.join("include", "SDL2")]
+        debug_suffix = ""
         if self.settings.build_type == "Debug":
-            self.cpp_info.libs = ["SDL2d", "SDL2maind"]
-        else:
-            self.cpp_info.libs = ["SDL2", "SDL2main"]
+            debug_suffix = "d"
+        windows_suffix = ""
+        if self.settings.os == "Windows":
+            windows_suffix = "-static"
+        self.cpp_info.libs = [f"SDL2{windows_suffix}{debug_suffix}", f"SDL2main{debug_suffix}"]
         if self.settings.os == "Android":
             self.cpp_info.system_libs.extend(["android", "GLESv1_CM", "GLESv2", "log", "OpenSLES"])
         elif self.settings.os == "iOS":
