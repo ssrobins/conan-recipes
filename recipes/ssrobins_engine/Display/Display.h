@@ -2,8 +2,7 @@
 
 #include <vector>
 
-class Display
-{
+class Display {
 public:
     Display(const int numTilesWidth, const int numTilesHeight);
     void setDisplaySize(const int width, const int height, const float screenScale, const bool outline);
@@ -16,6 +15,7 @@ public:
     int getGameHeight() const { return gameHeight; };
     int getOutlineOffsetWidth() const { return outlineOffsetWidth; };
     int getOutlineOffsetHeight() const { return outlineOffsetHeight; };
+
 private:
     const int numTilesWidth;
     const int numTilesHeight;

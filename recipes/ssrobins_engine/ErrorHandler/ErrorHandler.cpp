@@ -5,10 +5,11 @@
 #include <iostream>
 #include <string>
 #ifdef __ANDROID__
-    #include <android/log.h>
+#include <android/log.h>
 #endif
 
-ErrorHandler::ErrorHandler(std::string const& logFileName) : m_logFileName(logFileName)
+ErrorHandler::ErrorHandler(std::string const& logFileName)
+    : m_logFileName(logFileName)
 {
     // Remove the file so we don't see errors from a previous run of the program
     std::remove(m_logFileName.c_str());
@@ -16,14 +17,13 @@ ErrorHandler::ErrorHandler(std::string const& logFileName) : m_logFileName(logFi
 
 ErrorHandler::~ErrorHandler()
 {
-
 }
 
 void ErrorHandler::showError(Exception& error)
 {
-    #ifdef __ANDROID__
-         __android_log_print(ANDROID_LOG_VERBOSE, "Error", "%s", error.what());
-    #endif
+#ifdef __ANDROID__
+    __android_log_print(ANDROID_LOG_VERBOSE, "Error", "%s", error.what());
+#endif
 
     *this << error.what() << std::endl;
     std::cerr << error.what() << std::endl;

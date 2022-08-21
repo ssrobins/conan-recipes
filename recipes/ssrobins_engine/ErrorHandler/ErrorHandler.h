@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Exceptions.h"
-#include <string>
 #include <fstream>
+#include <string>
 
-class ErrorHandler
-{
+class ErrorHandler {
 public:
     ErrorHandler(std::string const&);
     ~ErrorHandler();

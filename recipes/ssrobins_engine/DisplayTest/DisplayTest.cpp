@@ -1,7 +1,6 @@
 #include "Display.h"
 #include "gtest/gtest.h"
 
-
 TEST(display, widthIsTheLimitingDimension)
 {
     Display display(12, 20);
@@ -53,7 +52,6 @@ TEST(display, heightIsTheLimitingDimensionWithOutline)
     EXPECT_EQ(1, display.getOutlineOffsetWidth());
     EXPECT_EQ(0, display.getOutlineOffsetHeight());
 }
-
 
 TEST(display, neitherWidthNorHeightIsTheLimitingDimension)
 {

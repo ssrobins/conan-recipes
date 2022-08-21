@@ -6,20 +6,20 @@
 #include "SDL_ttf.h"
 #include <string>
 
-class Text
-{
+class Text {
 public:
-    Text(const char * text, int heightPixels, std::string fontPath, SDL_Color fontColor, int gameWidth, SDL_Renderer* renderer, int x = 0, int y = 0, bool centered = false, bool createTextureNow = true);
+    Text(const char* text, int heightPixels, std::string fontPath, SDL_Color fontColor, int gameWidth, SDL_Renderer* renderer, int x = 0, int y = 0, bool centered = false, bool createTextureNow = true);
     ~Text();
-    void updateText(const char * newText);
+    void updateText(const char* newText);
     void createTexture();
     void render();
+
 private:
     float getPixelsToPointsScaleFactor();
     TTF_Font* font;
     int fontSize;
     SDL_Color fontColor;
-    const char * text;
+    const char* text;
     int x;
     int y;
     bool centered;
@@ -30,8 +30,7 @@ private:
     int gameWidth;
 };
 
-class Game
-{
+class Game {
 public:
     Game(const int numTilesWidth, const int numTilesHeight, const char* title, bool fullscreen);
     ~Game();
@@ -63,7 +62,7 @@ private:
 
     Display display;
 
-    SDL_Window *window;
+    SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_Rect renderRect;
     Mix_Music* music;
