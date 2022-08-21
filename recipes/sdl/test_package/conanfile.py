@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("sdl/2.0.22@ssrobins")
+        self.requires("sdl/2.24.0@ssrobins")
 
     def generate(self):
         tc = CMakeToolchain(self)

@@ -8,7 +8,7 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "sdl_image"
-    version = "2.6.1"
+    version = "2.6.2"
     description = "A library that loads image files as SDL surfaces and textures"
     homepage = "https://www.libsdl.org/projects/SDL_image/"
     license = "Zlib"
@@ -21,7 +21,7 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("libpng/1.6.37@ssrobins")
-        self.requires("sdl/2.0.22@ssrobins")
+        self.requires("sdl/2.24.0@ssrobins")
 
     @property
     def _source_subfolder(self):

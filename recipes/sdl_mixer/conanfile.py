@@ -8,7 +8,7 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "sdl_mixer"
-    version = "2.6.1"
+    version = "2.6.2"
     description = "A sample multi-channel audio mixer library"
     homepage = "https://www.libsdl.org/projects/SDL_mixer/"
     license = "Zlib"
@@ -20,7 +20,7 @@ class Conan(ConanFile):
     zip_name = f"release-{version}.tar.gz"
 
     def requirements(self):
-        self.requires("sdl/2.0.22@ssrobins")
+        self.requires("sdl/2.24.0@ssrobins")
         self.requires("vorbis/1.3.7@ssrobins")
 
     @property
