@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("sdl_mixer/2.6.1@ssrobins")
+        self.requires("sdl_mixer/2.6.2@ssrobins")
 
     def generate(self):
         tc = CMakeToolchain(self)
