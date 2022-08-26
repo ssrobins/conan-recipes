@@ -3,6 +3,6 @@ os=Windows
 arch=x86
 compiler=msvc
 compiler.version=193
-compiler.update=2
+compiler.update=3
 compiler.runtime=static
 compiler.cppstd=17
