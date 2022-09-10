@@ -43,6 +43,7 @@ def conan_create(recipe_path, desktop_only=False, own_code=False):
         conan_options = " -o iwyu=True"
     else:
         conan_subcommand = "create"
+        conan_options = ""
 
     if command_args.config:
         config = f"-s build_type={command_args.config}"

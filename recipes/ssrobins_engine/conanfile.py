@@ -16,6 +16,9 @@ class Conan(ConanFile):
     options = {
         "iwyu": [True, False]
     }
+    default_options = {
+        "iwyu": False
+    }
     generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = [
