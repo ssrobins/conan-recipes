@@ -7,7 +7,7 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "ssrobins_engine"
-    version = "2.0.1"
+    version = "2.0.2"
     description = "Thin game engine wrapper"
     homepage = "https://github.com/ssrobins/conan-recipes"
     license = "MIT"
