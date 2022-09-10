@@ -115,7 +115,7 @@ jobs:
 
       - name: Check includes
         if: matrix.clang_version && github.event.inputs.include_check == 'true'
-        run: ./cmake.py ${{ matrix.name }} --iwyu
+        run: ${{ matrix.script }} --iwyu
 
       - name: Remove duplicate Conan packages
         if: matrix.name != 'linux' && github.event.inputs.include_check != 'true'
