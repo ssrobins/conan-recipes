@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 class Display {
 public:
     Display(const int numTilesWidth, const int numTilesHeight);

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Exceptions.h"
 #include <fstream>
-#include <string>
+
+class Exception;
 
 class ErrorHandler {
 public:

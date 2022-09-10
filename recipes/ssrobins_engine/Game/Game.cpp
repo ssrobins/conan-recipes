@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "ErrorHandler.h"
+#include "Exceptions.h"
 #include "SDL_image.h"
 #include <chrono>
 
