@@ -40,6 +40,7 @@ def conan_create(recipe_path, desktop_only=False, own_code=False):
             print("include-what-you-use binary not found", flush=True)
             sys.exit(1)
         conan_subcommand = "install"
+        conan_options = " -o iwyu=True"
     else:
         conan_subcommand = "create"
 
@@ -48,7 +49,7 @@ def conan_create(recipe_path, desktop_only=False, own_code=False):
     else:
         config = "-s build_type=Debug"
 
-    conan_command = f"conan {conan_subcommand} --update --user ssrobins . {platform[command_args.platform]} -pr:b={script_path}/../profiles/default {config}"
+    conan_command = f"conan {conan_subcommand} --update --user ssrobins . {platform[command_args.platform]} -pr:b={script_path}/../profiles/default {config}{conan_options}"
     print(conan_command, flush=True)
     subprocess.run(conan_command, cwd=recipe_path, shell=True, check=True)
 

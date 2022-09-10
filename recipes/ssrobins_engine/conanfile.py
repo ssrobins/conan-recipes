@@ -13,6 +13,9 @@ class Conan(ConanFile):
     license = "MIT"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
+    options = {
+        "iwyu": [True, False]
+    }
     generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = [
@@ -48,7 +51,7 @@ class Conan(ConanFile):
         tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
         if self.settings.os == "iOS":
             tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
-            if self.settings.arch != "x86_64":
+            if self.settings.arch != "x86_64" and not self.options.iwyu:
                 tc.blocks["apple_system"].values["cmake_osx_architectures"] = "armv7;arm64"
         tc.generate()
         deps = CMakeDeps(self)
