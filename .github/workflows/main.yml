@@ -107,7 +107,7 @@ jobs:
         if: github.event.inputs.include_check != 'true'
         run: ${{ matrix.script }} --config Release
 
-      - name: Install Include what you use
+      - name: Install 'Include What You Use'
         if: matrix.clang_version && github.event.inputs.include_check == 'true'
         uses: ssrobins/install-include-what-you-use@main
         with:

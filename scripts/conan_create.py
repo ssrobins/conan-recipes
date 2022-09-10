@@ -24,7 +24,7 @@ def conan_create(recipe_path, desktop_only=False, own_code=False):
     parser = argparse.ArgumentParser()
     parser.add_argument("platform", choices=list(platform.keys()), help="Build platform")
     parser.add_argument("--config", help="Build config")
-    parser.add_argument("--iwyu", action="store_true", help="Enable Include what you use")
+    parser.add_argument("--iwyu", action="store_true", help="Enable 'Include What You Use' tool")
     command_args = parser.parse_args()
 
     if desktop_only and ("android" in command_args.platform or "ios" in command_args.platform):
