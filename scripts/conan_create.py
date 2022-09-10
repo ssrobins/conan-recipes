@@ -40,7 +40,8 @@ def conan_create(recipe_path, desktop_only=False, own_code=False):
             print("include-what-you-use binary not found", flush=True)
             sys.exit(1)
         conan_subcommand = "install"
-        conan_options = " -o iwyu=True"
+        build_dir = f"build_{command_args.platform}_iwyu"
+        conan_options = f" -o iwyu=True --output-folder {build_dir}"
     else:
         conan_subcommand = "create"
         conan_options = ""
@@ -55,11 +56,11 @@ def conan_create(recipe_path, desktop_only=False, own_code=False):
     subprocess.run(conan_command, cwd=recipe_path, shell=True, check=True)
 
     if iwyu:
-        cmake_command = 'cmake -G "Ninja Multi-Config" -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake -DCMAKE_CXX_INCLUDE_WHAT_YOU_USE="include-what-you-use" -B build'
+        cmake_command = f'cmake -G "Ninja Multi-Config" -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake -DCMAKE_CXX_INCLUDE_WHAT_YOU_USE="include-what-you-use" -B {build_dir}'
         print(cmake_command, flush=True)
         subprocess.run(cmake_command, cwd=recipe_path, shell=True, check=True)
 
-        cmake_build_command = f"cmake --build build --clean-first"
+        cmake_build_command = f"cmake --build {build_dir} --clean-first"
         print(cmake_build_command, flush=True)
         subprocess.run(cmake_build_command, cwd=recipe_path, shell=True, check=True)
 
