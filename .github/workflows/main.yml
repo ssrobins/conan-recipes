@@ -7,9 +7,12 @@ on:
     branches: [ main ]
   workflow_dispatch:
     inputs:
-      upload:
+      include_check:
+        description: 'Include check'
         type: boolean
+      upload:
         description: 'Upload Conan packages'
+        type: boolean
 
 env:
   CONAN_REVISIONS_ENABLED: 1
@@ -27,18 +30,22 @@ jobs:
           - name: androidarm
             os: ubuntu-20.04
             script: ./scripts/conan_create_all.py androidarm
+            clang_version: 12
           - name: androidarm64
             os: ubuntu-20.04
             script: ./scripts/conan_create_all.py androidarm64
+            clang_version: 12
           - name: ios
             os: macos-12
             script: ./scripts/conan_create_all.py ios
+            clang_version: 13
           - name: linux
             os: ubuntu-18.04
             script: ./scripts/conan_create_all.py linux
           - name: macos
             os: macos-12
             script: ./scripts/conan_create_all.py macos
+            clang_version: 13
           - name: windows
             os: windows-2022
             script: py scripts/conan_create_all.py windows
@@ -93,19 +100,31 @@ jobs:
         run: echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/23.2.8568313" >> $GITHUB_ENV
 
       - name: Build Debug
+        if: github.event.inputs.include_check != 'true'
         run: ${{ matrix.script }} --config Debug
 
       - name: Build Release
+        if: github.event.inputs.include_check != 'true'
         run: ${{ matrix.script }} --config Release
 
+      - name: Install Include what you use
+        if: matrix.clang_version && github.event.inputs.include_check == 'true'
+        uses: ssrobins/install-include-what-you-use@main
+        with:
+          clang_version: ${{ matrix.clang_version }}
+
+      - name: Check includes
+        if: matrix.clang_version && github.event.inputs.include_check == 'true'
+        run: ./cmake.py ${{ matrix.name }} --iwyu
+
       - name: Remove duplicate Conan packages
-        if: matrix.name != 'linux'
+        if: matrix.name != 'linux' && github.event.inputs.include_check != 'true'
         run: |
           conan remove "android_sdl/*" --force
           conan remove "cmake_utils/*" --force
 
       - name: Conan package upload
-        if: github.ref == 'refs/heads/main' || github.event.inputs.upload == 'true'
+        if: github.ref == 'refs/heads/main' || github.event.inputs.upload == 'true' && github.event.inputs.include_check != 'true'
         run: |
           conan remote add artifactory-ssrobins https://ssrobins.jfrog.io/artifactory/api/conan/conan
           conan remote login --password ${{ secrets.ARTIFACTORY_API_KEY }} artifactory-ssrobins ${{ secrets.ARTIFACTORY_USER }}
