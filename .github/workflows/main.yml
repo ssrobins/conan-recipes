@@ -124,7 +124,7 @@ jobs:
           conan remove "cmake_utils/*" --force
 
       - name: Conan package upload
-        if: github.ref == 'refs/heads/main' || github.event.inputs.upload == 'true' && github.event.inputs.include_check != 'true'
+        if: (github.ref == 'refs/heads/main' || github.event.inputs.upload == 'true') && github.event.inputs.include_check != 'true'
         run: |
           conan remote add artifactory-ssrobins https://ssrobins.jfrog.io/artifactory/api/conan/conan
           conan remote login --password ${{ secrets.ARTIFACTORY_API_KEY }} artifactory-ssrobins ${{ secrets.ARTIFACTORY_USER }}
