@@ -1,9 +1,8 @@
 #include "ErrorHandler.h"
 #include "Exceptions.h"
-#include "SDL.h"
+#include "SDL_messagebox.h"
 #include <fstream>
 #include <iostream>
-#include <string>
 #ifdef __ANDROID__
 #include <android/log.h>
 #endif

@@ -7,12 +7,18 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "ssrobins_engine"
-    version = "2.0.1"
+    version = "2.0.2"
     description = "Thin game engine wrapper"
     homepage = "https://github.com/ssrobins/conan-recipes"
     license = "MIT"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
+    options = {
+        "iwyu": [True, False]
+    }
+    default_options = {
+        "iwyu": False
+    }
     generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = [
@@ -45,10 +51,11 @@ class Conan(ConanFile):
         tc = CMakeToolchain(self)
         if self.settings.os != "Windows":
             tc.generator = "Ninja Multi-Config"
-        tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
+        if not self.options.iwyu:
+            tc.variables["CMAKE_VERBOSE_MAKEFILE"] = "TRUE"
         if self.settings.os == "iOS":
             tc.variables["CMAKE_SYSTEM_NAME"] = "iOS"
-            if self.settings.arch != "x86_64":
+            if self.settings.arch != "x86_64" and not self.options.iwyu:
                 tc.blocks["apple_system"].values["cmake_osx_architectures"] = "armv7;arm64"
         tc.generate()
         deps = CMakeDeps(self)
