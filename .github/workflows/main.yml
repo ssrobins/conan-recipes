@@ -64,11 +64,11 @@ jobs:
 
       - name: Install required Linux packages
         if: contains(matrix.name, 'android') || matrix.name == 'linux'
-        run: sudo apt-get install ninja-build python3-setuptools -y
+        run: sudo apt-get install cppcheck ninja-build python3-setuptools -y
 
       - name: Install required macOS packages
         if: matrix.name == 'ios' || matrix.name == 'macos'
-        run: brew install ninja
+        run: brew install cppcheck ninja
 
       - name: 'Download development provisioning profile'
         if: matrix.name == 'ios'
@@ -98,6 +98,12 @@ jobs:
       - name: Set Android NDK
         if: contains(matrix.name, 'android')
         run: echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/23.2.8568313" >> $GITHUB_ENV
+
+      - name: Run Cppcheck
+        if: matrix.name != 'windows'
+        run: |
+          cppcheck --version
+          cppcheck . --force --error-exitcode=1
 
       - name: Build Debug
         if: github.event.inputs.include_check != 'true'
