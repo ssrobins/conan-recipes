@@ -13,12 +13,12 @@ def conan_create(recipe_path, desktop_only=False, own_code=False):
     script_path = os.path.dirname(os.path.realpath(__file__))
 
     platform = {
-        "androidarm": f"-pr:h={script_path}/../profiles/androidarm.jinja",
-        "androidarm64": f"-pr:h={script_path}/../profiles/androidarm64.jinja",
-        "ios": f"-pr:h={script_path}/../profiles/ios",
-        "linux": f"-pr:h={script_path}/../profiles/linux",
-        "macos": f"-pr:h={script_path}/../profiles/macos",
-        "windows": f"-pr:h={script_path}/../profiles/windows_x86 -pr:b={script_path}/../profiles/windows_x64"
+        "androidarm": f"--profile:host={script_path}/../profiles/androidarm.jinja",
+        "androidarm64": f"--profile:host={script_path}/../profiles/androidarm64.jinja",
+        "ios": f"--profile:host={script_path}/../profiles/ios",
+        "linux": f"--profile:host={script_path}/../profiles/linux",
+        "macos": f"--profile:host={script_path}/../profiles/macos",
+        "windows": f"--profile:host={script_path}/../profiles/windows"
     }
 
     parser = argparse.ArgumentParser()
@@ -51,7 +51,7 @@ def conan_create(recipe_path, desktop_only=False, own_code=False):
     else:
         config = "-s build_type=Debug"
 
-    conan_command = f"conan {conan_subcommand} --update --user ssrobins . {platform[command_args.platform]} -pr:b={script_path}/../profiles/default {config}{conan_options}"
+    conan_command = f"conan {conan_subcommand} --update --user ssrobins . {platform[command_args.platform]} {config}{conan_options}"
     print(conan_command, flush=True)
     subprocess.run(conan_command, cwd=recipe_path, shell=True, check=True)
 
@@ -67,6 +67,6 @@ def conan_create(recipe_path, desktop_only=False, own_code=False):
 
 def conan_create_single_platform(recipe_path):
     script_path = os.path.dirname(os.path.realpath(__file__))
-    conan_create = f"conan create --update --user ssrobins . -pr:b={script_path}/../profiles/default -pr:h={script_path}/../profiles/default"
+    conan_create = f"conan create --update --user ssrobins ."
     print(conan_create, flush=True)
     subprocess.run(conan_create, cwd=recipe_path, shell=True, check=True)
