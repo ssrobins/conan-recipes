@@ -88,7 +88,9 @@ jobs:
           p12-password: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
 
       - name: Install Conan
-        run: pip3 install conan --pre --upgrade
+        run: |
+          pip3 install conan --pre --upgrade
+          conan profile detect
 
       - name: Print versions
         run: |
