@@ -7,14 +7,14 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "libpng"
-    version = "1.6.37"
+    version = "1.6.38"
     description = "Official PNG image format reference library"
     homepage = "http://www.libpng.org"
     license = "Libpng http://www.libpng.org/pub/png/src/libpng-LICENSE.txt"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
-    exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
+    exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"libpng-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"
     maj_min_ver = str().join(version.split(".")[0:2])
@@ -33,15 +33,9 @@ class Conan(ConanFile):
     def source(self):
         get(self,
             f"https://sourceforge.net/projects/libpng/files/libpng16/{self.version}/{self.zip_name}",
-            sha256="daeb2620d829575513e35fecc83f0d3791a620b9b93d800b763542ece9390fb4",
+            sha256="e2b5e1b4329650992c041996cf1269681b341191dc07ffed816c555769cceb77",
             destination=self._source_subfolder,
             strip_root=True)
-
-        # Apply a patch to the libpng CMakeLists.txt file with the following changes:
-        # https://sourceforge.net/p/libpng/code/merge-requests/4/
-        # https://github.com/glennrp/libpng/pull/318
-        # https://github.com/glennrp/libpng/pull/359
-        patch(self, base_path=self._source_subfolder, patch_file="CMakeLists.diff")
 
     def generate(self):
         tc = CMakeToolchain(self)
