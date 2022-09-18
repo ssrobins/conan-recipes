@@ -20,6 +20,7 @@ class Conan(ConanFile):
         "iwyu": False
     }
     generators = "CMakeDeps"
+    revision_mode = "scm"
     exports_sources = [
         "CMakeLists.txt",
         "Display/*",
