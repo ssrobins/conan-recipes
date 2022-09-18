@@ -14,6 +14,7 @@ class Conan(ConanFile):
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
+    revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"lib{name}-{version}"
     zip_name = f"{zip_folder_name}.tar.xz"
