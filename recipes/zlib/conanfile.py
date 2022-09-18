@@ -76,6 +76,8 @@ class Conan(ConanFile):
                 keep_path=False)
 
     def package_info(self):
+        self.cpp_info.set_property("cmake_file_name", "ZLIB")
+        self.cpp_info.set_property("cmake_target_name", "ZLIB::ZLIB")
         if self.settings.os == "Windows":
             if self.settings.build_type == "Debug":
                 self.cpp_info.libs = ["zlibstaticd"]

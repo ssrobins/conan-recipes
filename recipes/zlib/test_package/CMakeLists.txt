@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1.2)
 project(test_package CXX)
 
-find_package(zlib REQUIRED)
+find_package(ZLIB REQUIRED)
 
 add_executable(${PROJECT_NAME})
 
@@ -10,5 +10,5 @@ target_sources(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME}
-    zlib::zlib
+    ZLIB::ZLIB
 )
