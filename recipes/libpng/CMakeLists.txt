@@ -6,11 +6,6 @@ project(Project)
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-list(INSERT CMAKE_FIND_ROOT_PATH 0 ${CMAKE_BINARY_DIR})
-
-find_package(zlib REQUIRED)
-set(ZLIB_INCLUDE_DIR ${zlib_INCLUDE_DIRS_DEBUG}${zlib_INCLUDE_DIRS_RELEASE})
-
 option(PNG_SHARED "Build shared lib" OFF)
 
 # Workaround for this issue:
