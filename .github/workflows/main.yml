@@ -16,7 +16,6 @@ on:
 
 env:
   CONAN_REVISIONS_ENABLED: 1
-  DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
 
 jobs:
   builds:
@@ -100,6 +99,10 @@ jobs:
       - name: Set Android NDK
         if: contains(matrix.name, 'android')
         run: echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/23.2.8568313" >> $GITHUB_ENV
+
+      - name: Set Xcode version
+        if: matrix.name == 'ios' || matrix.name == 'macos'
+        run: sudo xcode-select --switch /Applications/Xcode_14.0.1.app/Contents/Developer
 
       - name: Run Cppcheck
         if: matrix.name != 'windows'
