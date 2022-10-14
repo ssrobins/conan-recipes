@@ -22,7 +22,7 @@ class Conan(ConanFile):
     def requirements(self):
         self.requires("bzip2/1.0.8@ssrobins")
         self.requires("libpng/1.6.38@ssrobins")
-        self.requires("zlib/1.2.12@ssrobins")
+        self.requires("zlib/1.2.13@ssrobins")
 
     @property
     def _source_subfolder(self):

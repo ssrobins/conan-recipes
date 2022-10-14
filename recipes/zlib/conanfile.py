@@ -7,7 +7,7 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "zlib"
-    version = "1.2.12"
+    version = "1.2.13"
     description = "A Massively Spiffy Yet Delicately Unobtrusive Compression Library " \
                   "(Also Free, Not to Mention Unencumbered by Patents)"
     homepage = "https://zlib.net/"
@@ -31,7 +31,7 @@ class Conan(ConanFile):
     def source(self):
         get(self,
             f"https://zlib.net/{self.zip_name}",
-            sha256="91844808532e5ce316b3c010929493c0244f3d37593afd6de04f71821d5136d9",
+            sha256="b3a24de97a8fdbc835b9833169501030b8977031bcb54b3b3ac13740f846ab30",
             destination=self._source_subfolder,
             strip_root=True)
 
