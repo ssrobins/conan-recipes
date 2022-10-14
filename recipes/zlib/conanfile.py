@@ -7,7 +7,7 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "zlib"
-    version = "1.2.12"
+    version = "1.2.13"
     description = "A Massively Spiffy Yet Delicately Unobtrusive Compression Library " \
                   "(Also Free, Not to Mention Unencumbered by Patents)"
     homepage = "https://zlib.net/"
