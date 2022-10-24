@@ -9,4 +9,4 @@ execute_process(
         message(FATAL_ERROR "Xcode error")
     endif()
 
-file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/." TYPE DIRECTORY FILES "@CMAKE_CURRENT_BINARY_DIR@/@component_name@.xcarchive")
+file(INSTALL "@CMAKE_CURRENT_BINARY_DIR@/@component_name@.xcarchive" DESTINATION "${CMAKE_INSTALL_PREFIX}/.")
