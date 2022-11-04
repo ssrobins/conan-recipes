@@ -5,7 +5,7 @@ required_conan_version = ">=2.0.0-beta1"
 
 class Conan(ConanFile):
     name = "cmake_utils"
-    version = "11.0.0"
+    version = "11.0.1"
     description = "Shared CMake utilities"
     license = "MIT"
     url = "https://github.com/ssrobins/conan-recipes"
