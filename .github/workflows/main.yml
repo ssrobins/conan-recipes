@@ -50,7 +50,7 @@ jobs:
             script: py scripts/conan_create_all.py windows
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Print environment variables
         run: env
@@ -71,7 +71,7 @@ jobs:
 
       - name: 'Download development provisioning profile'
         if: matrix.name == 'ios'
-        uses: apple-actions/download-provisioning-profiles@v1
+        uses: ssrobins/download-provisioning-profiles@v2
         with:
           bundle-id: '*'
           profile-type: 'IOS_APP_DEVELOPMENT'
