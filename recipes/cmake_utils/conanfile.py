@@ -9,7 +9,6 @@ class Conan(ConanFile):
     description = "Shared CMake utilities"
     license = "MIT"
     url = "https://github.com/ssrobins/conan-recipes"
-    revision_mode = "scm"
     exports_sources = "*"
 
     def package(self):
