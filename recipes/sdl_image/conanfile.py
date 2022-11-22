@@ -16,7 +16,7 @@ class Conan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"
-    exports_sources = ["CMakeLists.txt", f"CMakeLists-{name}.txt"]
+    exports_sources = ["CMakeLists.txt"]
     zip_name = f"release-{version}.tar.gz"
 
     def requirements(self):

@@ -16,7 +16,7 @@ class Conan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     generators = "CMakeDeps"
     revision_mode = "scm"
-    exports_sources = ["CMakeLists.diff", "CMakeLists.txt"]
+    exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"{name}-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"
 
