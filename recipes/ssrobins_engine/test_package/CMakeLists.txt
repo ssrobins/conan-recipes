@@ -3,6 +3,8 @@ project(test_package CXX)
 
 find_package(ssrobins_engine REQUIRED)
 
+include(${cmake_utils_PACKAGE_FOLDER_DEBUG}${cmake_utils_PACKAGE_FOLDER_RELEASE}/global_settings.cmake)
+
 if(ANDROID)
     add_library(${PROJECT_NAME} SHARED)
 else()
