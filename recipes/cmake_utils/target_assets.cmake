@@ -34,7 +34,7 @@ function(target_assets target_name)
             )
         endif()
 
-        if(NOT APPLE AND NOT ANDROID)
+        if(NOT MACOSX_BUNDLE AND NOT ANDROID)
             set(component_name ${target_name}_${PROJECT_VERSION}_${platform})
             install(DIRECTORY ${assets_path} DESTINATION ${target_name}/${assets_install_dir} COMPONENT ${component_name})
         endif()
