@@ -86,10 +86,6 @@ jobs:
           p12-file-base64: ${{ secrets.APPLE_CERTIFICATES }}
           p12-password: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
 
-      - name: Add Python bin to PATH
-        if: matrix.name == 'ios' || matrix.name == 'macos'
-        run: echo "/Library/Frameworks/Python.framework/Versions/Current/bin" >> $GITHUB_PATH
-
       - name: Install Conan
         run: |
           pip3 install conan --pre --upgrade
