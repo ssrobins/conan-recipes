@@ -86,6 +86,12 @@ jobs:
           p12-file-base64: ${{ secrets.APPLE_CERTIFICATES }}
           p12-password: ${{ secrets.APPLE_CERTIFICATES_PASSWORD }}
 
+      - name: Cache Conan packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.conan2
+          key: conan-${{ matrix.name }}
+
       - name: Install Conan
         run: |
           pip3 install conan --pre --upgrade
