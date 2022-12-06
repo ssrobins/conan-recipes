@@ -3,7 +3,7 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get
 import os
 
-required_conan_version = ">=2.0.0-beta1"
+required_conan_version = ">=2.0.0-beta6"
 
 class Conan(ConanFile):
     name = "freetype"
@@ -21,7 +21,7 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("bzip2/1.0.8@ssrobins")
-        self.requires("libpng/1.6.38@ssrobins")
+        self.requires("libpng/1.6.39@ssrobins")
         self.requires("zlib/1.2.13@ssrobins")
 
     @property

@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("libpng/1.6.38@ssrobins")
+        self.requires("libpng/1.6.39@ssrobins")
 
     def generate(self):
         tc = CMakeToolchain(self)

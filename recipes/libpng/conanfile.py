@@ -3,11 +3,11 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get, patch
 import os
 
-required_conan_version = ">=2.0.0-beta1"
+required_conan_version = ">=2.0.0-beta6"
 
 class Conan(ConanFile):
     name = "libpng"
-    version = "1.6.38"
+    version = "1.6.39"
     description = "Official PNG image format reference library"
     homepage = "http://www.libpng.org"
     license = "Libpng http://www.libpng.org/pub/png/src/libpng-LICENSE.txt"
@@ -34,7 +34,7 @@ class Conan(ConanFile):
     def source(self):
         get(self,
             f"https://sourceforge.net/projects/libpng/files/libpng16/{self.version}/{self.zip_name}",
-            sha256="e2b5e1b4329650992c041996cf1269681b341191dc07ffed816c555769cceb77",
+            sha256="af4fb7f260f839919e5958e5ab01a275d4fe436d45442a36ee62f73e5beb75ba",
             destination=self._source_subfolder,
             strip_root=True)
 

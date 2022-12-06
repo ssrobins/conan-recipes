@@ -4,7 +4,7 @@ from conan.tools.files import copy, get
 import os
 import shutil
 
-required_conan_version = ">=2.0.0-beta1"
+required_conan_version = ">=2.0.0-beta6"
 
 class Conan(ConanFile):
     name = "sdl_image"
@@ -20,7 +20,7 @@ class Conan(ConanFile):
     zip_name = f"release-{version}.tar.gz"
 
     def requirements(self):
-        self.requires("libpng/1.6.38@ssrobins")
+        self.requires("libpng/1.6.39@ssrobins")
         self.requires("sdl/2.26.1@ssrobins")
 
     @property
