@@ -3,7 +3,7 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get
 import os
 
-required_conan_version = ">=2.0.0-beta1"
+required_conan_version = ">=2.0.0-beta6"
 
 class Conan(ConanFile):
     name = "box2d"

@@ -1,7 +1,7 @@
 from conan import ConanFile
 from conan.tools.files import copy
 
-required_conan_version = ">=2.0.0-beta1"
+required_conan_version = ">=2.0.0-beta6"
 
 class Conan(ConanFile):
     name = "android_sdl"
