@@ -4,7 +4,7 @@ from conan.tools.files import copy, get, patch
 from conan.tools.system.package_manager import Apt
 import os
 
-required_conan_version = ">=2.0.0-beta6"
+required_conan_version = ">=2.0.0-beta7"
 
 class Conan(ConanFile):
     name = "glew"
@@ -14,7 +14,6 @@ class Conan(ConanFile):
     license = "https://github.com/nigels-com/glew/blob/master/LICENSE.txt"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"{name}-{version}"

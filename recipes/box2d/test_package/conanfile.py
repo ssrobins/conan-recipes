@@ -4,7 +4,6 @@ import os
 
 class TestPackageConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
-    generators = "CMakeDeps"
 
     def requirements(self):
         self.requires("box2d/2.3.1@ssrobins")

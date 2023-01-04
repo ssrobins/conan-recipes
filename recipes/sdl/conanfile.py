@@ -4,7 +4,7 @@ from conan.tools.files import copy, get
 from conan.tools.system.package_manager import Apt
 import os
 
-required_conan_version = ">=2.0.0-beta6"
+required_conan_version = ">=2.0.0-beta7"
 
 class Conan(ConanFile):
     name = "sdl"
@@ -16,7 +16,6 @@ class Conan(ConanFile):
     license = "Zlib https://www.libsdl.org/license.php"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"SDL2-{version}"
