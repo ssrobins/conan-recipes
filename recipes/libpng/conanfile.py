@@ -3,7 +3,7 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get, patch
 import os
 
-required_conan_version = ">=2.0.0-beta6"
+required_conan_version = ">=2.0.0-beta7"
 
 class Conan(ConanFile):
     name = "libpng"
@@ -13,7 +13,6 @@ class Conan(ConanFile):
     license = "Libpng http://www.libpng.org/pub/png/src/libpng-LICENSE.txt"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"libpng-{version}"

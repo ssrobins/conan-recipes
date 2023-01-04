@@ -4,7 +4,6 @@ import os
 
 class TestPackageConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
-    generators = "CMakeDeps"
 
     def requirements(self):
         self.requires("libpng/1.6.39@ssrobins")

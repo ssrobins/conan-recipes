@@ -3,7 +3,7 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy
 import os
 
-required_conan_version = ">=2.0.0-beta6"
+required_conan_version = ">=2.0.0-beta7"
 
 class Conan(ConanFile):
     name = "ssrobins_engine"
@@ -19,7 +19,6 @@ class Conan(ConanFile):
     default_options = {
         "iwyu": False
     }
-    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = [
         "CMakeLists.txt",

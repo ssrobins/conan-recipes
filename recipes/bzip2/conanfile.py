@@ -4,7 +4,7 @@ from conan.tools.files import copy, get
 import os
 import shutil
 
-required_conan_version = ">=2.0.0-beta6"
+required_conan_version = ">=2.0.0-beta7"
 
 class Conan(ConanFile):
     name = "bzip2"
@@ -14,7 +14,6 @@ class Conan(ConanFile):
     license = "BSD-like license"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt", f"CMakeLists-{name}.txt"]
     zip_folder_name = f"{name}-{version}"

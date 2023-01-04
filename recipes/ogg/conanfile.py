@@ -3,7 +3,7 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get
 import os
 
-required_conan_version = ">=2.0.0-beta6"
+required_conan_version = ">=2.0.0-beta7"
 
 class Conan(ConanFile):
     name = "ogg"
@@ -13,7 +13,6 @@ class Conan(ConanFile):
     license = "BSD license"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    generators = "CMakeDeps"
     revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"lib{name}-{version}"
