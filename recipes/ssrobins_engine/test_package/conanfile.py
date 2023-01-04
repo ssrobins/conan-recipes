@@ -6,7 +6,7 @@ class TestPackageConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
 
     def requirements(self):
-        self.requires("ssrobins_engine/2.0.8@ssrobins")
+        self.requires("ssrobins_engine/2.0.9@ssrobins")
 
     def generate(self):
         tc = CMakeToolchain(self)

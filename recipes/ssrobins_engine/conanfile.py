@@ -7,7 +7,7 @@ required_conan_version = ">=2.0.0-beta7"
 
 class Conan(ConanFile):
     name = "ssrobins_engine"
-    version = "2.0.8"
+    version = "2.0.9"
     description = "Thin game engine wrapper"
     homepage = "https://github.com/ssrobins/conan-recipes"
     license = "MIT"
@@ -33,7 +33,7 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("cmake_utils/12.0.1@ssrobins")
-        self.requires("sdl/2.26.1@ssrobins")
+        self.requires("sdl/2.26.2@ssrobins")
         self.requires("sdl_image/2.6.2@ssrobins")
         self.requires("sdl_mixer/2.6.2@ssrobins")
         self.requires("sdl_ttf/2.20.1@ssrobins")
