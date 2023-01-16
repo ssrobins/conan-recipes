@@ -13,7 +13,6 @@ class Conan(ConanFile):
     license = "Libpng http://www.libpng.org/pub/png/src/libpng-LICENSE.txt"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"libpng-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"

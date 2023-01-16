@@ -14,7 +14,6 @@ class Conan(ConanFile):
     license = "BSD-like license"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    revision_mode = "scm"
     exports_sources = ["CMakeLists.txt", f"CMakeLists-{name}.txt"]
     zip_folder_name = f"{name}-{version}"
     zip_name = f"{zip_folder_name}.tar.gz"

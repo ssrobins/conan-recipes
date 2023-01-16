@@ -13,7 +13,6 @@ class Conan(ConanFile):
     license = "BSD-3-Clause"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    revision_mode = "scm"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"googletest-release-{version}"
     zip_name = f"release-{version}.tar.gz"
