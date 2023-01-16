@@ -19,7 +19,6 @@ class Conan(ConanFile):
     default_options = {
         "iwyu": False
     }
-    revision_mode = "scm"
     exports_sources = [
         "CMakeLists.txt",
         "Display/*",

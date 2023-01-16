@@ -14,7 +14,6 @@ class Conan(ConanFile):
     license = "Zlib"
     url = "https://github.com/ssrobins/conan-recipes"
     settings = "os", "arch", "compiler", "build_type"
-    revision_mode = "scm"
     exports = "cmake_utils.py"
     exports_sources = ["AudioDevice.diff", "CMakeLists.diff", "CMakeLists.txt"]
     zip_folder_name = f"SFML-{version}"
