@@ -14,9 +14,6 @@ on:
         description: 'Upload Conan packages'
         type: boolean
 
-env:
-  CONAN_REVISIONS_ENABLED: 1
-
 jobs:
   builds:
     name: ${{ matrix.name }}
