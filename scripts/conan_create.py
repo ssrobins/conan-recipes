@@ -8,8 +8,6 @@ import sys
 
 
 def conan_create(recipe_path, desktop_only=False, own_code=False):
-    os.environ["CONAN_REVISIONS_ENABLED"] = "1"
-
     script_path = os.path.dirname(os.path.realpath(__file__))
 
     platform = {
