@@ -3,7 +3,7 @@ from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get
 import os
 
-required_conan_version = ">=2.0.0-beta7"
+required_conan_version = ">=2.0.0-beta10"
 
 class Conan(ConanFile):
     name = "ogg"
