@@ -15,7 +15,7 @@ class Conan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"{name}-{version}"
-    zip_name = f"{zip_folder_name}.tar.gz"
+    zip_name = f"{zip_folder_name}.tar.xz"
 
     def requirements(self):
         self.requires("bzip2/1.0.8@ssrobins")
@@ -32,8 +32,8 @@ class Conan(ConanFile):
 
     def source(self):
         get(self,
-            f"https://download.savannah.gnu.org/releases/{self.name}/{self.zip_name}",
-            sha256="efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938",
+            f"https://sourceforge.net/projects/{self.name}/files/{self.name}2/{self.version}/{self.zip_name}",
+            sha256="5ee23abd047636c24b2d43c6625dcafc66661d1aca64dec9e0d05df29592624c",
             destination=self._source_subfolder,
             strip_root=True)
 
