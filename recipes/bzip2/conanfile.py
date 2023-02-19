@@ -4,7 +4,7 @@ from conan.tools.files import copy, get
 import os
 import shutil
 
-required_conan_version = ">=2.0.0-beta7"
+required_conan_version = ">=2.0.0-beta10"
 
 class Conan(ConanFile):
     name = "bzip2"

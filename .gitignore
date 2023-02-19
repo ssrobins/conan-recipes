@@ -1,4 +1,3 @@
 __pycache__
-build_*/
+**/test_package/build-*
 CMakeUserPresets.json
-test_output/

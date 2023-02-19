@@ -1,5 +1,6 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
+from conan.tools.layout import basic_layout
 import os
 
 class TestPackageConan(ConanFile):
@@ -7,6 +8,9 @@ class TestPackageConan(ConanFile):
 
     def requirements(self):
         self.requires("vorbis/1.3.7@ssrobins")
+
+    def layout(self):
+        basic_layout(self)
 
     def generate(self):
         tc = CMakeToolchain(self)
