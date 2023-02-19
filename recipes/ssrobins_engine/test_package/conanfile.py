@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
 
     def requirements(self):
-        self.requires("ssrobins_engine/2.0.9@ssrobins")
+        self.requires("ssrobins_engine/2.0.10@ssrobins")
 
     def layout(self):
         basic_layout(self)
