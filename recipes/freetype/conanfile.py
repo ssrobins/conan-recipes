@@ -7,7 +7,7 @@ required_conan_version = ">=2.0.0-beta10"
 
 class Conan(ConanFile):
     name = "freetype"
-    version = "2.12.1"
+    version = "2.13.0"
     description = "Freely available software library to render fonts"
     homepage = "https://www.freetype.org/"
     license = "FTL https://www.freetype.org/license.html"
