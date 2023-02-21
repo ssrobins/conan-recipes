@@ -5,7 +5,7 @@ required_conan_version = ">=2.0.0-beta10"
 
 class Conan(ConanFile):
     name = "android_sdl"
-    version = "2.7.3"
+    version = "2.7.4"
     description = "Android Gradle project for SDL2"
     license = "MIT"
     url = "https://github.com/ssrobins/conan-recipes"
