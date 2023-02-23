@@ -4,7 +4,7 @@ from conan.tools.files import copy, get, patch
 from conan.tools.system.package_manager import Apt
 import os
 
-required_conan_version = ">=2.0.0-beta10"
+required_conan_version = ">=2.0.0"
 
 class Conan(ConanFile):
     name = "glew"
