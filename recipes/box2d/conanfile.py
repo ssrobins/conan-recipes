@@ -20,7 +20,7 @@ class Conan(ConanFile):
 
     def system_requirements(self):
         if self.settings.os == "Linux":
-            Apt(self).install(["libxinerama-dev", "libxrandr-dev"],
+            Apt(self).install(["libxcursor-dev", "libxinerama-dev", "libxrandr-dev"],
                 update=True, check=True)
 
     @property
