@@ -7,7 +7,7 @@ required_conan_version = ">=2.0.4"
 
 class Conan(ConanFile):
     name = "box2d"
-    version = "2.3.1"
+    version = "2.4.1"
     description = "A 2D physics engine for games"
     homepage = "https://box2d.org/"
     license = "Zlib"

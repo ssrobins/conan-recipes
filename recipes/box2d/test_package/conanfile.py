@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
 
     def requirements(self):
-        self.requires("box2d/2.3.1@ssrobins")
+        self.requires("box2d/2.4.1@ssrobins")
 
     def layout(self):
         basic_layout(self)
