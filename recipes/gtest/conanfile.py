@@ -15,7 +15,7 @@ class Conan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"googletest-release-{version}"
-    zip_name = f"release-{version}.tar.gz"
+    zip_name = f"v{version}.tar.gz"
 
     @property
     def _source_subfolder(self):
@@ -27,7 +27,7 @@ class Conan(ConanFile):
 
     def source(self):
         get(self,
-            f"https://github.com/google/googletest/archive/{self.zip_name}",
+            f"https://github.com/google/googletest/archive/refs/tags/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
 
