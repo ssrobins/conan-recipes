@@ -1,13 +1,14 @@
 from conan import ConanFile
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.files import copy, get
+from conan.tools.system.package_manager import Apt
 import os
 
 required_conan_version = ">=2.0.4"
 
 class Conan(ConanFile):
     name = "box2d"
-    version = "2.3.1"
+    version = "2.4.1"
     description = "A 2D physics engine for games"
     homepage = "https://box2d.org/"
     license = "Zlib"
@@ -16,6 +17,11 @@ class Conan(ConanFile):
     exports_sources = ["CMakeLists.txt"]
     zip_folder_name = f"{name}-{version}"
     zip_name = f"v{version}.tar.gz"
+
+    def system_requirements(self):
+        if self.settings.os == "Linux":
+            Apt(self).install(["libxcursor-dev", "libxi-dev", "libxinerama-dev", "libxrandr-dev"],
+                update=True, check=True)
 
     @property
     def _source_subfolder(self):
@@ -61,6 +67,6 @@ class Conan(ConanFile):
 
     def package_info(self):
         if self.settings.build_type == "Debug":
-            self.cpp_info.libs = ["Box2Dd"]
+            self.cpp_info.libs = ["box2dd"]
         else:
-            self.cpp_info.libs = ["Box2D"]
+            self.cpp_info.libs = ["box2d"]

@@ -7,7 +7,7 @@ recipe_path = f"{os.path.dirname(os.path.realpath(__file__))}/../recipes"
 
 conan_create_single_platform(f"{recipe_path}/android_sdl")
 conan_create_single_platform(f"{recipe_path}/cmake_utils")
-conan_create(f"{recipe_path}/box2d")
+conan_create(f"{recipe_path}/box2d", desktop_only=True)
 conan_create(f"{recipe_path}/bzip2")
 conan_create(f"{recipe_path}/glew", desktop_only=True)
 conan_create(f"{recipe_path}/gtest")
