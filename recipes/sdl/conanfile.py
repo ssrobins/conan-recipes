@@ -8,7 +8,7 @@ required_conan_version = ">=2.0.4"
 
 class Conan(ConanFile):
     name = "sdl"
-    version = "2.26.5"
+    version = "2.28.0"
     description = "A cross-platform development library designed to provide low level " \
                   "access to audio, keyboard, mouse, joystick, and graphics hardware " \
                   "via OpenGL and Direct3D."

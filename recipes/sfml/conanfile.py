@@ -8,7 +8,7 @@ required_conan_version = ">=2.0.4"
 
 class Conan(ConanFile):
     name = "sfml"
-    version = "2.5.1"
+    version = "2.6.0"
     description = "Simple and fast multimedia library"
     homepage = "https://www.sfml-dev.org/"
     license = "Zlib"
@@ -47,11 +47,6 @@ class Conan(ConanFile):
             f"https://www.sfml-dev.org/files/{self.zip_name}",
             destination=self._source_subfolder,
             strip_root=True)
-
-        # Replace auto_ptr with unique_ptr to fix build errors when using the C++17 standard
-        patch(self, base_path=os.path.join(self._source_subfolder, "src", "SFML", "Audio"), patch_file="AudioDevice.diff")
-        # Support macOS arm64 (can be removed once upgraded to sfml 2.6)
-        patch(self, base_path=self._source_subfolder, patch_file="CMakeLists.diff")
 
     def generate(self):
         tc = CMakeToolchain(self)
