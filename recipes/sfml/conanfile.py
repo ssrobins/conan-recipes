@@ -88,7 +88,7 @@ class Conan(ConanFile):
                 self.cpp_info.libs.append("sfml-main")
             self.cpp_info.system_libs.extend(["opengl32", "winmm"])
         elif self.settings.os == "Linux":
-            self.cpp_info.system_libs.extend(["GL", "pthread", "udev", "X11", "Xrandr"])
+            self.cpp_info.system_libs.extend(["dl", "GL", "pthread", "udev", "X11", "Xcursor", "Xrandr"])
         elif self.settings.os == "Macos":
             self.cpp_info.frameworks.extend([
                 "Carbon",
