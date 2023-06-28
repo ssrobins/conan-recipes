@@ -7,7 +7,7 @@ class TestPackageConan(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
 
     def requirements(self):
-        self.requires("sdl_ttf/2.20.2@ssrobins")
+        self.requires(self.tested_reference_str)
 
     def layout(self):
         basic_layout(self)
