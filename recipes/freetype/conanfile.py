@@ -7,7 +7,7 @@ required_conan_version = ">=2.0.4"
 
 class Conan(ConanFile):
     name = "freetype"
-    version = "2.13.0"
+    version = "2.13.1"
     description = "Freely available software library to render fonts"
     homepage = "https://www.freetype.org/"
     license = "FTL https://www.freetype.org/license.html"
@@ -19,7 +19,7 @@ class Conan(ConanFile):
 
     def requirements(self):
         self.requires("bzip2/1.0.8@ssrobins")
-        self.requires("libpng/1.6.39@ssrobins")
+        self.requires("libpng/1.6.40@ssrobins")
         self.requires("zlib/1.2.13@ssrobins")
 
     @property
@@ -33,7 +33,7 @@ class Conan(ConanFile):
     def source(self):
         get(self,
             f"https://sourceforge.net/projects/{self.name}/files/{self.name}2/{self.version}/{self.zip_name}",
-            sha256="5ee23abd047636c24b2d43c6625dcafc66661d1aca64dec9e0d05df29592624c",
+            sha256="ea67e3b019b1104d1667aa274f5dc307d8cbd606b399bc32df308a77f1a564bf",
             destination=self._source_subfolder,
             strip_root=True)
 

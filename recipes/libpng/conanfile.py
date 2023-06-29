@@ -7,7 +7,7 @@ required_conan_version = ">=2.0.4"
 
 class Conan(ConanFile):
     name = "libpng"
-    version = "1.6.39"
+    version = "1.6.40"
     description = "Official PNG image format reference library"
     homepage = "http://www.libpng.org"
     license = "Libpng http://www.libpng.org/pub/png/src/libpng-LICENSE.txt"
@@ -32,7 +32,7 @@ class Conan(ConanFile):
     def source(self):
         get(self,
             f"https://sourceforge.net/projects/libpng/files/libpng16/{self.version}/{self.zip_name}",
-            sha256="af4fb7f260f839919e5958e5ab01a275d4fe436d45442a36ee62f73e5beb75ba",
+            sha256="8f720b363aa08683c9bf2a563236f45313af2c55d542b5481ae17dd8d183bb42",
             destination=self._source_subfolder,
             strip_root=True)
 
