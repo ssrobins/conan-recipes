@@ -1,4 +1,5 @@
 from conan import ConanFile
+from conan.tools.build import can_run
 from conan.tools.cmake import CMake, CMakeDeps, CMakeToolchain
 from conan.tools.layout import basic_layout
 import os
@@ -31,5 +32,5 @@ class TestPackageConan(ConanFile):
         cmake.build()
 
     def test(self):
-        if self.settings.os != "Android" and self.settings.os != "iOS":
+        if can_run(self):
             self.run(os.path.join(self.build_folder, str(self.settings.build_type), "test_package"))
