@@ -18,7 +18,7 @@ class Conan(ConanFile):
     zip_name = f"release-{version}.tar.gz"
 
     def requirements(self):
-        self.requires("sdl/2.28.0@ssrobins")
+        self.requires("sdl/2.26.5@ssrobins")
         self.requires("vorbis/1.3.7@ssrobins")
 
     @property
